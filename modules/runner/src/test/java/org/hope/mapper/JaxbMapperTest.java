@@ -7,6 +7,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.annotation.*;
 import java.util.List;
@@ -31,9 +33,10 @@ import static org.junit.Assert.fail;
  * </pre>
  */
 public class JaxbMapperTest {
-
+     Logger logger = LoggerFactory.getLogger(JaxbMapperTest.class) ;
 	@Test
 	public void objectToXml() {
+        logger.info(">>>>>>>>>");
 		User user = new User();
 		user.setId(1L);
 		user.setName("calvin");
@@ -42,7 +45,7 @@ public class JaxbMapperTest {
 		user.getInterests().add("sports");
 
 		String xml = JaxbMapper.toXml(user, "UTF-8");
-		System.out.println("Jaxb Object to Xml result:\n" + xml);
+        logger.info("Jaxb Object to Xml result:\n" + xml);
 		assertXmlByDom4j(xml);
 	}
 
@@ -51,7 +54,7 @@ public class JaxbMapperTest {
 		String xml = generateXmlByDom4j();
 		User user = JaxbMapper.fromXml(xml, User.class);
 
-		System.out.println("Jaxb Xml to Object result:\n" + user);
+        logger.info("Jaxb Xml to Object result:\n" + user);
 
 		assertEquals(Long.valueOf(1L), user.getId());
 		assertEquals(2, user.getInterests().size());
@@ -74,7 +77,7 @@ public class JaxbMapperTest {
 		List<User> userList = Lists.newArrayList(user1, user2);
 
 		String xml = JaxbMapper.toXml(userList, "userList", User.class, "UTF-8");
-		System.out.println("Jaxb Object List to Xml result:\n" + xml);
+        logger.info("Jaxb Object List to Xml result:\n" + xml);
 	}
 
 	/**
