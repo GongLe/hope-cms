@@ -11,7 +11,7 @@
         <relativePath>../modules/parent/</relativePath>
     </parent>
 
-    <name>hope :: modules</name>
+    <name>modules</name>
     <artifactId>hope-modules</artifactId>
     <packaging>pom</packaging>
     <modules>

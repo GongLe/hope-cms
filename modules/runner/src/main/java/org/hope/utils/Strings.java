@@ -172,5 +172,21 @@ public class Strings extends StringUtils{
         return EMAIL_PATTERN.matcher(string).matches();
     }
 
+    /**
+     * <pre>
+     *      验证手机号段:
+     *     　 移动：134、135、136、137、138、139、150、151、157(TD)、158、159、187、188
+     *　    　联通：130、131、132、152、155、156、185、186
+     *　    　电信：133、153、180、189、（1349卫通）
+     * </pre>
+     */
+    public static boolean isMobile(String mobiles) {
+        if (isBlank(mobiles)) {
+            return false;
+        }
+        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
+        Matcher m = p.matcher(mobiles);
+        return m.matches();
+    }
 
 }

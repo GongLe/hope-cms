@@ -9,7 +9,7 @@
         <relativePath>../parent/</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <name>hope :: module :: runner</name>
+    <name> module :: runner</name>
     <artifactId>hope-runner</artifactId>
     <packaging>jar</packaging>
 
@@ -62,6 +62,13 @@
             <artifactId>spring-webmvc</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <dependency>
+            <groupId>opensymphony</groupId>
+            <artifactId>sitemesh</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- Wed end -->
 
         <!-- freemarker -->
@@ -175,13 +182,17 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <scope>test</scope>
+            <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>

@@ -6,14 +6,13 @@
     <groupId>org.hope</groupId>
     <artifactId>hope-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>hope :: modules :: parent</name>
+    <name>modules :: parent</name>
     <packaging>pom</packaging>
 
     <!--版本变量-->
     <properties>
         <!-- 各个modules版本定义-->
         <org.hope>1.0-SNAPSHOT</org.hope>
-
 
         <spring.version>3.2.4.RELEASE</spring.version>
         <hibernate.version>4.2.4.Final</hibernate.version>
@@ -51,6 +50,18 @@
         <!-- Plugin的属性定义 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.version>1.6</jdk.version>
+
+        <!-- 项目属性
+        <jdbc.driver.groupId>com.h2database</jdbc.driver.groupId>
+        <jdbc.driver.artifactId>h2</jdbc.driver.artifactId>
+        <jdbc.driver.version>${h2.version}</jdbc.driver.version>
+         -->
+
+            <jdbc.driver.groupId>mysql</jdbc.driver.groupId>
+            <jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
+            <jdbc.driver.version>5.1.21</jdbc.driver.version>
+        <!-- -->
+
     </properties>
     <!-- 设定除中央仓库(repo1.maven.org/maven2/)外的其他仓库,按设定顺序进行查找. -->
     <repositories>
@@ -120,6 +131,11 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-aop</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aspects</artifactId>
                 <version>${spring.version}</version>
             </dependency>
             <dependency>
@@ -201,13 +217,36 @@
                 <version>${spring.version}</version>
             </dependency>
 
-            <!-- connection  pool -->
+            <!-- connection  pool
             <dependency>
                 <groupId>commons-dbcp</groupId>
                 <artifactId>commons-dbcp</artifactId>
                 <version>${commons-dbcp.version}</version>
                 <scope>runtime</scope>
+            </dependency>   -->
+            <!-- connection pool -->
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-jdbc</artifactId>
+                <version>${tomcat-jdbc.version}</version>
+                <scope>runtime</scope>
             </dependency>
+
+            <!-- jdbc driver -->
+            <dependency>
+                <groupId>${jdbc.driver.groupId}</groupId>
+                <artifactId>${jdbc.driver.artifactId}</artifactId>
+                <version>${jdbc.driver.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <!--
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+             -->
             <!-- PERSISTENCE end -->
 
             <!-- WEB begin -->
@@ -779,6 +818,9 @@
                     <version>2.15</version>
                     <!--  增大内存且仅测试名称为*Test的类 -->
                     <configuration>
+                        <includes>
+                            <include>**/*Test.java</include>
+                        </includes>
                         <argLine>-Xmx256M</argLine>
                     </configuration>
                     <dependencies>
@@ -823,6 +865,7 @@
                         <archive>
                             <manifest>
                                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                             </manifest>
                         </archive>
                     </configuration>
