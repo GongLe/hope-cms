@@ -2,4 +2,3 @@
 
 <%@ include file="/WEB-INF/included/taglibs.jsp" %>
 
-<c:set var="ctx" value="${pageContext.request.contextPath}"/>
