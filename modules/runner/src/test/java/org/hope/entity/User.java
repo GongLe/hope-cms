@@ -1,6 +1,6 @@
 package org.hope.entity;
 
-import org.hope.utils.Collections3;
+import org.hope.runner.utils.Collections3;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;

@@ -1,10 +1,9 @@
 package org.hope.core.dao.user;
 
 import org.hope.core.entity.user.User;
-import org.hope.orm.JpaDao;
+import org.hope.runner.orm.JpaDao;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

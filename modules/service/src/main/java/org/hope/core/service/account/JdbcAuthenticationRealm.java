@@ -9,7 +9,7 @@ import org.apache.shiro.cache.Cache;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.hope.core.entity.user.User;
-import org.hope.utils.Encodes;
+import org.hope.runner.utils.Encodes;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;

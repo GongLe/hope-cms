@@ -1,7 +1,7 @@
 package org.hope.core.service.role;
 
 import org.hope.core.entity.role.Role;
-import org.hope.orm.support.SearchFilter;
+import org.hope.runner.orm.support.SearchFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -39,7 +39,7 @@ public interface RoleService {
      * @return Page<Role>
      * @see Page
      * @see Pageable
-     * @see org.hope.orm.support.SearchFilter
+     * @see org.hope.runner.orm.support.SearchFilter
      */
     public Page<Role> searchPageRole(Pageable pageable, List<SearchFilter> filters);
 }
