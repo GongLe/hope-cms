@@ -1,8 +1,8 @@
 package org.hope.dao;
 
 import org.hope.core.dao.user.UserDao2;
-import org.hope.test.spring.Profiles;
-import org.hope.test.spring.SpringTransactionalTestCase;
+import org.hope.runner.test.spring.Profiles;
+import org.hope.runner.test.spring.SpringTransactionalTestCase;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;

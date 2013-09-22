@@ -2,8 +2,8 @@ package org.hope.service.account;
 
 import org.hope.core.entity.user.User;
 import org.hope.core.service.account.AccountService;
-import org.hope.test.spring.Profiles;
-import org.hope.test.spring.SpringTransactionalTestCase;
+import org.hope.runner.test.spring.Profiles;
+import org.hope.runner.test.spring.SpringTransactionalTestCase;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
