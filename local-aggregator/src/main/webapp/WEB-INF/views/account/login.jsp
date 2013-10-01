@@ -3,10 +3,18 @@
 <%@ page import="org.apache.shiro.authc.ExcessiveAttemptsException"%>
 <%@ page import="org.apache.shiro.authc.IncorrectCredentialsException"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="le" uri="/WEB-INF/tld/le-taglib.tld" %>
 
 <html>
 <head>
 	<title>登录页</title>
+    <!--
+    =============
+    <le:javascript src="assets/js/jquery-1.10.2.js" ></le:javascript>
+     <le:bundle name="hello bundle" >
+             <le:stylesheet src="stylesheet"></le:stylesheet>
+     </le:bundle>
+    -->
 </head>
 
 <body>
