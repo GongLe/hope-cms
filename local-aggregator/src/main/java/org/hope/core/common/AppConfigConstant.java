@@ -11,7 +11,7 @@ public class AppConfigConstant {
     public static PropertiesLoader LOADER;
 
     static {
-        LOADER = new PropertiesLoader("appConfig.properties");
+        LOADER = new PropertiesLoader("appConfigConstant.properties");
         CTX = LOADER.getProperty(Keys.ctx);
         SRC = LOADER.getProperty(Keys.src);
         runtimeEnv = RuntimeEnv.valueOf(LOADER.getProperty(Keys.runtimeEnv));

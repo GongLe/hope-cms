@@ -21,6 +21,11 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
 	</context:component-scan>
 
+    <!-- local cache -->
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="shared" value="true"/>
+        <property name="configLocation" value="classpath:cache/ehcache-local.xml"/>
+    </bean>
 
 
     <!-- Jpa Entity Manager 配置 -->
