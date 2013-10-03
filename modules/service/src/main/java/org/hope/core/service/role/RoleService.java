@@ -11,7 +11,6 @@ import java.util.List;
  * 角色Service层
  * User: Gongle
  * Date: 13-9-9
- * Time: 下午9:48
  */
 public interface RoleService {
 

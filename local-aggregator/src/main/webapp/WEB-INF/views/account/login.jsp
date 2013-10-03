@@ -1,55 +1,57 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="org.apache.shiro.web.filter.authc.FormAuthenticationFilter"%>
-<%@ page import="org.apache.shiro.authc.ExcessiveAttemptsException"%>
-<%@ page import="org.apache.shiro.authc.IncorrectCredentialsException"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="le" uri="/WEB-INF/tld/le-taglib.tld" %>
-
-<html>
+<%@ include file="/WEB-INF/included/taglibs.jsp"%>
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="zh-CN"> <![endif]-->
+<!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="zh-CN"> <![endif]-->
+<!--[if IE 8]> <html class="lt-ie9" lang="zh-CN"> <![endif]-->
+<!--[if gt IE 8]><!--><html lang="zh-CN"><!--<![endif]-->
 <head>
-	<title>登录页</title>
-    <!--
-    =============
-    <le:javascript src="assets/js/jquery-1.10.2.js" ></le:javascript>
-     <le:bundle name="hello bundle" >
-             <le:stylesheet src="stylesheet"></le:stylesheet>
-     </le:bundle>
-    -->
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Cache-Control" content="no-store"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+
+    <%@ include file="/WEB-INF/included/resource.jsp" %>
+    <le:stylesheet src="/assets/ace/css/login.css" />
+
 </head>
-
-<body>
-	<form id="loginForm" action="${ctx}/login" method="post" class="form-horizontal">
-	<%
-	String error = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
-	if(error != null){
-	%>
-		<div class="alert alert-error input-medium controls">
-			<button class="close" data-dismiss="alert">×</button>登录失败，请重试.
-		</div>
-	<%
-	}
-	%>
-		<div class="control-group">
-			<label for="username" class="control-label">名称:</label>
-			<div class="controls">
-				<input type="text" id="username" name="username"  value="${username}" class="input-medium required"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label for="password" class="control-label">密码:</label>
-			<div class="controls">
-				<input type="password" id="password" name="password" class="input-medium required"/>
-			</div>
-		</div>
-				
-		<div class="control-group">
-			<div class="controls">
-				<label class="checkbox" for="rememberMe"><input type="checkbox" id="rememberMe" name="rememberMe"/> 记住我</label>
-				<input id="submit_btn" class="btn btn-primary" type="submit" value="登录"/> <a class="btn" href="${ctx}/register">注册</a>
-			</div>
-		</div>
-	</form>
-
-
+<body class="login">
+<div class="wrapper">
+    <h1  style="color:#ffffff"><i class="icon-leaf"></i>&nbsp;lework</h1>
+    <div class="login-body">
+        <h2>账号登陆</h2>
+        <form action="${ctx}/login" method="post" class="form-validate" >
+            <div class="control-group">
+                <div class="email controls">
+                    <input type="text" name="username" placeholder="用户名" class="input-block-level"  >
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="pw controls">
+                    <input type="password" name="password" placeholder="密码" class="input-block-level"  >
+                </div>
+            </div>
+            <div class="submit">
+                <shiro:user>
+                <p class="padding-10">
+                    <strong>
+                        <shiro:principal/>
+                    </strong>检测到你已经登录，<a href="${ctx }/logout">注销</a> 或者
+                    <a href="${ctx }/dashboard">进入系统</a>
+                </p>
+                </shiro:user>
+                <shiro:guest>
+                    <div class="remember">
+                        <label for="rememberMe">记住密码&nbsp;&nbsp;</label><input type="checkbox" name="rememberMe" id="rememberMe"/>
+                    </div>
+                    <input type="submit" value="登陆" class="btn btn-primary" >
+                </shiro:guest>
+            </div>
+        </form>
+        <div class="forget">
+            <a href="#"><span>忘记密码？</span></a>
+        </div>
+    </div>
+</div>
 </body>
 </html>

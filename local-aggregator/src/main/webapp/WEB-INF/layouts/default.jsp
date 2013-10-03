@@ -2,9 +2,11 @@
 <%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <!DOCTYPE html>
-<html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="zh-CN"> <![endif]-->
+<!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="zh-CN"> <![endif]-->
+<!--[if IE 8]> <html class="lt-ie9" lang="zh-CN"> <![endif]-->
+<!--[if gt IE 8]><!--><html lang="zh-CN"><!--<![endif]-->
 <head>
     <title><sitemesh:title/></title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
@@ -18,12 +20,13 @@
 </head>
 
 <body>
-
-    <%@ include file="/WEB-INF/layouts/header.jsp" %>
-
-        <sitemesh:body/>
-
-    <%@ include file="/WEB-INF/layouts/footer.jsp" %>
+<%@ include file="/WEB-INF/included/navbar.jsp" %>
+<div class="main-container container-fluid">
+    <%@ include file="/WEB-INF/included/sidebar.jsp" %>
+    <div class="main-content">
+        <sitemesh:body></sitemesh:body>
+    </div> <!--/.main-content-->
+</div> <!--/.main-container-->
 
 </body>
 </html>

@@ -1,16 +1,25 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@include file="/WEB-INF/included/resource.jsp" %>
 <%response.setStatus(200);%>
 
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Cache-Control" content="no-store"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
 	<title>404 - 页面不存在</title>
 </head>
 
-<body>
-	<h2>404 - 页面不存在.</h2>
-	<p><a href="<c:url value="/"/>">返回首页</a></p>
+<body class="error-page">
+<div class="wrapper">
+    <div class="desc"><i class="icon-warning-sign"></i><span>404 - 页面不存在</span></div>
+    <div class="buttons">
+            <a href="<c:url value="/dashboard" />" class="btn btn-info btn-large btn-block"><i class="icon-home"></i>首页</a>
+            <a href="javascript:;" onclick="window.history.go(-1);" class="btn btn-large btn-block"><i class="icon-arrow-left"></i>返回</a>
+    </div>
+</div>
+
 </body>
 </html>
