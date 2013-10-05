@@ -59,8 +59,23 @@
         window.ace.click_event = $.fn.tap ? "tap" : "click";
     });
 </script>
+
+
 <!--bootstrap js-->
 <le:javascript src="/plugins/bootstrap/2.3.2/js/bootstrap.js"/>
 <!--ace js-->
 <le:javascript src="/assets/ace/js/ace.min2.js"/>
+
+<!-- bootstrap modal-->
+<le:stylesheet src="/plugins/bootstrap-modal/css/bootstrap-modal.css"/>
+<le:javascript src="/plugins/bootstrap-modal/js/bootstrap-modalmanager.js"/>
+<le:javascript src="/plugins/bootstrap-modal/js/bootstrap-modal.js"/>
+<!-- pnotify-->
+<le:stylesheet src="/plugins/pnotify/jquery.pnotify.default.css"/>
+<le:javascript src="/plugins/pnotify/jquery.pnotify.min.js" />
+<!-- jquery validation -->
+<le:javascript src="/plugins/jquery-validation/1.11.1/jquery.validate.js" />
+<le:javascript src="/plugins/jquery-validation/1.11.1/additional-methods.js" />
+<le:javascript src="/plugins/jquery-validation/1.11.1/jquery_validate_message_cn_zh.js" />
+
 

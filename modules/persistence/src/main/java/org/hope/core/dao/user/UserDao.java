@@ -9,4 +9,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  */
 public interface UserDao extends PagingAndSortingRepository<User, String>, JpaSpecificationExecutor<User> {
     User findByLoginName(String loginName);
+    User findByEmail(String email);
 }

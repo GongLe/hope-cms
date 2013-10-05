@@ -22,9 +22,17 @@ public interface AccountService {
 
     /**
      * 根据loginName查找用户
+     *
      * @param loginName 用户名
      */
     public User getUserByLoginName(String loginName);
+
+    /**
+     * 根据Email查找用户
+     *
+     * @param email Email
+     */
+    public User getUserByEmail(String email);
 
     /**
      * 新建用户
@@ -49,4 +57,10 @@ public interface AccountService {
      * @see org.hope.runner.orm.support.SearchFilter
      */
     public Page<User> searchPageUser(Pageable pageable, List<SearchFilter> filters);
+
+    public void saveUser(User entity);
+
+    public void deleteUser(User entity);
+
+    public void deleteUser(String id);
 }

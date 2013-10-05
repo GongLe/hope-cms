@@ -29,9 +29,29 @@ public class AccountServiceImpl implements AccountService {
 
     private UserDao userDao;
 
+    @Override
+    public void deleteUser(User entity) {
+        userDao.delete(entity);
+    }
+
+    @Override
+    public void deleteUser(String id) {
+        userDao.delete(id);
+    }
+
+    @Override
+    public void saveUser(User entity) {
+        userDao.save(entity) ;
+    }
+
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userDao.findByEmail(email);
     }
 
     @Override

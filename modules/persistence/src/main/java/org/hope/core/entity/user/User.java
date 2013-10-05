@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hope.core.entity.AuditorEntity;
 import org.hope.core.entity.role.Role;
@@ -25,6 +26,7 @@ public class User extends AuditorEntity {
     private String loginName;
     private String niceName;
     private String name;
+    private String email;
     private String plainPassword;
     private String password;
     private String salt;
@@ -124,6 +126,15 @@ public class User extends AuditorEntity {
 
     public void setType(String type) {
         this.type = type;
+    }
+    @Email
+    @NotBlank
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @ManyToMany(cascade = { CascadeType.ALL })

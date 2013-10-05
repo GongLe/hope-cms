@@ -168,7 +168,7 @@
                         </li>
 
                         <li>
-                            <a href="#">
+                            <a href="${ctx}/profile">
                                 <i class="icon-user"></i>
                                 Profile
                             </a>
