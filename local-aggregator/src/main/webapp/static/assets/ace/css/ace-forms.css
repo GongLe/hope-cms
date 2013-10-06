@@ -189,11 +189,11 @@ span.input-icon {
 .input-icon ~ .help-inline {
     padding-left:8px
 }
-label.error {
-    font-weight: bold;
-    color: red;
+.control-group label.error {
     padding: 1px 6px 0;
     margin-bottom: 0;
+    font-weight: bold;
+    color: #d68273;
 }
 .control-group.warning .input-icon>[class*="icon-"] {
     color:#d3bd50

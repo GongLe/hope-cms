@@ -78,4 +78,39 @@
 <le:javascript src="/plugins/jquery-validation/1.11.1/additional-methods.js" />
 <le:javascript src="/plugins/jquery-validation/1.11.1/jquery_validate_message_cn_zh.js" />
 
+<script>
+    /**jquery pnotify 全局方法封装**/
+    $(function () {
+        $.pnotify.defaults.history = false;
+        var stack_bottomright = {"dir1": "up", "dir2": "left", "firstpos1": 25, "firstpos2": 25};
+
+        window.notify = function (title, message, type) {
+            var opts = {
+                title: title || '',
+                text: message || '',
+                shadow: false,
+                addclass: "stack-bottomright",
+                labels: {redisplay: "重新显示", all: "所有", last: "最后", close: "关闭", stick: "播放/停止"},
+                animate_speed: 'fast' ,
+                stack: stack_bottomright
+            };
+            switch (type) {
+                case 'error':
+                    opts.type = "error";
+                    break;
+                case 'info':
+                    opts.type = "info";
+                    break;
+                case 'success':
+                    opts.type = "success";
+                    break;
+                //default  type: "notice"
+            }
+            $.pnotify(opts);
+        };
+
+
+    })
+</script>
+
 
