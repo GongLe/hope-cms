@@ -9,7 +9,7 @@
      $(function(){
         /**全局提示信息,使用jquery pnotify插件**/
         if('${$message}' && '${$title}'){
-           window.notify('${$title}' ,'${$message}' , '${$type}');
+           lework.notify('${$title}' ,'${$message}' , '${$type}');
         }
      });
  </script>

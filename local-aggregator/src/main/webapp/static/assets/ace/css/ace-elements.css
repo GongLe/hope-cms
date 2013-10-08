@@ -891,6 +891,13 @@ button.btn:active {
     color:#515151
 }
 
+.action-buttons a {
+    margin: 0 2px;
+    display: inline-block;
+    opacity: .85;
+    -webkit-transition: all .1s;
+    transition: all .1s;
+}
 /**分页 :: pagination**/
 
 .pagination ul>li>a,.pager>li>a {

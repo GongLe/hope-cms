@@ -137,6 +137,7 @@ public class User extends AuditorEntity {
         this.email = email;
     }
 
+    @JsonIgnore
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(name = "SS_USER_ROLE",
             joinColumns =

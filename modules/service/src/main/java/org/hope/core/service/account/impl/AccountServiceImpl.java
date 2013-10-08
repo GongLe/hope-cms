@@ -29,6 +29,11 @@ public class AccountServiceImpl implements AccountService {
 
     private UserDao userDao;
 
+    @Autowired
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
     @Override
     public void deleteUser(User entity) {
         userDao.delete(entity);
@@ -44,10 +49,7 @@ public class AccountServiceImpl implements AccountService {
         userDao.save(entity) ;
     }
 
-    @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
+
 
     @Override
     public User getUserByEmail(String email) {

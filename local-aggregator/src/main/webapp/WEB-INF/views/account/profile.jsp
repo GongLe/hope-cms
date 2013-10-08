@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title> 账户信息</title>
+    <title>个人中心</title>
 </head>
 
 <body>
@@ -26,93 +26,143 @@
 
     <div class="row-fluid">
         <div class="span10">
-            <div class="box box-bordered ">
-                <div class="box-title">
-                    <h3><i class="icon-edit"></i> 账户信息</h3>
+            <div class="tabbable">
+                <ul class="nav nav-tabs" id="myTab">
+                    <li class="active">
+                        <a data-toggle="tab" href="#baseInfo">
+                            <i class="green icon-home bigger-110"></i>
+                            基本信息
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a data-toggle="tab" href="#profile">
+                            头像设置
+                        </a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#profile">
+                            联系信息
+                        </a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            Dropdown
+                            <b class="caret"></b>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-info">
+                            <li>
+                                <a data-toggle="tab" href="#dropdown1">@fat</a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="tab" href="#dropdown2">@mdo</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="baseInfo" class="tab-pane active">
+                        <div class="box">
+
+                            <div class="box-content ">
+                                <form action="${ctx}/account/profile"  method="post" name="inputForm" id="inputForm"
+                                      class="form-horizontal">
+                                    <div class="control-group">
+                                        <label for="loginName" class="control-label">帐号</label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                <span class="add-on"><i class="icon-user"></i></span>
+                                                <input type="text" id="loginName" name="loginName" value="${entity.loginName}" disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="name" class="control-label">姓名</label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                <input type="text" placeholder="姓名"  name="name" id="name" value="${entity.name}">
+                                            </div>
+                                            <!--  <span class="help-block">
+                                                 &nbsp;
+                                              </span>-->
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="niceName" class="control-label">昵称</label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                <input type="text" placeholder="昵称"  name="niceName" id="niceName" value="${entity.niceName}">
+                                            </div>
+                                        </div>
+                                    </div >
+                                    <div class="control-group">
+                                        <label for="email" class="control-label">Email</label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                <input type="text" placeholder="电子邮箱"  name="email" id="email" value="${entity.email}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="plainPassword" class="control-label">修改密码</label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                <span class="add-on"><i class="icon-key"></i></span>
+                                                <input type="password" placeholder="输入新密码" name="plainPassword" id="plainPassword"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="control-group" style="display:none;"  >
+                                        <label for="plainPassword2" class="control-label">确认新密码</label>
+                                        <div class="controls">
+                                            <div class="input-prepend">
+                                                <span class="add-on"><i class="icon-key"></i></span>
+                                                <input type="password" placeholder="确认新密码" name="plainPassword2" id="plainPassword2"  >
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label for="createdDate" class="control-label">创建时间</label>
+                                        <div class="controls">
+                                            <div class="input-append input-prepend">
+                                                <span class="add-on"> <i class="icon-time"></i></span>
+                                                <input type="text" name="createdDate" id="createdDate"   disabled="disabled"
+                                                       value="<fmt:formatDate value="${entity.createdDate}" pattern="yyyy-MM-dd HH:mm" />">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix form-actions">
+                                        <button class="btn btn-primary" type="submit">
+                                            <i class="icon-ok bigger-110"></i>
+                                            保存
+                                        </button>
+
+                                        &nbsp; &nbsp; &nbsp;
+                                        <button class="btn" type="reset">
+                                            <i class="icon-undo bigger-110"></i>
+                                            重置
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="profile" class="tab-pane">
+                        <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
+                    </div>
+
                 </div>
-                <div class="box-content no-padding">
-                    <form action="${ctx}/account/profile"  method="post" name="inputForm" id="inputForm" class="form-horizontal form-bordered">
-                        <div class="control-group">
-                            <label for="loginName" class="control-label">帐号</label>
-                            <div class="controls">
-                                <div class="input-prepend">
-                                    <span class="add-on"><i class="icon-user"></i></span>
-                                    <input type="text" id="loginName" name="loginName" value="${entity.loginName}" disabled="disabled">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label for="name" class="control-label">姓名</label>
-                            <div class="controls">
-                                <div class="input-prepend">
-                                    <input type="text" placeholder="姓名"  name="name" id="name" value="${entity.name}">
-                                </div>
-                              <!--  <span class="help-block">
-                                   &nbsp;
-                                </span>-->
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label for="niceName" class="control-label">昵称</label>
-                            <div class="controls">
-                                <div class="input-prepend">
-                                    <input type="text" placeholder="昵称"  name="niceName" id="niceName" value="${entity.niceName}">
-                                </div>
-                            </div>
-                        </div >
-                        <div class="control-group">
-                            <label for="email" class="control-label">Email</label>
-                            <div class="controls">
-                                <div class="input-prepend">
-                                    <input type="text" placeholder="电子邮箱"  name="email" id="email" value="${entity.email}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label for="plainPassword" class="control-label">修改密码</label>
-                            <div class="controls">
-                                <div class="input-prepend">
-                                    <span class="add-on"><i class="icon-key"></i></span>
-                                    <input type="password" placeholder="输入新密码" name="plainPassword" id="plainPassword"  >
-                                </div>
-                            </div>
-                        </div>
-                        <div class="control-group" style="display:none;"  >
-                            <label for="plainPassword2" class="control-label">确认新密码</label>
-                            <div class="controls">
-                                <div class="input-prepend">
-                                    <span class="add-on"><i class="icon-key"></i></span>
-                                    <input type="password" placeholder="确认新密码" name="plainPassword2" id="plainPassword2"  >
-                                </div>
-                            </div>
-                        </div>
+            </div>  <!--/.tabbable-->
 
-                        <div class="control-group">
-                            <label for="createdDate" class="control-label">创建时间</label>
-                            <div class="controls">
-                                <div class="input-append input-prepend">
-                                    <span class="add-on"> <i class="icon-time"></i></span>
-                                    <input type="text" name="createdDate" id="createdDate"   disabled="disabled"
-                                           value="<fmt:formatDate value="${entity.createdDate}" pattern="yyyy-MM-dd HH:mm" />">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix form-actions">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="icon-ok bigger-110"></i>
-                                    保存
-                                </button>
 
-                                &nbsp; &nbsp; &nbsp;
-                                <button class="btn" type="reset">
-                                    <i class="icon-undo bigger-110"></i>
-                                    重置
-                                </button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
 
         </div> <!--/.span12-->
     </div> <!--/.row-fluid-->

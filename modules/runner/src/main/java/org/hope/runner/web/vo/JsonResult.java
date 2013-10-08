@@ -1,4 +1,4 @@
-package org.hope.runner.web;
+package org.hope.runner.web.vo;
 
 import java.io.Serializable;
 import java.util.HashMap;

@@ -1,5 +1,6 @@
 package org.hope.core.entity.permission;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hope.core.entity.AuditorEntity;
 import org.hope.core.entity.role.Role;
@@ -66,7 +67,7 @@ public class Permission extends AuditorEntity {
     public void setDescription(String description) {
         this.description = description;
     }
-
+    @JsonIgnore
     @ManyToMany(mappedBy = "permissions", cascade = CascadeType.ALL)
     public List<Role> getRoles() {
         return roles;

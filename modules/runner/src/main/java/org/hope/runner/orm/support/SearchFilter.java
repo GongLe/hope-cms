@@ -13,7 +13,16 @@ import java.util.Map;
 
 /**
  * 与具体ORM实现无关的属性过滤条件封装类, 主要记录页面中简单的搜索过滤条件.
- * <code> filter_EQS_name,filter_LIKES_name_OR_email  </code>
+ * <code> eg:  filter_EQS_name,filter_LIKES_name_OR_email  </code>
+ *
+ * <pre>
+ *     MatchType :  UEQ, EQ, LLIKE, LIKE, RLIKE, GT, LT, GTE, LTE
+ *     eg:
+ *      List<SearchFilter> filters = Lists.newArrayList() ;
+         if(Strings.isNotBlank(sSearch)){
+            filters.add(new SearchFilter("LIKES_name_OR_code",sSearch));
+         }
+ * </pre>
  *
  * @author calvin
  * @author Gongle
