@@ -82,6 +82,8 @@
 <le:javascript src="/plugins/jquery-validation/1.11.1/jquery_validate_message_cn_zh.js" />
 <!--jquery datatables-->
 <le:javascript src="/plugins/DataTables-1.9.4/media/js/jquery.dataTables.js" />
+<!--jquery template JSRender-->
+<le:javascript src="/plugins/JsRender/jsrender.min.js" />
 <!--插件全局设置 -->
 <le:javascript src="/plugins/lework.plugins.setting.js" />
 

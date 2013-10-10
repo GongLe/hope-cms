@@ -205,7 +205,7 @@ textarea {
 }
 body {
   margin: 0;
-  font-family: Tahoma,Arial,"微软雅黑","宋体","黑体" ;
+ /* font-family: Tahoma,Arial,"微软雅黑","宋体","黑体" ;*/
   font-size: 14px;
   line-height: 20px;
   color: #333333;
@@ -1210,12 +1210,12 @@ textarea {
   font-weight: normal;
   line-height: 20px;
 }
-input,
+/*input,
 button,
 select,
 textarea {
   font-family: Tahoma,Arial,"微软雅黑","宋体","黑体" ;
-}
+}*/
 label {
   display: block;
   margin-bottom: 5px;
@@ -3117,7 +3117,7 @@ input[type="submit"].btn.btn-mini {
 .navbar-search .search-query {
   margin-bottom: 0;
   padding: 4px 14px;
-  font-family: Tahoma,Arial,"微软雅黑","宋体","黑体" ;
+ /* font-family: Tahoma,Arial,"微软雅黑","宋体","黑体" ;*/
   font-size: 13px;
   font-weight: normal;
   line-height: 1;

@@ -1,3 +1,16 @@
+.clear-both{
+
+    clear: both;
+}
+
+.clear-both:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
 .lighter {
     font-weight: lighter
 }
@@ -309,29 +322,31 @@
 .width-48 {
     width: 48% !important
 }
+
 .no-radius {
-    -webkit-border-radius:0!important;
-    -moz-border-radius:0!important;
-    border-radius:0!important
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important
 }
+
 .no-padding {
-    padding: 0  !important
+    padding: 0 !important
 }
 
 .no-padding-bottom {
-    padding-bottom: 0  !important
+    padding-bottom: 0 !important
 }
 
 .no-padding-top {
-    padding-top: 0  !important
+    padding-top: 0 !important
 }
 
 .no-padding-left {
-    padding-left: 0   !important
+    padding-left: 0 !important
 }
 
 .no-padding-right {
-    padding-right: 0  !important
+    padding-right: 0 !important
 }
 
 .no-margin {
@@ -343,7 +358,7 @@
 }
 
 .no-margin-top {
-    margin-top: 0   !important
+    margin-top: 0 !important
 }
 
 .no-margin-left {
@@ -351,7 +366,7 @@
 }
 
 .no-margin-right {
-    margin-right: 0  !important
+    margin-right: 0 !important
 }
 
 .no-border {
@@ -367,15 +382,15 @@
 }
 
 .no-border-left {
-    border-left: none  !important
+    border-left: none !important
 }
 
 .no-border-right {
-    border-right: 0  !important
+    border-right: 0 !important
 }
 
 .overflow-hidden {
-    overflow: hidden  !important
+    overflow: hidden !important
 }
 
 .overflow-auto {
@@ -383,11 +398,11 @@
 }
 
 .overflow-scroll {
-    overflow: scroll  !important
+    overflow: scroll !important
 }
 
 .overflow-visible {
-    overflow: visible  !important
+    overflow: visible !important
 }
 
 .hr {

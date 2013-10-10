@@ -727,7 +727,7 @@
 }
 
 .box.box-color .box-title {
-    background: #368ee0
+    background: #438eb9;
 }
 
 .box.box-color .box-title h3 {
@@ -736,7 +736,7 @@
 
 .box.box-color .box-title .tabs>li.active>a {
     background: #fff;
-    color: #368ee0
+    color: #438eb9;
 }
 
 .box.box-color .box-title .tabs>li>a {
@@ -744,7 +744,7 @@
 }
 
 .box.box-color .box-title .tabs>li>a:hover {
-    color: #368ee0
+    color: #438eb9;
 }
 
 .box.box-color .box-title .actions>a {
@@ -753,7 +753,7 @@
 
 .box.box-color .box-title .actions>a:hover {
     background: #fff;
-    color: #368ee0
+    color: #438eb9;
 }
 
 .box.box-bordered .table {
@@ -793,15 +793,15 @@
 }
 
 .box.box-bordered.box-color .slimScrollDiv {
-    border-bottom: 2px solid #368ee0
+    border-bottom: 2px solid #438eb9;
 }
 
 .box.box-bordered.box-color .box-title {
-    border-color: #368ee0
+    border-color: #438eb9;
 }
 
 .box.box-bordered.box-color .box-content {
-    border-color: #368ee0
+    border-color: #438eb9;
 }
 
 .box.box-bordered .box-title {
@@ -876,7 +876,7 @@
 }
 
 .box .box-title .tabs>li.active>a {
-    background: #368ee0;
+    background: #438eb9;
     color: #fff
 }
 
@@ -893,7 +893,7 @@
 }
 
 .box .box-title .actions .btn:hover {
-    background: #368ee0;
+    background: #438eb9;
     color: #fff
 }
 
@@ -953,7 +953,7 @@
 }
 
 .table-pagination>span>a.active {
-    background: #368ee0;
+    background: #438eb9;
     color: #fff
 }
 
@@ -967,7 +967,7 @@ table.DTCR_clonedTable {
 
 div.DTCR_pointer {
     width: 1px;
-    background-color: #368ee0;
+    background-color: #438eb9;
     z-index: 201
 }
 
@@ -977,7 +977,7 @@ div.DTCR_pointer:before {
     position: absolute;
     top: -25px;
     left: -5px;
-    color: #368ee0
+    color: #438eb9;
 }
 
 .ColVis {
@@ -1181,7 +1181,7 @@ span.ColVis_radio {
 }
 
 .dataTables_wrapper .dataTables_paginate>span>a.paginate_active {
-    background: #368ee0;
+    background: #438eb9;
     color: #fff
 }
 
