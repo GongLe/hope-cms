@@ -14,7 +14,8 @@
 <!--[if IE 7]>
 <le:stylesheet src="/plugins/font-awesome/css/font-awesome-ie7.min.css"/>
 <![endif]-->
-
+<!-- easyui css custom theme-->
+<le:stylesheet src="/plugins/easyui/1.3.4/themes/bootstrap/easyui.custom.css"/>
 
 <!--utils-->
 <le:stylesheet src="/assets/ace/css/ace-utils.css"/>
@@ -40,6 +41,7 @@
 <le:stylesheet src="/assets/ace/css/ace-tree.css"/>
 <!--gallery-->
 <le:stylesheet src="/assets/ace/css/ace-gallery.css"/>
+
 
 <!--[if lt IE 9]>
 <le:stylesheet src="/assets/ace/css/ace-ie.min.css"/>
@@ -84,6 +86,8 @@
 <le:javascript src="/plugins/DataTables-1.9.4/media/js/jquery.dataTables.js" />
 <!--jquery template JSRender-->
 <le:javascript src="/plugins/JsRender/jsrender.min.js" />
+<!-- jquery easyui loader-->
+<script src="${ctx}/static/plugins/easyui/1.3.4/easyloader.js" ></script>
 <!--插件全局设置 -->
 <le:javascript src="/plugins/lework.plugins.setting.js" />
 

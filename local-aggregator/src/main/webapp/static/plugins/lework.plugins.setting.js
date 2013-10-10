@@ -28,7 +28,6 @@ $(function () {
                 // extract sort information
                 var sortCol, sortDir, sortName;
                 for (var i = 0; i < parseInt(paramMap['iColumns']); i++) {
-                    console.log(paramMap['bSortable_' + i])
                     if (paramMap['bSortable_' + i] == true) {
                         sortName = paramMap['mDataProp_' + i];
                         sortDir = paramMap['sSortDir_' + i];
@@ -105,6 +104,15 @@ $(function () {
                 }
                 $.pnotify(opts);
             };
+        }
+        /**====================
+         * jquery easyui
+         * ====================**/
+        if (easyloader) {
+            easyloader.locale = "zh_CN"; // 本地化设置
+            easyloader.theme = "bootstrap"; // 设置主题
+            easyloader.css = false  ;
+
         }
         return lework;
     })(window.lework || {}); // closure
