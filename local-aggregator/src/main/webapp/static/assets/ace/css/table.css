@@ -143,8 +143,232 @@ th .lbl:only-child,td .lbl:only-child {
 .dataTable th.sorting_disabled:after {
     display:none
 }
-.dataTables_wrapper {
+/*********8**/
+table.DTCR_clonedTable {
+    background-color: #FFFFFF;
+    cursor: move;
+    z-index: 202;
+}
+div.DTCR_pointer {
+    background-color: #368EE0;
+    width: 1px;
+    z-index: 201;
+}
+div.DTCR_pointer:before {
+    color: #368EE0;
+
+    font-family: "FontAwesome";
+    left: -5px;
+    position: absolute;
+    top: -25px;
+}
+.ColVis {
+    float: right;
+    margin-bottom: 1em;
+}
+.ColVis_Button {
+    background-color: #FFFFFF;
+    border: 1px solid #D0D0D0;
+    cursor: pointer;
+    float: left;
+    height: 30px;
+    margin-right: 3px;
+    padding: 3px 5px;
     position: relative;
+}
+button.ColVis_Button::-moz-focus-inner {
+    border: medium none !important;
+    padding: 0;
+}
+.ColVis_text_hover {
+    background-color: #F0F0F0;
+    border: 1px solid #999999;
+}
+div.ColVis_collectionBackground {
+    background-color: #000000;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1100;
+}
+div.ColVis_collection {
+    background-color: #F3F3F3;
+    border: 1px solid #CCCCCC;
+    padding: 3px;
+    position: relative;
+    width: 150px;
+    z-index: 1102;
+}
+div.ColVis_collection button.ColVis_Button {
+    background-color: #FFFFFF;
+    float: none;
+    margin-bottom: 2px;
+    width: 100%;
+}
+div.ColVis_collection button.ColVis_Group {
+    background: none repeat scroll 0 0 #DADADA;
+    border: 1px solid #BABABA;
+}
+div.ColVis_catcher {
+    position: absolute;
+    z-index: 1101;
+}
+.disabled {
+    color: #999999;
+}
+button.ColVis_Button {
+    text-align: left;
+}
+div.ColVis_collection button.ColVis_Button:hover {
+    background-color: #F0F0F0;
+    border: 1px solid #999999;
+}
+div.ColVis_collection button.ColVis_Group:hover {
+    background: none repeat scroll 0 0 #BABABA;
+    border: 1px solid #424242;
+}
+span.ColVis_radio {
+    display: inline-block;
+    width: 20px;
+}
+.dataTables_wrapper .ColVis {
+    margin: 10px 10px 10px 0;
+}
+.dataTables_wrapper .ColVis .ColVis_Button {
+    background: none repeat scroll 0 0 #EEEEEE;
+    border: 0 none;
+    padding: 3px 8px;
+}
+.dataTables_wrapper .ColVis .ColVis_Button i {
+    margin-left: 5px;
+}
+.dataTables_wrapper .ColVis .ColVis_Button:hover {
+    background: none repeat scroll 0 0 #DDDDDD;
+}
+.dataTables_wrapper .dataTables_length {
+    float: left;
+    margin: 10px 10px 5px;
+    min-width: 200px;
+}
+.dataTables_wrapper .dataTables_length .input-mini {
+    float: left;
+}
+.dataTables_wrapper .dataTables_length label > span {
+    float: left;
+    margin: 4px 5px;
+}
+.dataTables_wrapper .DTTT_container {
+    margin: 10px 5px 10px 0;
+}
+.dataTables_wrapper .DTTT_container .DTTT_button {
+    background: none repeat scroll 0 0 #EEEEEE;
+    border: 0 none;
+    border-radius: 0 0 0 0;
+    box-shadow: none;
+    color: #333333;
+    margin-right: 5px;
+}
+.dataTables_wrapper .DTTT_container .DTTT_button:hover {
+    background: none repeat scroll 0 0 #DDDDDD;
+}
+.dataTables_wrapper .dataTables_filter {
+    float: right;
+    margin: 10px 10px 5px 5px;
+}
+.dataTables_wrapper .dataTables_filter input {
+    margin-bottom: 0;
+}
+.dataTables_wrapper .dataTables_info {
+    float: left;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.dataTables_wrapper .dataTables_info span {
+    font-weight: 600;
+}
+.dataTables_wrapper .dataTables_paginate {
+    float: right;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    margin-top: 10px;
+}
+.dataTables_wrapper .dataTables_paginate > a {
+    background: none repeat scroll 0 0 #EEEEEE;
+    color: #333333;
+    cursor: pointer;
+    margin-right: 5px;
+    padding: 3px 8px;
+    text-decoration: none;
+}
+.dataTables_wrapper .dataTables_paginate > a.paginate_button_disabled {
+    color: #999999;
+}
+.dataTables_wrapper .dataTables_paginate > a.paginate_button_disabled:hover {
+    background: none repeat scroll 0 0 #EEEEEE;
+    cursor: default;
+}
+.dataTables_wrapper .dataTables_paginate > a:hover {
+    background: none repeat scroll 0 0 #DDDDDD;
+}
+.dataTables_wrapper .dataTables_paginate > span > a {
+    background: none repeat scroll 0 0 #EEEEEE;
+    color: #333333;
+    cursor: pointer;
+    margin-right: 5px;
+    padding: 3px 8px;
+    text-decoration: none;
+}
+.dataTables_wrapper .dataTables_paginate > span > a.paginate_active {
+    background: none repeat scroll 0 0 #368EE0;
+    color: #FFFFFF;
+}
+.dataTables_scroll {
+    clear: both;
+}
+.dataTables_scrollBody {
+}
+.DTFC_Cloned {
+    background: none repeat scroll 0 0 #EEEEEE;
+    border-right: 1px solid #DDDDDD;
+}
+div.DTS tbody th, div.DTS tbody td {
+    white-space: nowrap;
+}
+div.DTS tbody tr.even {
+    background-color: #FFFFFF;
+}
+.alert.alert-nomargin {
+    margin: 0;
+}
+.DTFC_LeftHeadWrapper {
+    border-right: 1px solid #DDDDDD;
+}
+div.DTS div.DTS_Loading {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid #999999;
+    height: 20px;
+    left: 50%;
+    margin-left: -100px;
+    margin-top: -20px;
+    padding: 20px 0;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 200px;
+    z-index: 1;
+}
+div.DTS div.dataTables_scrollHead {
+    background-color: #FFFFFF;
+}
+div.DTS div.dataTables_scrollBody {
+    z-index: 2;
+}
+/**gongle datatables**/
+.dataTables_wrapper {
+
 
 }
 .dataTables_wrapper .dataTables_processing {

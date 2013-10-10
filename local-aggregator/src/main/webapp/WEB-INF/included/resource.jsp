@@ -14,8 +14,7 @@
 <!--[if IE 7]>
 <le:stylesheet src="/plugins/font-awesome/css/font-awesome-ie7.min.css"/>
 <![endif]-->
-<!-- easyui css custom theme-->
-<le:stylesheet src="/plugins/easyui/1.3.4/themes/bootstrap/easyui.custom.css"/>
+
 
 <!--utils-->
 <le:stylesheet src="/assets/ace/css/ace-utils.css"/>
@@ -47,6 +46,8 @@
 <le:stylesheet src="/assets/ace/css/ace-ie.min.css"/>
 <![endif]-->
 
+<!-- easyui css custom theme    -->
+<le:stylesheet src="/plugins/easyui/1.3.4/themes/bootstrap/easyui.custom.css"/>
 
 <!--jquery -->
 <le:javascript src="/assets/js/jquery-1.10.2.js"/>
@@ -64,8 +65,6 @@
         window.lework = {}  ;
     }
 </script>
-
-
 <!--bootstrap js-->
 <le:javascript src="/plugins/bootstrap/2.3.2/js/bootstrap.js"/>
 <!--ace js-->
@@ -86,15 +85,21 @@
 <le:javascript src="/plugins/DataTables-1.9.4/media/js/jquery.dataTables.js" />
 <!--jquery template JSRender-->
 <le:javascript src="/plugins/JsRender/jsrender.min.js" />
-<!-- jquery easyui loader-->
-<script src="${ctx}/static/plugins/easyui/1.3.4/easyloader.js" ></script>
+
 <!--插件全局设置 -->
 <le:javascript src="/plugins/lework.plugins.setting.js" />
 
+<!-- jquery easyui loader-->
+<script src="${ctx}/static/plugins/easyui/1.3.4/easyloader.js" ></script>
 <script>
-    $(function () {
-
-    })
+    /**====================
+     * jquery easyui
+     * ====================**/
+    if (easyloader) {
+        easyloader.locale = "zh_CN"; // 本地化设置
+        easyloader.theme = "bootstrap"; // 设置主题
+        easyloader.css = false  ;
+    }
 </script>
 
 

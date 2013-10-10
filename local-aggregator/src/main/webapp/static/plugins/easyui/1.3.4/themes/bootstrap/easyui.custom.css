@@ -261,11 +261,9 @@
   vertical-align: top;
   cursor: pointer;
   opacity: 0.6;
-  filter: alpha(opacity=60);
 }
 .combo-arrow-hover {
   opacity: 1.0;
-  filter: alpha(opacity=100);
 }
 .combo-panel {
   overflow: auto;
@@ -282,10 +280,10 @@
   background-color: #ffffff;
 }
 .combo-arrow {
-  background-color: #F2F2F2;
+  background-color: #e4e4e4;
 }
 .combo-arrow-hover {
-  background-color: #e6e6e6;
+  background-color: #cdcdcd;
 }
 .combobox-item {
   padding: 2px;
@@ -737,8 +735,7 @@ a.l-btn {
     padding: 0 8px;
     line-height: 24px;
     font-size: 13px;
-    background-color: #abbac3!important;
-    border-color: #abbac3;
+    background-color: #abbac3 ;
 
  }
 a.l-btn:hover{
@@ -813,7 +810,7 @@ a.l-btn .l-btn-focus {
   outline: #0000FF dotted thin;
 }
 a.l-btn {
-  color: #444;
+/*  color: #444;
   background-image: url('./images/linkbutton_bg.png');
   background-repeat: no-repeat;
   background: #f5f5f5;
@@ -827,9 +824,9 @@ a.l-btn {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#e6e6e6,GradientType=0);
   -moz-border-radius: 0px 0px 0px 0px;
   -webkit-border-radius: 0px 0px 0px 0px;
-  border-radius: 0px 0px 0px 0px;
+  border-radius: 0px 0px 0px 0px;*/
 }
-a.l-btn span.l-btn-left {
+/*a.l-btn span.l-btn-left {
   background-image: url('./images/linkbutton_bg.png');
   background-repeat: no-repeat;
   background-image: none;
@@ -839,7 +836,7 @@ a:hover.l-btn {
   color: #00438a;
   border: 1px solid #ddd;
   filter: none;
-}
+}*/
 a.l-btn-plain,
 a.l-btn-plain span.l-btn-left {
   background: transparent;
@@ -857,7 +854,7 @@ a:hover.l-btn-plain {
 a.l-btn-disabled,
 a:hover.l-btn-disabled {
   color: #444;
-  filter: alpha(opacity=50);
+ /* filter: alpha(opacity=50);*/
   background: #f5f5f5;
   color: #444;
   background: -webkit-linear-gradient(top,#ffffff 0,#e6e6e6 100%);
@@ -865,13 +862,13 @@ a:hover.l-btn-disabled {
   background: -o-linear-gradient(top,#ffffff 0,#e6e6e6 100%);
   background: linear-gradient(to bottom,#ffffff 0,#e6e6e6 100%);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#e6e6e6,GradientType=0);
-  filter: alpha(opacity=50) progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#e6e6e6,GradientType=0);
+  /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#e6e6e6,GradientType=0);
+  filter: alpha(opacity=50) progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#e6e6e6,GradientType=0);*/
 }
 a.l-btn-plain-disabled,
 a:hover.l-btn-plain-disabled {
-  background: transparent;
-  filter: alpha(opacity=50);
+/*  background: transparent;
+  filter: alpha(opacity=50);*/
 }
 a.l-btn-selected,
 a:hover.l-btn-selected {
@@ -962,7 +959,7 @@ a:hover.l-btn-plain-selected {
   -moz-box-shadow: 2px 2px 3px #cccccc;
   -webkit-box-shadow: 2px 2px 3px #cccccc;
   box-shadow: 2px 2px 3px #cccccc;
-  filter: progid:DXImageTransform.Microsoft.Blur(pixelRadius=2,MakeShadow=false,ShadowOpacity=0.2);
+/*  filter: progid:DXImageTransform.Microsoft.Blur(pixelRadius=2,MakeShadow=false,ShadowOpacity=0.2);*/
 }
 .menu-rightarrow {
   background: url('./images/menu_arrows.png') no-repeat -32px center;
@@ -2106,6 +2103,59 @@ a.s-btn-plain-active {
 .tree-checkbox2 {
   background: url('./images/tree_icons.png') no-repeat -240px -18px;
 }
+
+/**重写,整合fontawesome icon font **/
+.tree-folde, .tree-folder, .tree-folder-open, .tree-file,
+.tree-file-text, .tree-folder-full, .tree-folder-open-full {
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: inherit;
+    -webkit-font-smoothing: antialiased;
+
+}
+
+.tree-folder {
+    background-image: none;
+}
+
+.tree-folder:before {
+    content: "\f114";
+
+}
+
+.tree-folder-full:before {
+    content: "\f07b";
+
+}
+
+.tree-folder-open {
+    background-image: none;
+
+}
+
+.tree-folder-open:before {
+    content: "\f115";
+
+}
+
+.tree-folder-open-full:before {
+    content: "\f07c";
+
+}
+
+.tree-file {
+    background-image: none;
+}
+
+.tree-file:before {
+    content: "\f016";
+}
+
+.tree-file-text:before {
+    content: "\f15b";
+}
+/**end**/
 .tree-title {
   font-size: 14px;
   display: inline-block;
@@ -2245,7 +2295,7 @@ a.s-btn-plain-active {
   -moz-box-shadow: 2px 2px 3px #cccccc;
   -webkit-box-shadow: 2px 2px 3px #cccccc;
   box-shadow: 2px 2px 3px #cccccc;
-  filter: progid:DXImageTransform.Microsoft.Blur(pixelRadius=2,MakeShadow=false,ShadowOpacity=0.2);
+/*  filter: progid:DXImageTransform.Microsoft.Blur(pixelRadius=2,MakeShadow=false,ShadowOpacity=0.2);*/
 }
 .window,
 .window .window-body {

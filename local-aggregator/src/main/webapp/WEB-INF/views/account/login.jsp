@@ -7,9 +7,6 @@
 <!--[if gt IE 8]><!--><html lang="zh-CN"><!--<![endif]-->
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <meta http-equiv="Cache-Control" content="no-store"/>
-    <meta http-equiv="Pragma" content="no-cache"/>
-    <meta http-equiv="Expires" content="0"/>
 
     <%@ include file="/WEB-INF/included/resource.jsp" %>
     <le:stylesheet src="/assets/ace/css/login.css" />
@@ -44,7 +41,9 @@
                     <div class="remember">
                         <label for="rememberMe">记住密码&nbsp;&nbsp;</label><input type="checkbox" name="rememberMe" id="rememberMe"/>
                     </div>
-                    <input type="submit" value="登陆" class="btn btn-primary" >
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary" >登陆</button>
+                    </div>
                 </shiro:guest>
             </div>
         </form>

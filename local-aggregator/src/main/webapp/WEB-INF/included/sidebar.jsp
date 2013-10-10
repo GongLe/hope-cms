@@ -12,14 +12,14 @@
 <li>
     <a href="javascript:;">
         <i class="icon-dashboard"></i>
-        <span class="menu-text"> Dashboard </span>
+        <span class="menu-text-in"> Dashboard </span>
     </a>
 </li>
 
 <li>
     <a href="#" class="dropdown-toggle">
         <i class="icon-desktop"></i>
-        <span class="menu-text"> UI Elements </span>
+        <span class="menu-text-in"> UI Elements </span>
 
         <b class="arrow icon-angle-down"></b>
     </a>
@@ -95,7 +95,7 @@
     <a href="#" class="dropdown-toggle">
         <i class="icon-file-alt"></i>
 
-                                    <span class="menu-text">
+                                    <span class="menu-text-in">
                                         Other Pages
                                         <span class="badge badge-primary ">4</span>
                                     </span>

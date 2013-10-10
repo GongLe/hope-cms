@@ -497,7 +497,7 @@ li [class^="icon-"],li [class*=" icon-"],.nav-list li [class^="icon-"],.nav-list
 .menu-min .nav-list>li>a {
     position:relative
 }
-.menu-min .nav-list>li>a>.menu-text {
+.menu-min .nav-list>li>a>.menu-text-in {
     display:none;
     position:absolute;
     left:41px;
@@ -513,7 +513,7 @@ li [class^="icon-"],li [class*=" icon-"],.nav-list li [class^="icon-"],.nav-list
     border:1px solid #ccc;
     padding-left:12px
 }
-.menu-min .nav-list>li>a.dropdown-toggle>.menu-text {
+.menu-min .nav-list>li>a.dropdown-toggle>.menu-text-in {
     -webkit-box-shadow:none;
     -moz-box-shadow:none;
     box-shadow:none;
@@ -532,10 +532,10 @@ li [class^="icon-"],li [class*=" icon-"],.nav-list li [class^="icon-"],.nav-list
 .menu-min .nav-list>li:hover>a {
     color:#1963aa
 }
-.menu-min .nav-list>li:hover>a>.menu-text {
+.menu-min .nav-list>li:hover>a>.menu-text-in {
     display:block
 }
-.menu-min .nav-list>li.active>a>.menu-text {
+.menu-min .nav-list>li.active>a>.menu-text-in {
     border-left-color:#1963aa
 }
 .menu-min .nav-list>li.open>a {

@@ -105,15 +105,7 @@ $(function () {
                 $.pnotify(opts);
             };
         }
-        /**====================
-         * jquery easyui
-         * ====================**/
-        if (easyloader) {
-            easyloader.locale = "zh_CN"; // 本地化设置
-            easyloader.theme = "bootstrap"; // 设置主题
-            easyloader.css = false  ;
 
-        }
         return lework;
     })(window.lework || {}); // closure
 

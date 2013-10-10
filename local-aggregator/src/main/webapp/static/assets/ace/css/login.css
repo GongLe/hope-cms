@@ -51,7 +51,7 @@
     height: 35px
 }
 
-.login .wrapper .login-body .submit {
+/*.login .wrapper .login-body .submit {
     margin-top: 15px;
     *zoom: 1
 }
@@ -60,7 +60,7 @@
     content: "";
     display: table;
     clear: both
-}
+}*/
 
 .login .wrapper .login-body .submit input {
     float: right
