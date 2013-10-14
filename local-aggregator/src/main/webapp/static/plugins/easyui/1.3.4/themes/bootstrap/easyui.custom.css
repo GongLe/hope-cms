@@ -378,25 +378,32 @@
 .datagrid-row {
   height: 25px;
 }
+
 .datagrid-header td,
 .datagrid-body td,
 .datagrid-footer td {
-  border-width: 0 1px 1px 0;
-  border-style: dotted;
-  margin: 0;
-  padding: 0;
+
+     border-width: 0 1px 1px 0;
+      border-style: dotted;
+/*    border-top: 0;
+    border-left: 0;
+    border-bottom: 1px #ccc dotted;
+    border-right: 1px #ccc dotted;*/
+    margin: 0;
+    padding: 0;
 }
 .datagrid-cell,
 .datagrid-cell-group,
 .datagrid-header-rownumber,
 .datagrid-cell-rownumber {
   margin: 0;
-  padding: 0 4px;
+  padding:5px 7px;
+  padding:2px 3px\9;
   white-space: nowrap;
   word-wrap: normal;
   overflow: hidden;
-  height: 18px;
-  line-height: 18px;
+  height: 22px;
+  line-height: 22px;
   font-weight: normal;
   font-size: 14px;
 }
@@ -422,6 +429,9 @@
   padding: 0;
   overflow: auto;
   zoom: 1;
+}
+.datagrid table{
+    border-collapse:separate;
 }
 .datagrid-view1 .datagrid-body-inner {
   padding-bottom: 20px;
@@ -1914,6 +1924,7 @@ a.s-btn-plain-active {
 .tabs-header-right .tabs li.tabs-selected a.tabs-inner {
   border-left: 1px solid #ffffff;
 }
+/**
 .tooltip {
   position: absolute;
   display: none;
@@ -2012,6 +2023,8 @@ a.s-btn-plain-active {
 .tooltip-bottom .tooltip-arrow {
   border-bottom-color: #ffffff;
 }
+**/
+
 .tree {
   margin: 0;
   padding: 0;

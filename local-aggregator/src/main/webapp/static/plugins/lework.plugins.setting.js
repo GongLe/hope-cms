@@ -8,6 +8,15 @@ $(function () {
          * jquery DataTables Plugins 全局设置
          ===================================**/
         if ($.fn.dataTable) {
+            /**
+             *初始化Datatable全局搜索 placeholder属性
+             * @param placeholder属性
+             * @param tableFilterId table list filter 非必填f
+             */
+            lework.initDatatablesSearchHolder = function(placeholderValue,tableFilterId){
+                $('input[type=text]', tableFilterId || '#table-list_filter').attr('placeholder', placeholderValue || '输入搜索')
+                    .css({width:180});
+            }
 
             //适配Spring data jpa page 参数
             lework.springDataJpaPageableAdapter = function (sSource, aoData, fnCallback, oSettings) {
