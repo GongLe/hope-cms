@@ -12,10 +12,8 @@
 <div class="breadcrumbs" id="breadcrumbs">
     <ul class="breadcrumb">
         <li>
-            <i class="icon-home home-icon"></i>
-            <a href="${ctx}/dashboard">home</a>
+            <a href="${ctx}/dashboard" class="grey"> <i class="icon-home home-icon"></i></a>
         </li>
-
         <li class="active">
             角色管理
         </li>
@@ -37,10 +35,10 @@
                 </div>
                 <div class="box-content no-padding ">
                     <table id="table-list"
-                           class="table table-hover table-nomargin table-bordered dataTable dataTable-nosort clear-both"></table>
+                           class="table table-hover  table-nomargin table-bordered dataTable dataTable-nosort clear-both"></table>
                     <div class="table-funtion-bar clear-both">
                         <div class="btn-group">
-                            <button data-toggle="dropdown" class="btn dropdown-toggle">
+                            <button data-toggle="dropdown" class="btn no-border dropdown-toggle">
                                 <i class="icon-check-empty bigger-120"></i>
                                 <span class="caret"></span>
                             </button>
@@ -61,15 +59,14 @@
                             </ul>
                         </div>
                         <div class="btn-group">
-                            <button class="btn" data-original-title="新增"><i class="icon-plus"></i></button>
-                            <button class="btn" data-original-title="刷新"><i class="icon-refresh"></i></button>
-                            <button class="btn" data-original-title="删除"><i class="icon-trash"></i></button>
+                            <button class="btn no-border tooltips" id="create-function" data-original-title="新增"><i class="icon-plus"></i></button>
+                            <button class="btn no-border tooltips" id="refresh-function" data-original-title="刷新"><i class="icon-refresh"></i></button>
+                            <button class="btn no-border tooltips" id="delete-function" data-original-title="删除"><i class="icon-trash"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
             <!--/.box-->
-
         </div>
     </div>
 </div>
@@ -77,8 +74,24 @@
 <!--/.page-content-->
 <script>
     $(function () {
+        var oTable = $('#table-list');
+        //新增
+        $('#create-function').click(function () {
 
-        $('#table-list').dataTable({
+        });
+        //刷新
+        $('#refresh-function').click(function () {
+            oTable.fnDraw();
+        });
+        //删除
+        $('#delete-function').confirmDelete({text :'<span class="text-warning">确认删除多条记录?</span>',onDelete: function () {
+            //TODO
+            oTable.fnDraw();
+            return true ;
+         }
+        });
+
+        oTable.dataTable({
             "aoColumns": [
                 { "mData": "name", 'sTitle': '名称' },
                 { "mData": "code", 'sTitle': '值'}  ,
@@ -89,7 +102,7 @@
                 {
                     "mRender": function (data, type, full) {
 
-                        return  $('#tableActionTpl').render() ;
+                        return  $('#tableActionTpl').render();
                     },
                     "aTargets": [3 ]
                 },
@@ -99,24 +112,26 @@
                 //   { "bVisible": false,  "aTargets": [ 1 ] },
                 { "sClass": "center", "aTargets": [ 2 ] }
             ],
-            "bStateSave": true , /**state saving **/
-            'bProcessing': false ,
+            "bStateSave": true, /**state saving **/
+            'bProcessing': false,
             'bServerSide': true,
             'fnServerData': lework.springDataJpaPageableAdapter,
-            'sAjaxSource': '${ctx}/role/getDatatablesJson' ,
-            'fnInitComplete': function () {      /**datatables ready**/
-
+            'sAjaxSource': '${ctx}/role/getDatatablesJson',
+            'fnInitComplete': function () {
+                /**datatables ready**/
+                lework.initDatatablesSearchHolder('名称/值');
                 // bootstrap-tooltip
-                $('.action-buttons a','#table-list').tooltip() ;
-                /**
-                $('.action-buttons .delete-confirm', '#table-list').popover({html: true, placement: 'bottom'  ,
-                    content  :'confirm?'
+                $('.tooltips').tooltip();
+                $('.confirmDelete').confirmDelete({onDelete: function () {
+                    console.log('on confirm delete ');
+                },
+                    onCancel: function () {
+                        console.log('on confirm canel');
+                        return true;
+                    }
                 });
-                $('.action-buttons .delete-confirm', '#table-list').blur(function(){
-                        $(this).popover('hide');
-                }) ;    **/
             }
-        });
+        });//dataTables
     })  //dom ready
 
 
@@ -129,16 +144,16 @@
 <!--table action template-->
 <script id="tableActionTpl" type="text/x-jsrender">
     <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-        <a class="grey" href="javascript:;" data-original-title="配置" title="">
+        <a class="grey tooltips" href="javascript:;" data-original-title="配置" title="">
             <i class="icon-cog bigger-120"></i>
         </a>
-        <a class="grey" href="javascript:;" title="" data-original-title="查看">
+        <a class="grey tooltips" href="javascript:;" title="" data-original-title="查看">
             <i class="icon-zoom-in bigger-120"></i>
         </a>
-        <a class="grey" href="javascript:;" title="" data-original-title="修改">
+        <a class="grey tooltips" href="javascript:;" title="" data-original-title="修改">
             <i class="icon-edit bigger-120"></i>
         </a>
-        <a class="grey delete-confirm" href="javascript:;" title="" data-original-title="删除">
+        <a class="grey tooltips confirmDelete" href="javascript:;" title="" data-original-title="删除">
             <i class="icon-trash bigger-120"></i>
         </a>
     </div>

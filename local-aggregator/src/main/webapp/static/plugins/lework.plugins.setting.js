@@ -13,9 +13,9 @@ $(function () {
              * @param placeholder属性
              * @param tableFilterId table list filter 非必填f
              */
-            lework.initDatatablesSearchHolder = function(placeholderValue,tableFilterId){
+            lework.initDatatablesSearchHolder = function (placeholderValue, tableFilterId) {
                 $('input[type=text]', tableFilterId || '#table-list_filter').attr('placeholder', placeholderValue || '输入搜索')
-                    .css({width:180});
+                    .css({width: 180});
             }
 
             //适配Spring data jpa page 参数
@@ -88,7 +88,13 @@ $(function () {
         if ($.pnotify) {
             $.pnotify.defaults.history = false;
             var stack_bottomright = {"dir1": "up", "dir2": "left", "firstpos1": 25, "firstpos2": 25};
-
+            /**
+             *页面信息提示
+             * 依赖于jquery pnotiy插件c
+             * @param title title
+             * @param message notiry content
+             * @param type  type :error,info,success,notice . default value :  notice
+             */
             lework.notify = function (title, message, type) {
                 var opts = {
                     title: title || '',

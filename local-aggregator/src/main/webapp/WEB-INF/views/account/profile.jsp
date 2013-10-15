@@ -11,8 +11,7 @@
 <div class="breadcrumbs" id="breadcrumbs">
     <ul class="breadcrumb">
         <li>
-            <i class="icon-home home-icon"></i>
-            <a href="${ctx}/dashboard">home</a>
+            <a href="${ctx}/dashboard" class="grey"> <i class="icon-home home-icon"></i></a>
         </li>
 
         <li class="active">
@@ -167,7 +166,7 @@
         </div> <!--/.span12-->
     </div> <!--/.row-fluid-->
 </div><!--/.page-content-->
-<%@include file="/WEB-INF/included/prompt.jsp" %>
+<%@include file="/WEB-INF/included/notify.jsp" %>
   <script>
       $(function () {
           //控制密码修改输入框

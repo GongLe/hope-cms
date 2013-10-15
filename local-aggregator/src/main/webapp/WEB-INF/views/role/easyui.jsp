@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>测试整合easyui兼容性</title>
+    <title>整合easyui兼容性</title>
 </head>
 
 <body>
@@ -27,9 +27,6 @@
 <div class="page-content">
     <div class="row-fluid">
         <div class="span12">
-
-
-
             <h2>easyui merge</h2>
 
             <div style="padding:5px;">
@@ -48,7 +45,7 @@
             </div>
             <div class="span4">
                 <h4>easyui-tree</h4>
-                <ul   id="easyui-tree" data-options="animate:true,checkbox:true,lines:true">
+                <ul   class="easyui-tree" data-options="animate:true,checkbox:false,lines:true">
                     <li>
                         <span>My Documents</span>
                         <ul>
@@ -85,7 +82,7 @@
             </div>
             <div class="span6">
                 <h4>1:combobox</h4>
-                <select id="easyui-combobox" name="state" data-options="height:30,width:200" style="width:200px;">
+                <select class="easyui-combobox" name="state" data-options="height:30,width:200" style="width:200px;">
                     <option value="MO">Missouri</option>
                     <option value="WI">Wisconsin</option>
                     <option value="WY">Wyoming</option>
@@ -93,11 +90,11 @@
                 <p> <h4 class="red">2:easyui tooltip与bootstrap有冲突.不推荐使用.</h4>
                 </p>
                 <h4>3:tree grid</h4>
-                <table title="Folder Browser" id="easyui-treegrid" style="width:700px;height:250px"
+                <table title="" class="easyui-treegrid" style="width:500px;height:400px"
                                data-options="
                         url: '${ctx}/static/plugins/easyui/treegrid_data1.json',
                         method: 'get',
-                        rownumbers: true,
+                        rownumbers: false ,
                         idField: 'id',
                         treeField: 'name'
                     ">
@@ -109,7 +106,20 @@
                             </tr>
                             </thead>
                 </table>
-
+            </div><!--/.span6-->
+            <div class="span6">
+                <h2>Basic Dialog</h2>
+                <div class="demo-info">
+                    <div class="demo-tip icon-tip"></div>
+                    <div>Click below button to open or close dialog.</div>
+                </div>
+                <div style="margin:10px 0;">
+                    <a href="javascript:void(0)" class="easyui-linkbutton btn-info" onclick="$('#dlg').dialog('open')">Open</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton btn-danger" onclick="$('#dlg').dialog('close')">Close</a>
+                </div>
+                <div id="dlg" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save'" style="width:400px;height:200px;padding:10px">
+                    The dialog content.
+                </div>
             </div>
         </div>
     </div>
@@ -133,9 +143,9 @@
                     }
                 });
             });
-            $('#easyui-treegrid').treegrid();
-            $('#easyui-tree').tree();
-            $('#easyui-combobox').tree();
+           // $('#easyui-treegrid').treegrid();
+          //  $('#easyui-tree').tree();
+         //   $('#easyui-combobox').tree();
 
         })
     })  //dom ready

@@ -25,7 +25,8 @@
             </div>
             <div class="control-group">
                 <div class="pw controls">
-                    <input type="password" name="password" placeholder="密码" class="input-block-level"  >
+                    <input type="password" name="password"  placeholder="密码" class="input-block-level"  >
+                    <!--autocomplete="off"-->
                 </div>
             </div>
             <div class="submit">

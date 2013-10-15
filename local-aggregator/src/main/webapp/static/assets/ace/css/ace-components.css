@@ -13,6 +13,9 @@
 }
 
 /** 工具提示 :: tooltip  **/
+.tooltip{
+    font-family: "微软雅黑", "宋体", "黑体";
+}
 .tooltip.left {
     margin-left:-11px
 }

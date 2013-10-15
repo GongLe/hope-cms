@@ -957,7 +957,7 @@
     color: #fff
 }
 
-/**jquery datatables style  overwrite**/
+/**jquery datatables style  overwrite
 
 table.DTCR_clonedTable {
     background-color: #fff;
@@ -1095,7 +1095,7 @@ span.ColVis_radio {
 }
 
 .dataTables_wrapper .dataTables_length label>span {
-    /*float: left;*/
+
     margin: 4px 5px
 }
 
@@ -1238,3 +1238,4 @@ div.DTS div.dataTables_scrollHead {
 div.DTS div.dataTables_scrollBody {
     z-index: 2
 }
+**/

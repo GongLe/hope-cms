@@ -85,7 +85,11 @@
 <le:javascript src="/plugins/DataTables-1.9.4/media/js/jquery.dataTables.js" />
 <!--jquery template JSRender-->
 <le:javascript src="/plugins/JsRender/jsrender.min.js" />
-
+<!--qtip2-->
+<le:stylesheet src="/plugins/qtip2/jquery.qtip.css" />
+<le:javascript src="/plugins/qtip2/jquery.qtip.js" />
+<!--系统jquery plugins :: ConfirmDelete -->
+<le:javascript src="/plugins/lework.jquery.confirmdelete.js" />
 <!--插件全局设置 -->
 <le:javascript src="/plugins/lework.plugins.setting.js" />
 

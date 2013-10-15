@@ -47,7 +47,7 @@ th .lbl:only-child,td .lbl:only-child {
     vertical-align:top
 }
 
-
+ /**jquery Datetables **/
 .table-header {
    background-color:#307ecc;
     color:#FFF;
