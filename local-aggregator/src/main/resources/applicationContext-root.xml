@@ -16,7 +16,7 @@
 <description>Spring公共配置 </description>
 
 	<!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
-	<context:component-scan base-package="org.hope" >
+	<context:component-scan base-package="org.lework" >
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
 	</context:component-scan>
@@ -32,7 +32,7 @@
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
-        <property name="packagesToScan" value="org.hope.core"/>
+        <property name="packagesToScan" value="org.lework.core"/>
         <property name="mappingResources" value="META-INF/orm.xml" />
         <property name="jpaProperties">
             <props>
@@ -49,7 +49,7 @@
     <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 
     <!-- Spring Data Jpa配置 -->
-    <jpa:repositories base-package="org.hope.core"  transaction-manager-ref="transactionManager"
+    <jpa:repositories base-package="org.lework.core"  transaction-manager-ref="transactionManager"
                       entity-manager-factory-ref="entityManagerFactory"/>
 
     <!-- Jpa 事务配置 -->
@@ -59,7 +59,7 @@
     <!--jpa entity auditor -->
      <jpa:auditing auditor-aware-ref="auditorAwareImpl"  />
 
-    <bean id="auditorAwareImpl" class="org.hope.core.entity.AuditorAwareImpl" />
+    <bean id="auditorAwareImpl" class="org.lework.core.entity.AuditorAwareImpl" />
 
     <!-- 使用annotation定义事务 -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />

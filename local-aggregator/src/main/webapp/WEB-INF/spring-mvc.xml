@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
 	<!-- 自动扫描且只扫描@Controller -->
-	<context:component-scan base-package="org.hope.core.web" use-default-filters="false">
+	<context:component-scan base-package="org.lework.core.web" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
 	</context:component-scan>
@@ -32,7 +32,7 @@
 	</bean>
 
     <!-- 应用路径映射-->
-    <bean id="resourcePathExposer" class="org.hope.core.common.ResourcePathExposer" init-method="init" />
+    <bean id="resourcePathExposer" class="org.lework.core.common.ResourcePathExposer" init-method="init" />
 
 	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL-->	
 	<mvc:default-servlet-handler/>

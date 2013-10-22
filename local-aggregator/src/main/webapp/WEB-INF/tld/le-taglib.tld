@@ -10,7 +10,7 @@
     <tag>
         <name>bundle</name>
         <!-- 定义标签处理类 -->
-        <tag-class>org.hope.core.common.taglib.AssetBundle</tag-class>
+        <tag-class>org.lework.core.common.taglib.AssetBundle</tag-class>
         <!-- 定义标签体支持JSP脚本 -->
         <body-content>JSP</body-content>
         <!-- 配置标签属性 -->
@@ -26,7 +26,7 @@
     <tag>
         <name>javascript</name>
         <!-- 定义标签处理类 -->
-        <tag-class>org.hope.core.common.taglib.AssetJavascript</tag-class>
+        <tag-class>org.lework.core.common.taglib.AssetJavascript</tag-class>
         <!-- 定义标签体支持JSP脚本 -->
         <body-content>scriptless</body-content>
         <!-- 配置标签属性 -->
@@ -47,7 +47,7 @@
     <tag>
         <name>stylesheet</name>
         <!-- 定义标签处理类 -->
-        <tag-class>org.hope.core.common.taglib.AssetStylesheet</tag-class>
+        <tag-class>org.lework.core.common.taglib.AssetStylesheet</tag-class>
         <body-content>empty</body-content>
         <!-- 配置标签属性 -->
         <attribute>

@@ -12,7 +12,7 @@
 	</bean>
 	    
     <!-- 自定义shiro的realm数据库身份验证 , 所有accountService依赖的dao都需要用depends-on声明 -->
-	<bean id="jdbcAuthenticationRealm" class="org.hope.core.service.account.JdbcAuthenticationRealm" depends-on="userDao">
+	<bean id="jdbcAuthenticationRealm" class="org.lework.core.service.account.JdbcAuthenticationRealm" depends-on="userDao">
 		<property name="name" value="jdbcAuthentication" />
 		<property name="defaultPermissions">
    			<list>
