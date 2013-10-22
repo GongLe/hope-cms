@@ -86,7 +86,7 @@
         //删除
         $('#delete-function').confirmDelete({text :'<span class="text-warning">确认删除多条记录?</span>',onDelete: function () {
             //TODO
-            oTable.fnDraw();
+            oTable.fnDraw(); //reload data
             return true ;
          }
         });
@@ -145,16 +145,16 @@
 <script id="tableActionTpl" type="text/x-jsrender">
     <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
         <a class="grey tooltips" href="javascript:;" data-original-title="配置" title="">
-            <i class="icon-cog bigger-120"></i>
+            <i class="icon-cog bigger-140"></i>
         </a>
         <a class="grey tooltips" href="javascript:;" title="" data-original-title="查看">
-            <i class="icon-zoom-in bigger-120"></i>
+            <i class="icon-zoom-in bigger-140"></i>
         </a>
         <a class="grey tooltips" href="javascript:;" title="" data-original-title="修改">
-            <i class="icon-edit bigger-120"></i>
+            <i class="icon-edit bigger-140"></i>
         </a>
         <a class="grey tooltips confirmDelete" href="javascript:;" title="" data-original-title="删除">
-            <i class="icon-trash bigger-120"></i>
+            <i class="icon-trash bigger-140"></i>
         </a>
     </div>
 </script>

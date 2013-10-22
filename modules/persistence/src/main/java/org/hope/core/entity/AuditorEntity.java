@@ -14,6 +14,7 @@ import java.util.Date;
  */
 @MappedSuperclass
 public class AuditorEntity extends IdEntity implements Cloneable {
+
     @CreatedBy
     private String createdBy;
     @CreatedDate

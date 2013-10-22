@@ -21,7 +21,8 @@ import java.util.List;
  * @author Gongle
  */
 @Entity
-@Table(name = "ss_user")
+@Table(name = "SS_USER")
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User extends AuditorEntity {
     private String loginName;
     private String niceName;

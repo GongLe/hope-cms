@@ -3,6 +3,7 @@ package org.hope.core.entity.role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hope.core.entity.AuditorEntity;
+import org.hope.core.entity.menu.Menu;
 import org.hope.core.entity.permission.Permission;
 import org.hope.core.entity.user.User;
 
@@ -11,10 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Role Entity User: Gongle Date: 13-9-9 Time: 下午4:52
+ * Role Entity
+ * user: Gongle
+ * Date: 13-9-9
  */
 @Entity
-@Table(name = "ss_role")
+@Table(name = "SS_ROLE")
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Role extends AuditorEntity {
     private String name;
     private String code;
@@ -23,7 +27,7 @@ public class Role extends AuditorEntity {
     private String description;
     private List<User> users = new ArrayList<User>();
     private List<Permission> permissions = new ArrayList<Permission>();
-
+    private List<Menu> menus = new ArrayList<Menu>() ;
     public String getName() {
         return name;
     }
@@ -63,6 +67,7 @@ public class Role extends AuditorEntity {
     public void setDescription(String description) {
         this.description = description;
     }
+
     @JsonIgnore
     @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL)
     public List<User> getUsers() {
@@ -72,6 +77,7 @@ public class Role extends AuditorEntity {
     public void setUsers(List<User> users) {
         this.users = users;
     }
+
     @JsonIgnore
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "SS_ROLE_PERMISSION",
@@ -86,6 +92,22 @@ public class Role extends AuditorEntity {
 
     public void setPermissions(List<Permission> permissions) {
         this.permissions = permissions;
+    }
+
+    @JsonIgnore
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "SS_ROLE_MENU",
+            joinColumns =
+            @JoinColumn(name = "FK_ROLE_ID", referencedColumnName = "ID"),
+            inverseJoinColumns =
+            @JoinColumn(name = "FK_MENU_ID", referencedColumnName = "ID")
+    )
+    public List<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
     }
 
     @Override

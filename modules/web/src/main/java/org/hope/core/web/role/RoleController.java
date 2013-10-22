@@ -35,6 +35,12 @@ public class RoleController extends AbstractController {
     @Autowired
     private RoleService roleService;
 
+    @RequestMapping(method = RequestMethod.GET,value = "/easyui")
+    public String  easyui(Model model,
+                       HttpServletRequest request) {
+
+        return "role/easyui";
+    }
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model, @PageableDefaults(pageNumber = 0, value = 30) Pageable pageable,
                        HttpServletRequest request) {

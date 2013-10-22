@@ -69,8 +69,8 @@ $(function () {
                 sPaginationType: "full_numbers",
                 oLanguage: {
                     sSearch: "<span>搜索:</span> ",
-                    sInfo: "当前显示 <span>_START_</span> 到 <span>_END_</span> 条,共 <span>_TOTAL_</span> 条记录",
-                    sInfoEmpty: "当前显示 <span>0</span> 到 <span>0</span> 条,共 <span>0</span> 条记录",
+                    sInfo: "显示_START_到_END_条,共_TOTAL_条记录",
+                    sInfoEmpty: "显示0到0条,共0条记录",
                     sLengthMenu: "每页显示 _MENU_ 条记录",
                     sProcessing: "加载中...",
                     sEmptyTable: "无可用数据",

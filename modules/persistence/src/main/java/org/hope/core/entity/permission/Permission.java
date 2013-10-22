@@ -19,7 +19,8 @@ import java.util.List;
  * Time: 下午4:52
  */
 @Entity
-@Table(name = "ss_permission")
+@Table(name = "SS_PERMISSION")
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Permission extends AuditorEntity {
     private String name;
     private String code;
