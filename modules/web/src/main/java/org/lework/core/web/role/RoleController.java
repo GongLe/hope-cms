@@ -6,6 +6,7 @@ import org.lework.core.service.role.RoleService;
 import org.lework.runner.orm.support.SearchFilter;
 import org.lework.runner.utils.Strings;
 import org.lework.runner.web.AbstractController;
+import org.lework.runner.web.NotificationType;
 import org.lework.runner.web.datatables.DataTableResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -48,18 +50,21 @@ public class RoleController extends AbstractController {
         return "role/role";
     }
 
+    @RequestMapping(value = "update", method = RequestMethod.GET)
+    public String update(@RequestParam(value = "id",required = false ) String id){
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String update(@Valid @ModelAttribute("entity") Role role, BindingResult result,
-                         RedirectAttributes redirectAttributes) {
+        return  "role/role-update" ;
+    }
+
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public void update(@Valid @ModelAttribute("entity") Role role, BindingResult result,
+                       HttpServletResponse response) {
 
         if (result.hasErrors()) {
             logger.info(result.toString());
-            prompt(redirectAttributes, "提示信息", "保存失败! " + result.toString(), notify_type_error);
-            return "redirect:/role";
+            callback(response, "保存失败!", null, NotificationType.ERROR);
         }
-        prompt(redirectAttributes, "提示信息", "修改成功!", notify_type_success);
-        return "redirect:/role";
+        callback(response, "修改成功!", null, NotificationType.SUCCESS);
     }
 
     /**

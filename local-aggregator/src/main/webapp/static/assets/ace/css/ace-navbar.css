@@ -20,7 +20,8 @@
     padding-right:0;
     min-height:40px;
     position:relative;
-    background:#438eb9  ;
+    /*background:#438eb9  ;*/
+    background:#2C90CA  ;
     filter:none;
 }
 .navbar .navbar-text,.navbar .navbar-link {

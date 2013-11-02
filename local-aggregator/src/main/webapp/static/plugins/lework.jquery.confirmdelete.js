@@ -55,7 +55,7 @@
                         e.preventDefault();
                         var ret;
                         if ($.isFunction(that.options.onDelete)) {
-                            ret = that.options.onDelete.call(this, $(this));
+                            ret = that.options.onDelete.apply(this );
                         }
                         if (ret == true) {
                             that.hide();
@@ -65,7 +65,7 @@
                     $('.confirmCancel', api.elements.content).on('click', function (e) {
                         e.preventDefault();
                         if ($.isFunction(that.options.onCancel)) {
-                            var ret = that.options.onCancel.call(this, $(this));
+                            var ret = that.options.onCancel.apply(this);
                             if (ret == true)
                                 api.hide(false);
                         } else {

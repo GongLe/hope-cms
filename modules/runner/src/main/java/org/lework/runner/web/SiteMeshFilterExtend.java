@@ -15,7 +15,7 @@ public class SiteMeshFilterExtend extends SiteMeshFilter {
     /**
      * 忽略  SiteMeshFilter 参数标识*
      */
-    public static String IGNORE_DECORATE_FLAG = "_ignore_decorate";
+    public static String IGNORE_DECORATE_FLAG = "$SiteMesh";
 
     @Override
     public void doFilter(ServletRequest rq, ServletResponse rs, FilterChain chain) throws IOException, ServletException {

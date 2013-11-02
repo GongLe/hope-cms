@@ -35,7 +35,8 @@
                 </div>
                 <div class="box-content no-padding ">
                     <table id="table-list"
-                           class="table table-hover  table-nomargin table-bordered dataTable dataTable-nosort clear-both"></table>
+                           class="table table-hover  table-nomargin table-bordered dataTable dataTable-nosort clear-both">
+                    </table>
                     <div class="table-funtion-bar clear-both">
                         <div class="btn-group">
                             <button data-toggle="dropdown" class="btn no-border dropdown-toggle">
@@ -71,9 +72,16 @@
     </div>
 </div>
 
+
 <!--/.page-content-->
 <script>
+
     $(function () {
+        //表弟提交后,iframe回调函数
+        window.actionCallback = function(){
+            $.colorbox.close();
+            lework.notify('操作提示', this.message  , this.type );
+        } ;
         var oTable = $('#table-list');
         //新增
         $('#create-function').click(function () {
@@ -86,7 +94,7 @@
         //删除
         $('#delete-function').confirmDelete({text :'<span class="text-warning">确认删除多条记录?</span>',onDelete: function () {
             //TODO
-            oTable.fnDraw(); //reload data
+            oTable.fnDraw(); //reload Datatables
             return true ;
          }
         });
@@ -101,8 +109,8 @@
             "aoColumnDefs": [
                 {
                     "mRender": function (data, type, full) {
-
-                        return  $('#tableActionTpl').render();
+                        console.log(data)
+                        return  $('#tableActionTpl').render({id:data});
                     },
                     "aTargets": [3 ]
                 },
@@ -113,12 +121,12 @@
                 { "sClass": "center", "aTargets": [ 2 ] }
             ],
             "bStateSave": true, /**state saving **/
-            'bProcessing': false,
+            'bProcessing': true ,
             'bServerSide': true,
             'fnServerData': lework.springDataJpaPageableAdapter,
             'sAjaxSource': '${ctx}/role/getDatatablesJson',
-            'fnInitComplete': function () {
-                /**datatables ready**/
+            'fnInitComplete': function () {     /**datatables ready**/
+
                 lework.initDatatablesSearchHolder('名称/值');
                 // bootstrap-tooltip
                 $('.tooltips').tooltip();
@@ -132,6 +140,7 @@
                 });
             }
         });//dataTables
+        window.openModal = function(){};
     })  //dom ready
 
 
@@ -144,16 +153,17 @@
 <!--table action template-->
 <script id="tableActionTpl" type="text/x-jsrender">
     <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-        <a class="grey tooltips" href="javascript:;" data-original-title="配置" title="">
+        <a class="grey tooltips" href="javascript:;" data-original-title="配置"  >
             <i class="icon-cog bigger-140"></i>
         </a>
-        <a class="grey tooltips" href="javascript:;" title="" data-original-title="查看">
+        <a class="grey tooltips" href="http://www.baidu.com"   onclick="$(this).colorbox({ iframe :true  ,overlayClose:false});"   data-original-title="查看">
             <i class="icon-zoom-in bigger-140"></i>
         </a>
-        <a class="grey tooltips" href="javascript:;" title="" data-original-title="修改">
+        <a class="grey tooltips" href="role/update?id={{:id}}&$SiteMesh=false"
+           onclick="$(this).colorbox({ width:'50%',overlayClose:false,scrolling:false });" data-original-title="修改">
             <i class="icon-edit bigger-140"></i>
         </a>
-        <a class="grey tooltips confirmDelete" href="javascript:;" title="" data-original-title="删除">
+        <a class="grey tooltips confirmDelete" href="javascript:;"  data-original-title="删除">
             <i class="icon-trash bigger-140"></i>
         </a>
     </div>

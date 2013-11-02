@@ -70,10 +70,14 @@
 <!--ace js-->
 <le:javascript src="/assets/ace/js/ace.min2.js"/>
 
-<!-- bootstrap modal-->
+<!-- bootstrap modal
 <le:stylesheet src="/plugins/bootstrap-modal/css/bootstrap-modal.css"/>
 <le:javascript src="/plugins/bootstrap-modal/js/bootstrap-modalmanager.js"/>
 <le:javascript src="/plugins/bootstrap-modal/js/bootstrap-modal.js"/>
+-->
+<!--jquery colorbox-->
+<le:stylesheet src="/plugins/colorbox/colorbox.css"/>
+<le:javascript src="/plugins/colorbox/jquery.colorbox.js"/>
 <!-- pnotify-->
 <le:stylesheet src="/plugins/pnotify/jquery.pnotify.default.css"/>
 <le:javascript src="/plugins/pnotify/jquery.pnotify.min.js" />

@@ -45,7 +45,7 @@
             </div>
             <div class="span4">
                 <h4>easyui-tree</h4>
-                <ul   class="easyui-tree" data-options="animate:true,checkbox:false,lines:true">
+                <ul class="easyui-tree"  >
                     <li>
                         <span>My Documents</span>
                         <ul>
@@ -78,6 +78,7 @@
                         </ul>
                     </li>
                 </ul>
+
 
             </div>
             <div class="span6">

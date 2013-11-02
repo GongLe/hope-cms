@@ -6,6 +6,7 @@ import org.lework.core.service.account.AccountService;
 import org.lework.core.service.account.ShiroUser;
 import org.lework.runner.utils.Strings;
 import org.lework.runner.web.AbstractController;
+import org.lework.runner.web.NotificationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,11 +44,11 @@ public class ProfileController extends AbstractController {
 
         if (result.hasErrors()) {
             logger.info(result.toString());
-            prompt(redirectAttributes,"提示信息","保存失败! " + result.toString() ,notify_type_error);
+            prompt(redirectAttributes,"提示信息","保存失败! " + result.toString() , NotificationType.ERROR);
             return "redirect:/account/profile";
         }
         accountService.updateUser(user);
-        prompt(redirectAttributes,"提示信息","修改成功!",notify_type_success);
+        prompt(redirectAttributes,"提示信息","修改成功!",NotificationType.SUCCESS);
         return "redirect:/account/profile";
     }
 
