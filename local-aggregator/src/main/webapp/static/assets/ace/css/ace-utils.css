@@ -1,4 +1,4 @@
-.clear-both{
+.clear-both {
 
     clear: both;
 }
@@ -11,6 +11,7 @@
     line-height: 0;
     height: 0;
 }
+
 .lighter {
     font-weight: lighter
 }
@@ -249,6 +250,26 @@
 
 .smaller-75 {
     font-size: 75%
+}
+
+.width-100px {
+    width: 100px;
+}
+
+.width-150px {
+    width: 150px;
+}
+
+.width-200px {
+    width: 200px;
+}
+
+.width-250px {
+    width: 250px;
+}
+
+.width-300px {
+    width: 300px;
 }
 
 .width-20 {

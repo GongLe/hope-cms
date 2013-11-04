@@ -4,11 +4,15 @@
 	(c) 2013 Jack Moore - http://www.jacklmoore.com/colorbox
 	license: http://www.opensource.org/licenses/mit-license.php
 */
+/**
+ * 自定义属性 adjustY,Y轴偏移px or %,
+ */
 (function ($, document, window) {
 	var
 	// Default settings object.
 	// See http://jacklmoore.com/colorbox for details.
 	defaults = {
+        adjustY:'0%',
 		// data sources
 		html: false,
 		photo: false,
@@ -32,7 +36,7 @@
 		href: false,
 		title: false,
 		rel: false,
-		opacity: 0.9,
+		opacity: 0.95,
 		preloading: true,
 		className: false,
 		overlayClose: true,
@@ -594,6 +598,7 @@
 	};
 
 	publicMethod.position = function (speed, loadedCallback) {
+
 		var
 		css,
 		top = 0,
@@ -601,7 +606,6 @@
 		offset = $box.offset(),
 		scrollTop,
 		scrollLeft;
-		
 		$window.unbind('resize.' + prefix);
 
 		// remove the modal so that it doesn't influence the document width/height
@@ -637,7 +641,7 @@
 			top += Math.round(Math.max(winheight() - settings.h - loadedHeight - interfaceHeight, 0) / 2);
 		}
 
-		$box.css({top: offset.top, left: offset.left, visibility:'visible'});
+		$box.css({top: offset.top  , left: offset.left, visibility:'visible'});
 		
 		// this gives the wrapper plenty of breathing room so it's floated contents can move around smoothly,
 		// but it has to be shrank down around the size of div#colorbox when it's done.  If not,
@@ -665,10 +669,29 @@
 
 		previousCSS = css;
 
-		if (!speed) {
-			$box.css(css);
-		}
 
+       // console.log('before:'+ css.top)
+        /**
+         * 通过属性"adjustY"计算Y轴偏移
+         * @author Gongle
+         */
+        var _adjustY = 0 , _adjustPX = settings.adjustY.indexOf('px') != -1;
+        if (_adjustPX) {    //px
+            _adjustY = settings.adjustY.split('px')[0];
+            _adjustY  = css.top - _adjustY ;
+        } else { //%
+            _adjustY = settings.adjustY.split('%')[0];
+            _adjustY = Math.floor((_adjustY / -100) * (css.top)) + css.top;
+        }
+        if(_adjustY>= 0){
+            css.top = _adjustY ;
+        }
+
+       // console.log('after:'+ _adjustY)
+
+        if (!speed) {
+            $box.css(css);
+        }
 		$box.dequeue().animate(css, {
 			duration: speed || 0,
 			complete: function () {

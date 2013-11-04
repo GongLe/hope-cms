@@ -195,6 +195,10 @@ span.input-icon {
     font-weight: bold;
     color: #d68273;
 }
+/**表单验证信息行内显示**/
+.error-inline .control-group label.error{
+    display: inline;
+}
 .control-group.warning .input-icon>[class*="icon-"] {
     color:#d3bd50
 }

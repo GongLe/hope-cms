@@ -4,4 +4,4 @@
       全局hidden iframe
  =======================================
 --%>
- <iframe  name="$iframe" id="$iframe" style="display: none" height="0" width="0" />
+ <iframe  name="$iframe" id="$iframe" src="about:blank" style="display: none" height="0" width="0" />

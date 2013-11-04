@@ -9,6 +9,24 @@ $(function () {
          ===================================**/
         if ($.fn.dataTable) {
             /**
+             * 扩充datatables方法,刷新,保持分页,排序信息.
+             */
+            $.fn.dataTableExt.oApi.fnStandingRedraw = function (oSettings) {
+                if (oSettings.oFeatures.bServerSide === false) {
+                    var before = oSettings._iDisplayStart;
+
+                    oSettings.oApi._fnReDraw(oSettings);
+
+                    // iDisplayStart has been reset to zero - so lets change it back
+                    oSettings._iDisplayStart = before;
+                    oSettings.oApi._fnCalculateEnd(oSettings);
+                }
+
+                // draw the 'current' page
+                oSettings.oApi._fnDraw(oSettings);
+            };
+
+            /**
              *初始化Datatable全局搜索 placeholder属性
              * @param placeholder属性
              * @param tableFilterId table list filter 非必填f

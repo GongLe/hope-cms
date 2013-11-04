@@ -110,6 +110,12 @@
                                个人中心
                             </a>
                         </li>
+                        <li>
+                            <a href="${ctx}/developer/">
+                                <i class="icon-book"></i>
+                                开发者文档
+                            </a>
+                        </li>
 
                         <li class="divider"></li>
 

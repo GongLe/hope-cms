@@ -27,6 +27,7 @@ public interface OrganizationService {
      * @param code 组织code
      */
     public boolean validateOrgCode(String id ,String code ) ;
+
     public Organization getOrganization(String id);
 
     public List<Organization> getAllOrganizations();
@@ -53,4 +54,5 @@ public interface OrganizationService {
      * @see org.lework.runner.orm.support.SearchFilter
      */
     public Page<Organization> searchPageOrganization(Pageable pageable, List<SearchFilter> filters);
+
 }

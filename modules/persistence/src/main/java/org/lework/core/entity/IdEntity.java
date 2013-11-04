@@ -2,6 +2,7 @@ package org.lework.core.entity;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.GenericGenerator;
+import org.lework.runner.utils.Strings;
 
 import javax.persistence.*;
 
@@ -43,5 +44,15 @@ public abstract class IdEntity {
             this.id = id;
         }
 
+    }
+
+    @Transient
+    public boolean isNew() {
+        return Strings.isBlank(getId());
+    }
+
+    @Transient
+    public boolean getIsNew() {
+        return Strings.isBlank(getId());
     }
 }

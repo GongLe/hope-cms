@@ -37,7 +37,7 @@
 <!--table-->
 <le:stylesheet src="/assets/ace/css/table.css"/>
 <!--tree-->
-<le:stylesheet src="/assets/ace/css/ace-tree.css"/>
+<%--<le:stylesheet src="/assets/ace/css/ace-tree.css"/>--%>
 <!--gallery-->
 <le:stylesheet src="/assets/ace/css/ace-gallery.css"/>
 
@@ -94,8 +94,10 @@
 <le:javascript src="/plugins/qtip2/jquery.qtip.js" />
 <!--系统jquery plugins :: ConfirmDelete -->
 <le:javascript src="/plugins/lework.jquery.confirmdelete.js" />
+<le:javascript src="/plugins/lework.jquery.TableMutilDelete.js" />
 <!--插件全局设置 -->
 <le:javascript src="/plugins/lework.plugins.setting.js" />
+<le:javascript src="/plugins/lework.utils.js" />
 
 <!-- jquery easyui loader-->
 <script src="${ctx}/static/plugins/easyui/1.3.4/easyloader.js" ></script>

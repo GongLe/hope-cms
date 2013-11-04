@@ -2,7 +2,10 @@ package org.lework.core.dao.role;
 
 import org.lework.core.entity.role.Role;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+
+import java.util.List;
 
 /**
  * Role Dao
@@ -12,4 +15,10 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  */
 public interface RoleDao extends PagingAndSortingRepository<Role, String>, JpaSpecificationExecutor<Role> {
     public Role findByCode(String code);
+
+    //@Query(value = "from Role where s")
+    public List<Role> findAllByStatus(String status);
+
+   @Query("select r from User u inner join u.roles r where u.id=?1 and r.status=?2 ")
+    public List<Role> findUserRolesByStatus(String userId ,String status );
 }

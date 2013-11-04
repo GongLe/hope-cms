@@ -15,7 +15,7 @@
             <i class="icon-home home-icon"></i>
             <a href="${ctx}/dashboard">home</a>
         </li>
-
+        <li><a href="${ctx}/developer">开发者中心</a></li>
         <li class="active">
             测试整合easyui兼容性
         </li>
@@ -45,38 +45,8 @@
             </div>
             <div class="span4">
                 <h4>easyui-tree</h4>
-                <ul class="easyui-tree"  >
-                    <li>
-                        <span>My Documents</span>
-                        <ul>
-                            <li data-options="state:'closed'">
-                                <span>Photos</span>
-                                <ul>
-                                    <li>
-                                        <span>Friend</span>
-                                    </li>
-                                    <li>
-                                        <span>Wife</span>
-                                    </li>
-                                    <li>
-                                        <span>Company</span>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <span>Program Files</span>
-                                <ul>
-                                    <li>Intel</li>
-                                    <li>Java</li>
-                                    <li>Microsoft Office</li>
-                                    <li>Games</li>
-                                </ul>
-                            </li>
-                            <li>index.html</li>
-                            <li>about.html</li>
-                            <li>welcome.html</li>
-                        </ul>
-                    </li>
+                <ul class="easyui-tree"
+                    data-options="url: '${ctx}/static/plugins/easyui/tree_data1.json',method:'get',animate:true,lines:true"  >
                 </ul>
 
 
@@ -131,22 +101,20 @@
         //test easyui
         using(['menu', 'messager','tree','combobox','treegrid'], function () {
             $('#confirm1').click(function () {
-                $.messager.confirm('My Title', 'Are you confirm this?', function (r) {
-                    if (r) {
-                        alert('confirmed: ' + r);
+                $.messager.confirm('My Title', 'Are you confirm this?', function (res) {
+                    if (res) {
+                        alert('confirmed: ' + res);
                     }
                 });
             })
             $('#prompt1').click(function () {
-                $.messager.prompt('My Title', 'Please type something', function (r) {
-                    if (r) {
-                        alert('you type: ' + r);
+                $.messager.prompt('My Title', 'Please type something', function (res) {
+                    if (res) {
+                        alert('you type: ' + res);
                     }
                 });
             });
-           // $('#easyui-treegrid').treegrid();
-          //  $('#easyui-tree').tree();
-         //   $('#easyui-combobox').tree();
+
 
         })
     })  //dom ready

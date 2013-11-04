@@ -15,10 +15,10 @@
         <body-content>JSP</body-content>
         <!-- 配置标签属性 -->
         <attribute>
-            <description>bundle unique name ,defalut name is : scirpt.name ...+ stylesheet.name </description>
+            <description>bundle unique name ,defalut name is : scirpt.name ...+ stylesheet.name</description>
             <name>name</name>
             <required>false</required>
-            <fragment>false</fragment>
+            <rtexprvalue>true</rtexprvalue> <!--rtexprvalue的全称是 Run-time Expression Value， 它用于表示是否可以使用JSP表达式. -->
         </attribute>
     </tag>
 
@@ -34,13 +34,13 @@
             <description>equals html script#src ! notice : src relative appConfig.properties#src</description>
             <name>src</name>
             <required>true</required>
-            <fragment>false</fragment>
+            <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
             <description>equals html script#type</description>
             <name>type</name>
             <required>false</required>
-            <fragment>false</fragment>
+            <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
 
@@ -54,25 +54,25 @@
             <description>equals html link#href</description>
             <name>src</name>
             <required>true</required>
-            <fragment>false</fragment>
+            <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
             <description>equals html link#type</description>
             <name>type</name>
             <required>false</required>
-            <fragment>false</fragment>
+            <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
             <description>equals html link#media</description>
             <name>media</name>
             <required>false</required>
-            <fragment>false</fragment>
+            <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
             <description>equals html link#rel</description>
             <name>rel</name>
             <required>false</required>
-            <fragment>false</fragment>
+            <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
 </taglib>

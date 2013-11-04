@@ -50,7 +50,8 @@ public class DataTableResult<T> {
 
         this.aaData = page.getContent();
         iTotalRecords = (int) page.getTotalElements();
-        iTotalDisplayRecords = page.hasContent() ? page.getContent().size() : 0;
+        iTotalDisplayRecords = (int) page.getTotalElements();
+     //   iTotalDisplayRecords = page.hasContent() ? page.getContent().size() : 0;
         // iTotalDisplayRecords = (int) page.getTotalElements() ;
 
     }

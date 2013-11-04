@@ -1,6 +1,7 @@
 package org.lework.core.web.role;
 
 import com.google.common.collect.Lists;
+import org.lework.core.common.enumeration.Status;
 import org.lework.core.entity.role.Role;
 import org.lework.core.service.role.RoleService;
 import org.lework.runner.orm.support.SearchFilter;
@@ -36,41 +37,84 @@ public class RoleController extends AbstractController {
     @Autowired
     private RoleService roleService;
 
-    @RequestMapping(method = RequestMethod.GET,value = "/easyui")
-    public String  easyui(Model model,
-                       HttpServletRequest request) {
 
-        return "role/easyui";
-    }
+
+    /**
+     * list页面*
+     */
     @RequestMapping(method = RequestMethod.GET)
-    public String list(Model model, @PageableDefaults(pageNumber = 0, value = 30) Pageable pageable,
-                       HttpServletRequest request) {
-        List<SearchFilter> filters = SearchFilter.buildFromHttpRequest(request);
-        roleService.searchPageRole(pageable, filters);
+    public String list() {
+
         return "role/role";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.GET)
-    public String update(@RequestParam(value = "id",required = false ) String id){
-
+    /**
+     * 修改页面
+     */
+    @RequestMapping(value = "/update", method = RequestMethod.GET)
+    public String update(@ModelAttribute("entity") Role role ,Model model){
+        model.addAttribute("statusList" , Status.values() ) ;
         return  "role/role-update" ;
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST)
+    /**
+     * 保存
+     */
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public void update(@Valid @ModelAttribute("entity") Role role, BindingResult result,
                        HttpServletResponse response) {
 
         if (result.hasErrors()) {
-            logger.info(result.toString());
-            callback(response, "保存失败!", null, NotificationType.ERROR);
+            actionCallback(response, "保存失败!" + result.toString() , null, NotificationType.ERROR);
         }
-        callback(response, "修改成功!", null, NotificationType.SUCCESS);
+        try {
+            roleService.saveRole(role);
+            actionCallback(response, "保存成功!", null, NotificationType.SUCCESS);
+        }catch (Exception e){
+            e.printStackTrace();
+            actionCallback(response, "保存失败!" + e.toString(), null, NotificationType.ERROR);
+        }
+
     }
 
     /**
+     * 删除
+     */
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public void delete(@RequestParam(value = "deleteId" ,required = false) String deleteId,
+                       @RequestParam(value = "deleteIds" ,required = false) String deleteIds,
+                       HttpServletResponse response) {
+
+        try {
+            //单个删除
+            if(Strings.isNotBlank(deleteId)){
+                roleService.deleteRole(deleteId);
+                actionCallback(response, "删除成功!", null, NotificationType.SUCCESS);
+            }else if(Strings.isNotBlank(deleteIds)){   //多个删除
+               String []  ids  = Strings.split(deleteIds,",");
+               roleService.deleteRoles(ids);
+                actionCallback(response, "删除多条成功!", null, NotificationType.SUCCESS);
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            actionCallback(response, "删除失败!" + e.toString(), null, NotificationType.ERROR);
+        }
+
+    }
+    /**
+     * 查看
+     */
+    @RequestMapping(value = "/view", method = RequestMethod.GET)
+    public String view(@ModelAttribute("entity") Role role ,Model model) {
+        model.addAttribute("statusList" , Status.values() ) ;
+        return "role/role-view";
+    }
+    /**
      * datatables  json result*
      */
-    @RequestMapping(value = "getDatatablesJson", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/getDatatablesJson", method = {RequestMethod.GET, RequestMethod.POST})
     public
     @ResponseBody
     DataTableResult<Role> getDatatablesJson(
@@ -87,6 +131,18 @@ public class RoleController extends AbstractController {
         return DataTableResult.build(page);
     }
 
+    /**
+     * 验证角色代码是否可用
+     * @return JSON
+     */
+    @RequestMapping(value = "/validateRoleCode", method = {RequestMethod.GET, RequestMethod.POST})
+    public
+    @ResponseBody
+    Boolean validateRoleCode(@RequestParam(value = "id", required = false) String id,
+                             @RequestParam(value = "code", required = true) String code) {
+
+        return roleService.validateRoleCode(id, code);
+    }
 
     /**
      * Preparable二次部分绑定的效果

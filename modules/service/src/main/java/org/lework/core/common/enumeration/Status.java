@@ -33,7 +33,7 @@ public enum Status {
         }
     }
 
-    public static Status parse(Integer code) {
+    public static Status parse(String code) {
         return data.get(code);
     }
 

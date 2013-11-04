@@ -16,8 +16,13 @@
     ConfirmDelete.DEFAULTS = {
         onDelete: null,
         onCancel: null,
-        text: '<span class="text-warning" >确认删除?</span>',
-        position: {my: 'center center', at: 'center center'},
+        text: '<span class="text-warning" >确认删除？</span>',
+        position: {my: 'center center',
+            at: 'center center',
+            adjust: {
+                x: -30
+            }
+        },
         cssClass: 'qtip-confirmbox',
         viewport: $(window)
     };
@@ -55,7 +60,7 @@
                         e.preventDefault();
                         var ret;
                         if ($.isFunction(that.options.onDelete)) {
-                            ret = that.options.onDelete.apply(this );
+                            ret = that.options.onDelete.apply(that.$ele[0] );
                         }
                         if (ret == true) {
                             that.hide();
@@ -65,7 +70,7 @@
                     $('.confirmCancel', api.elements.content).on('click', function (e) {
                         e.preventDefault();
                         if ($.isFunction(that.options.onCancel)) {
-                            var ret = that.options.onCancel.apply(this);
+                            var ret = that.options.onCancel.apply(that.$ele[0] );
                             if (ret == true)
                                 api.hide(false);
                         } else {
@@ -74,8 +79,8 @@
                     });
                 }
             },
-            content: {text: that.options.text + ' <button class="btn btn-danger btn-small no-border confirmDelete" >确认</button>&nbsp;' +
-                ' <button class="btn btn-white btn-small no-border confirmCancel" >取消</button>'},
+            content: {text: '<div style="min-width:160px;">' + that.options.text + '<button class="btn btn-danger btn-small no-border confirmDelete" >确认</button>&nbsp;' +
+                ' <button class="btn btn-white btn-small no-border confirmCancel" >取消</button> </div> '},
             viewport: this.options.viewport
         });
     }
@@ -89,7 +94,7 @@
                 $this.data('lework.confirmDelete', (data = new ConfirmDelete(this, options)));
             }
 
-            if (typeof option == 'string') data[option].call($this)
+            if (typeof option == 'string') data[option].call(data)
         })
     }
 
@@ -99,7 +104,7 @@
     // ConfirmDelete NO CONFLICT
     // =================
 
-    $.fn.alert.noConflict = function () {
+    $.fn.confirmDelete.noConflict = function () {
         $.fn.confirmDelete = old
         return this
     }
