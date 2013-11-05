@@ -27,7 +27,6 @@ public class Role extends AuditorEntity {
     /**角色代码**/
     private String code;
     private String status;
-    private String type;
     private String description;
     private List<User> users = new ArrayList<User>();
     private List<Permission> permissions = new ArrayList<Permission>();
@@ -57,14 +56,6 @@ public class Role extends AuditorEntity {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     @Length(max = 200 )

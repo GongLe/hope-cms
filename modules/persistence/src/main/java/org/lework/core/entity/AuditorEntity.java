@@ -33,7 +33,7 @@ public class AuditorEntity extends IdEntity implements Cloneable {
     }
 
     // 设定JSON序列化时的日期格式
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss", timezone = "GMT+08:00")
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -51,7 +51,7 @@ public class AuditorEntity extends IdEntity implements Cloneable {
     }
 
     // 设定JSON序列化时的日期格式
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss", timezone = "GMT+08:00")
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }

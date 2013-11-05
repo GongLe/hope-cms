@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>开发者中心 </title>
+    <title>开发者文档 </title>
 </head>
 
 <body>

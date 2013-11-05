@@ -63,4 +63,25 @@ public interface AccountService {
     public void deleteUser(User entity);
 
     public void deleteUser(String id);
+
+    public void deleteUsers(List<String> ids);
+
+    public void deleteUsers(String[] ids);
+
+    /**
+     * 验证用户名是否可用
+     *
+     * @param id        User主键
+     * @param loginName 用户名
+     * @return true:代码值可用,false:代码值不可用
+     */
+    public boolean validateLoginName(String id, String loginName);
+    /**
+     * 验证Email是否可用
+     * @param id User主键
+     * @param email 用户Email
+     * @return  true:代码值可用,false:代码值不可用
+     */
+    public boolean validateEmail(String id, String email);
+
 }

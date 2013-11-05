@@ -14,11 +14,11 @@ public enum Status {
     /**
      * 启用
      */
-    Enable("Enable", "启用"),
+    enable("enable", "启用"),
     /**
      * 禁用
      */
-    Disable("Disable", "禁用");
+    disable("disable", "禁用");
 
     // 值
     private String  code;

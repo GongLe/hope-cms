@@ -7,6 +7,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.lework.core.entity.ShiroUser;
 import org.lework.core.entity.user.User;
 import org.lework.runner.utils.Encodes;
 import org.springframework.beans.factory.annotation.Autowired;

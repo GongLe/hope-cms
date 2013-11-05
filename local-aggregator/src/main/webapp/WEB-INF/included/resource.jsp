@@ -110,6 +110,13 @@
         easyloader.theme = "bootstrap"; // 设置主题
         easyloader.css = false  ;
     }
+    /**===============
+        close ajax cache
+       =================
+    **/
+    $.ajaxSetup ({
+        cache: false
+    });
 </script>
 
 

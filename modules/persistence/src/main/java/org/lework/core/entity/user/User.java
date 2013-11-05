@@ -35,6 +35,8 @@ public class User extends AuditorEntity {
     private String description;
     private String status;
     private String type;
+    private String telphone; //联系电话 eg:010-6552555
+    private String mobile ;  //手机号码
     private List<Role> roles = new ArrayList<Role>();
 
 
@@ -96,7 +98,7 @@ public class User extends AuditorEntity {
 
 
     // 设定JSON序列化时的日期格式
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss", timezone = "GMT+08:00")
     public Date getUserRegistered() {
         return userRegistered;
     }
@@ -154,6 +156,21 @@ public class User extends AuditorEntity {
         this.roles = roles;
     }
 
+    public String getTelphone() {
+        return telphone;
+    }
+
+    public void setTelphone(String telphone) {
+        this.telphone = telphone;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

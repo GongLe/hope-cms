@@ -18,13 +18,17 @@
         selectedCssClass : 'selected warning',
         onSelect :null,
         beforeSelect: null,
-        afterSelect :null
+        afterSelect :null ,
+        filterSelector :'.filterSelected'
     };
     var old = $.fn.tableMutilDelete;
 
     TableMutilDelete.prototype.init = function () {
         var that = this , ret;
         $( this.$ele ).on('click', this.options.targetElement, function (event) {
+            if($(event.target).is(that.options.filterSelector)){
+                return;
+            }
             if ($.isFunction(that.options.beforeSelect)) {
                 if ((ret = that.options.beforeSelect.apply(this) ) == false) {
                     return ret;

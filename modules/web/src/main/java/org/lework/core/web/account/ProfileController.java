@@ -3,7 +3,7 @@ package org.lework.core.web.account;
 import org.apache.shiro.SecurityUtils;
 import org.lework.core.entity.user.User;
 import org.lework.core.service.account.AccountService;
-import org.lework.core.service.account.ShiroUser;
+import org.lework.core.entity.ShiroUser;
 import org.lework.runner.utils.Strings;
 import org.lework.runner.web.AbstractController;
 import org.lework.runner.web.NotificationType;

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>角色管理</title>
+    <title>用户管理</title>
 </head>
 
 <body>
@@ -15,7 +15,7 @@
             <a href="${ctx}/dashboard" class="grey"> <i class="icon-home home-icon"></i></a>
         </li>
         <li class="active">
-            角色管理
+            用户管理
         </li>
     </ul>
     <!--.breadcrumb-->
@@ -32,7 +32,7 @@
                 <div class="box-title no-margin-top">
                     <h3>
                         <i class="icon-list-ul"></i>
-                        角色列表
+                        用户列表
                     </h3>
                 </div>
                 <div class="box-content no-padding ">
@@ -56,7 +56,7 @@
                             </ul>
                         </div>
                         <div class="btn-group">
-                            <button class="btn no-border tooltips" id="create-function" data-original-title="新增" >
+                            <button class="btn no-border tooltips" id="create-function" data-original-title="新建" >
                                 <i class="icon-plus"></i>
                             </button>
                             <button class="btn no-border tooltips" id="refresh-function" data-original-title="刷新">
@@ -94,11 +94,11 @@
 
         oTable.dataTable({
             'aoColumns': [
-                { 'mData': 'name', 'sTitle': '角色名称' },
-                { 'mData': 'code', 'sTitle': '角色代码'}  ,
+                { 'mData': 'name', 'sTitle': '姓名' },
+                { 'mData': 'loginName', 'sTitle': '用户名'}  ,
+                { 'mData': 'email', 'sTitle': 'Email'}  ,
                 { 'mData': 'status', 'sTitle': '状态'}  ,
                 { 'mData': 'createdBy', 'sTitle': '创建人'}  ,
-                { 'mData': 'createdDate', 'sTitle': '创建时间'}  ,
                 { 'mData': 'id', 'sTitle': '操作'}
             ],
             'aoColumnDefs': [
@@ -110,7 +110,7 @@
                         }
                         return    '<i class="icon-flag bigger-130 red" title="禁用的"></i>';
                     },
-                    'aTargets': [2 ]
+                    'aTargets': [3 ]
                 },
                 {
                     'mRender': function (data, type, full) {
@@ -121,28 +121,28 @@
                 },
                 { bSortable: false,
                     aTargets: [5]
-                },
+                } ,
                 //   { 'bVisible': false,  'aTargets': [ 1 ] },
-                { 'sClass': 'center', 'aTargets': [ 2 ] }
+                { 'sClass': 'center', 'aTargets': [3] }
             ],
             'bStateSave': true , /**state saving **/
             'bProcessing': true ,
             'bServerSide': true,
             'fnServerData': lework.springDataJpaPageableAdapter,
-            'sAjaxSource': '${ctx}/role/getDatatablesJson',
+            'sAjaxSource': '${ctx}/user/getDatatablesJson',
             'fnInitComplete': function () {     /**datatables ready**/
 
-                lework.initDatatablesSearchHolder('名称/值');
+                lework.initDatatablesSearchHolder('用户名/姓名');
 
             } ,
             fnDrawCallback :function(oSettings ){
-                lework.log('DataTables has redrawn the table') ;
                 // bootstrap-tooltip
                 $('.tooltips').tooltip();
+             //   $('.action-buttons').click(function(e){e.preventDefault();});
                 $('.confirmDelete').confirmDelete({onDelete: function () {
                     $('#hiddenForm').prop({   //提交隐藏的表单域.
                         'target': '$iframe',
-                        action: 'role/delete?deleteId=' + $(this).data('id')
+                        action: 'user/delete?deleteId=' + $(this).data('id')
                     }).submit();
                     return true;
                    }
@@ -158,12 +158,12 @@
             }
         });
 
-        //新增
+        //新建
         $('#create-function').click(function () {
             $(this).colorbox({
-                href :'role/update?$SiteMesh=false' ,
+                href :'user/update?$SiteMesh=false' ,
                 adjustY:'40%',
-                width: '650px',
+                width: '680px',
                 overlayClose: false,
                 scrolling: false
             })
@@ -189,7 +189,7 @@
             ids = ids.join(',');
             $('#hiddenForm').prop({   //提交隐藏的表单域.
                 'target': '$iframe',
-                action: 'role/delete?deleteIds=' + ids
+                action: 'user/delete?deleteIds=' + ids
             }).submit();
             checkIconStatus(false)
             return true;
@@ -229,15 +229,15 @@
 <!--table action template-->
 <script id="tableActionTpl" type="text/x-jsrender">
     <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-        <a class="light-blue tooltips" href="javascript:;" data-original-title="配置"  >
+        <a class="light-blue tooltips filterSelected" href="javascript:;" data-original-title="配置角色|菜单|权限"  >
             <i class="icon-cog bigger-140 filterSelected"></i>
         </a>
-        <a class="green tooltips view"  href="role/view?id={{:id}}&$SiteMesh=false"   data-original-title="查看"
-           onclick="$(this).colorbox({adjustY:'40%',width:'650px',overlayClose:false,scrolling:true,scrolling:false });" >
+        <a class="green tooltips view"  href="user/view?id={{:id}}&$SiteMesh=false"   data-original-title="查看"
+           onclick="$(this).colorbox({adjustY:'40%',width:'900px',overlayClose:false,scrolling:true,scrolling:false });" >
             <i class="icon-zoom-in bigger-140 filterSelected"></i>
         </a>
-        <a class="blue tooltips update" href="role/update?id={{:id}}&$SiteMesh=false" data-original-title="修改"
-           onclick="$(this).colorbox({ adjustY:'40%',width:'650px',overlayClose:false,scrolling:false });" >
+        <a class="blue tooltips update" href="user/update?id={{:id}}&$SiteMesh=false" data-original-title="编辑基本信息"
+           onclick="$(this).colorbox({ adjustY:'40%',width:'680px',overlayClose:false,scrolling:false });" >
             <i class="icon-edit bigger-140 filterSelected"></i>
         </a>
         <a class="red tooltips confirmDelete" href="javascript:;" data-id="{{:id}}"  data-original-title="删除">

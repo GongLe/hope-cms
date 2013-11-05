@@ -1,4 +1,4 @@
-package org.lework.core.service.account;
+package org.lework.core.entity;
 
 import com.google.common.base.Objects;
 
@@ -23,6 +23,9 @@ public class ShiroUser implements Serializable {
 
     public String getName() {
         return name;
+    }
+    public String getLoginName() {
+        return loginName;
     }
 
     /**

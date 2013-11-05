@@ -196,8 +196,19 @@ span.input-icon {
     color: #d68273;
 }
 /**表单验证信息行内显示**/
-.error-inline .control-group label.error{
+.error-inline  label.error{
     display: inline;
+    margin-bottom: 0;
+    font-weight: bold;
+    color: #d68273;
+}
+
+/**form-horizontal y轴偏移-30px**/
+.offset-20 .controls{
+    margin-left: 160px;
+}
+.offset-20 .control-label{
+    width: 140px ;
 }
 .control-group.warning .input-icon>[class*="icon-"] {
     color:#d3bd50

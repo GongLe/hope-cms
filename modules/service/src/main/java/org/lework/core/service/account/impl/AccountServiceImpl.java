@@ -1,12 +1,15 @@
 package org.lework.core.service.account.impl;
 
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.lework.core.dao.user.UserDao;
+import org.lework.core.entity.role.Role;
 import org.lework.core.entity.user.User;
 import org.lework.core.service.account.AccountService;
 import org.lework.runner.orm.support.SearchFilter;
 import org.lework.runner.orm.support.Specifications;
 import org.lework.runner.security.Digests;
+import org.lework.runner.utils.Collections3;
 import org.lework.runner.utils.Encodes;
 import org.lework.runner.utils.Strings;
 import org.slf4j.Logger;
@@ -18,6 +21,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +36,54 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    /**
+     * 验证用户名是否可用
+     * @param id User主键
+     * @param loginName 用户名
+     * @return  true:代码值可用,false:代码值不可用
+     */
+    @Override
+    public boolean validateLoginName(String id, String loginName) {
+        User  entity = userDao.findByLoginName(loginName) ;
+        if (entity == null) {  //loginName
+            return true;
+        } else if (Strings.isBlank(id)) {   //新增操作
+            return entity == null;
+        } else {   //修改操作
+            return entity.getId().equals(id);
+        }
+    }
+
+    @Override
+    public boolean validateEmail(String id, String email) {
+        User  entity = userDao.findByEmail(email)   ;
+        if (entity == null) {  //email
+            return true;
+        } else if (Strings.isBlank(id)) {   //新增操作
+            return entity == null;
+        } else {   //修改操作
+            return entity.getId().equals(id);
+        }
+    }
+
+    @Override
+    public void deleteUsers(String[] ids) {
+        if (ArrayUtils.isEmpty(ids)) {
+            return;
+        }
+        List<User> entities = (List<User>) userDao.findAll(Arrays.asList(ids));
+        userDao.delete(entities);
+    }
+
+    @Override
+    public void deleteUsers(List<String> ids) {
+        if (Collections3.isEmpty(ids)) {
+            return;
+        }
+        List<User> entities = (List<User>) userDao.findAll(ids);
+        userDao.delete(entities);
     }
 
     @Override

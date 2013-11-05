@@ -20,7 +20,7 @@
         position: {my: 'center center',
             at: 'center center',
             adjust: {
-                x: -30
+                x: -45
             }
         },
         cssClass: 'qtip-confirmbox',

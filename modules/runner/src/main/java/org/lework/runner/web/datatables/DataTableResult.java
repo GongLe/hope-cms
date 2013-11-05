@@ -41,7 +41,7 @@ public class DataTableResult<T> {
     public DataTableResult() {
     }
 
-    public static DataTableResult build(Page page) {
+    public  static <T> DataTableResult build(Page<T> page) {
         return new DataTableResult(page);
     }
 
