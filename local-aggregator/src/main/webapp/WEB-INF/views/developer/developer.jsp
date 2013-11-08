@@ -30,6 +30,7 @@
             <ul class="nav nav-tabs nav-stacked">
                 <li  ><a href="easyui">jquery easyui</a></li>
                 <li  ><a href="taglib-form">jsp taglib::spring </a></li>
+                <li  ><a href="validate">jquery validate </a></li>
             </ul>
         </div>
     </div>

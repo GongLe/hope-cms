@@ -10,7 +10,7 @@
 
 <div class="modal-content" >
     <form action="user/update"  method="post" id="inputForm" name="inputForm" target="$iframe"
-          class="no-margin form-horizontal offset-20 error-inline" >
+          class="no-margin form-horizontal offset-40 error-inline" >
         <div class="modal-header" style="padding:5px 20px 5px 20px;">
             <small class="grey">
                 正在<c:if test="${entity.isNew == true}" >新建用户</c:if><c:if test="${entity.isNew ==false}" >编辑用户“${entity.loginName}”</c:if>
@@ -19,7 +19,7 @@
 
 <div class="modal-body ">
     <div class="row-fluid ">
-      <div class="span12" >
+      <div class="span9" >
 
         <!--隐藏域-->
         <form:hidden path="entity.id" />
@@ -70,27 +70,14 @@
                   <textarea class="input-xlarge" rows="3" id="description" name="description"   placeholder="输入描述信息" > ${entity.description}</textarea>
               </div>
           </div>
-
-          <c:if test="${entity.isNew == false }">
-              <div class="control-group">
-                  <label class="control-label"  >创建日期</label>
-                  <div class="controls">
-                      <input class="input-xlarge" type="text"   disabled="disabled"
-                             value=" <fmt:formatDate value="${entity.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" />" >
-
-                  </div>
-              </div>
-              <div class="control-group">
-                  <label class="control-label"  >创建人</label>
-                  <div class="controls">
-                      <input class="input-xlarge" disabled="disabled" type="text"  value="${entity.createdBy}" >
-                  </div>
-              </div>
-          </c:if>
-
       </div>
-
-    </div>
+        <div class="span3">
+            <h5 class="header smaller lighter red no-margin-top no-margin-bottom no-border">所属角色</h5>
+            <div class="well" style="min-height:230px;max-height:300px;">
+                <ul id="roleTree" ></ul>
+            </div>
+        </div>
+    </div> <!--/.row-fluid-->
 </div><!--/.modal-body-->
         <div class="modal-footer">
             <button type="button" class="btn btn-small" onclick="$.colorbox.close()">
@@ -160,6 +147,21 @@
             }
         }
        }); //end validate
+        //easyui loader
+        using(['tree'], function () {
+            $('#roleTree').tree({
+                url: 'role/getTreeJson',
+                method: 'get',
+                checkbox: true ,
+                onLoadSuccess : function(node, data){
+
+                },
+                onCheck : function(node, checked){
+
+                }
+            });
+        })
+
     })
 </script>
 </body>

@@ -128,7 +128,8 @@
         validatebox:{
             js:'jquery.validatebox.js',
             css:'validatebox.css',
-            dependencies:['tooltip']
+           // dependencies:['tooltip']
+            dependencies:[]
         },
         numberbox:{
             js:'jquery.numberbox.js',

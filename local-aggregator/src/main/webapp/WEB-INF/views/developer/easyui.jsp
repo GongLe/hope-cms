@@ -58,6 +58,9 @@
                     <option value="WI">Wisconsin</option>
                     <option value="WY">Wyoming</option>
                 </select>
+                <input class="easyui-combotree" value="122"
+                       data-options="url:'${ctx}/static/plugins/easyui/tree_data1.json',method:'get'" style="width:200px;">
+
                 <p> <h4 class="red">2:easyui tooltip与bootstrap有冲突.不推荐使用.</h4>
                 </p>
                 <h4>3:tree grid</h4>

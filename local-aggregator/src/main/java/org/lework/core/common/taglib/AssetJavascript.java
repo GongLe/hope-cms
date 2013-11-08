@@ -38,7 +38,7 @@ public class AssetJavascript extends SimpleTagSupport {
     }
 
     public String buildOut() {
-        return String.format(String.format(DEFAULT_OUT, getRealPath(), getType()));
+        return String.format(String.format(DEFAULT_OUT, getSrc() , getType()));
     }
 
     private String getRealPath() {

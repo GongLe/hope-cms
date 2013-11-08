@@ -74,7 +74,6 @@
     </div>
 </div>
 
-
 <!--/.page-content-->
 <script>
 
@@ -163,7 +162,7 @@
             $(this).colorbox({
                 href :'role/update?$SiteMesh=false' ,
                 adjustY:'40%',
-                width: '650px',
+                width: '800px',
                 overlayClose: false,
                 scrolling: false
             })
@@ -180,18 +179,19 @@
         });
 
         //多行删除
-        $('#delete-function').confirmDelete({text: '<span class="text-warning">确认删除多条记录？</span>', onDelete: function () {
-            //TODO
-            var ids = [];
-            oTable.find('tr.selected .confirmDelete').each(function () {
-                ids.push($(this).data('id'))
-            });
-            ids = ids.join(',');
-            $('#hiddenForm').prop({   //提交隐藏的表单域.
-                'target': '$iframe',
-                action: 'role/delete?deleteIds=' + ids
-            }).submit();
-            checkIconStatus(false)
+        $('#delete-function').confirmDelete({text: '<span class="text-warning">确认删除多条记录？</span>',
+            onDelete: function () {
+                //TODO
+                var ids = [];
+                oTable.find('tr.selected .confirmDelete').each(function () {
+                    ids.push($(this).data('id'))
+                });
+                ids = ids.join(',');
+                $('#hiddenForm').prop({   //提交隐藏的表单域.
+                    'target': '$iframe',
+                    action: 'role/delete?deleteIds=' + ids
+                }).submit();
+                checkIconStatus(false)
             return true;
         }
         });
@@ -237,7 +237,7 @@
             <i class="icon-zoom-in bigger-140 filterSelected"></i>
         </a>
         <a class="blue tooltips update" href="role/update?id={{:id}}&$SiteMesh=false" data-original-title="修改"
-           onclick="$(this).colorbox({ adjustY:'40%',width:'650px',overlayClose:false,scrolling:false });" >
+           onclick="$(this).colorbox({ adjustY:'40%',width:'800px',overlayClose:false,scrolling:false });" >
             <i class="icon-edit bigger-140 filterSelected"></i>
         </a>
         <a class="red tooltips confirmDelete" href="javascript:;" data-id="{{:id}}"  data-original-title="删除">

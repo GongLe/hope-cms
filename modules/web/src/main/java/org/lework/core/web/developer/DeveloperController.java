@@ -23,12 +23,13 @@ public class DeveloperController {
 
         return "developer/easyui";
     }
+    @RequestMapping(method = RequestMethod.GET, value = "/validate")
+    public String validate() {
+
+        return "developer/validate";
+    }
     @RequestMapping(method = RequestMethod.GET, value = "/taglib-form")
     public String taglibForm(Model model) {
-        User user = new User();
-        user.setName("user name ");
-        user.setLoginName("user login name ");
-        model.addAttribute("user" , user) ;
         return "developer/taglib-form";
     }
 }

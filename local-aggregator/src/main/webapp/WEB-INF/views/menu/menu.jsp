@@ -84,7 +84,13 @@ $(function(){
                   console.log(row)
             },
             onDblClickRow : function(row){
-
+                $.colorbox({
+                    href :'menu/update?$SiteMesh=false&id=' + row.id  ,
+                    adjustY:'40%',
+                    width: '700px',
+                    overlayClose: false,
+                    scrolling: false
+                })
             },
             onLoadSuccess : function(){
                 $('.tooltips').tooltip();

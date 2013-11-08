@@ -1,9 +1,15 @@
 package org.lework.core.entity.menu;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.lework.core.entity.AuditorEntity;
 import org.lework.core.entity.role.Role;
+import org.lework.runner.utils.Collections3;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,7 +27,7 @@ public class Menu extends AuditorEntity {
 
     private String name;            //菜单名
     private String code;            //代码
-    private Integer sort;            //排序
+    private String sortNum;            //排序
     private String type = "menu";        //类型  menu,url
     private String status;        //状态 默认为有效状态
     private String url;                //URL
@@ -30,6 +36,18 @@ public class Menu extends AuditorEntity {
     private List<Menu> childrenMenus;    //下级菜单
     private List<Role> roles = new ArrayList<Role>();    //菜单对应的角色
 
+    @Transient
+    public boolean hasChild(){
+        return Collections3.isNotEmpty(getChildrenMenus()) ;
+    }
+
+    @Transient
+    public boolean hasParent(){
+        return getParentMenu() != null ;
+    }
+
+    @NotEmpty
+    @Length(max = 50 )
     public String getName() {
         return name;
     }
@@ -37,7 +55,8 @@ public class Menu extends AuditorEntity {
     public void setName(String name) {
         this.name = name;
     }
-
+    @NotBlank
+    @Length(max = 50 )
     public String getCode() {
         return code;
     }
@@ -46,13 +65,14 @@ public class Menu extends AuditorEntity {
         this.code = code;
     }
 
-    public Integer getSort() {
-        return sort;
+    public String getSortNum() {
+        return sortNum;
     }
 
-    public void setSort(Integer sort) {
-        this.sort = sort;
+    public void setSortNum(String sortNum) {
+        this.sortNum = sortNum;
     }
+
 
     public String getType() {
         return type;
@@ -62,6 +82,7 @@ public class Menu extends AuditorEntity {
         this.type = type;
     }
 
+    @NotBlank
     public String getStatus() {
         return status;
     }
@@ -70,6 +91,8 @@ public class Menu extends AuditorEntity {
         this.status = status;
     }
 
+    @NotBlank
+    @Length(max = 200 )
     public String getUrl() {
         return url;
     }
@@ -99,6 +122,7 @@ public class Menu extends AuditorEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "parentMenu", fetch = FetchType.LAZY)
+    @OrderBy(value = "sortNum asc")
     public List<Menu> getChildrenMenus() {
         return childrenMenus;
     }
@@ -115,6 +139,32 @@ public class Menu extends AuditorEntity {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Menu rhs = (Menu) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(code, rhs.code)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).
+                append(code).
+                toHashCode();
     }
 
     @Override

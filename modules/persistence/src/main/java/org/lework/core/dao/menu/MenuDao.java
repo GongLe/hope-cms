@@ -1,8 +1,12 @@
 package org.lework.core.dao.menu;
 
 import org.lework.core.entity.menu.Menu;
+import org.lework.core.entity.role.Role;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+
+import java.util.List;
 
 /**
  * Menu Dao
@@ -11,4 +15,32 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  */
 public interface MenuDao extends PagingAndSortingRepository<Menu, String>, JpaSpecificationExecutor<Menu> {
     public Menu findByCode(String code);
+
+    public List<Menu> findAllByStatus(String status);
+
+    @Query("from Menu m where m.parentMenu is null order by m.sortNum")
+    public List<Menu> findRootMenus( );
+
+    @Query("from Menu m where  m.parentMenu.id=?1 order by m.sortNum")
+    public List<Menu> findChildMenusByParentId(String parentId );
+
+    @Query("from Menu m where  m.parentMenu is null  order by m.sortNum")
+    public List<Menu> findRoots( );
+
+    /**
+     * 获取角色所属的菜单
+     * @param roleId
+     * @param status
+     * @return
+     */
+    @Query("select m from Role r inner join r.menus m where r.id=?1 and m.status=?2  order by m.sortNum")
+    public List<Menu> findRoleMenusByStatus(String roleId ,String status );
+    /**
+     * 获取角色所属的菜单
+     * @param roleId
+     * @return
+     */
+    @Query("select m from Role r inner join r.menus m where r.id=?1 order by m.sortNum")
+    public List<Menu> findRoleMenus(String roleId  );
+
 }

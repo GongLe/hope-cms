@@ -19,13 +19,14 @@
         onSelect :null,
         beforeSelect: null,
         afterSelect :null ,
-        filterSelector :'.filterSelected'
+        filterSelector :'.filterSelected' ,
+        trigger :  'click'
     };
     var old = $.fn.tableMutilDelete;
 
     TableMutilDelete.prototype.init = function () {
         var that = this , ret;
-        $( this.$ele ).on('click', this.options.targetElement, function (event) {
+        $( this.$ele ).on(that.options.trigger , this.options.targetElement, function (event) {
             if($(event.target).is(that.options.filterSelector)){
                 return;
             }

@@ -39,7 +39,7 @@
                     <div class="control-group">
                         <label class="control-label" for="parentMenu">上级菜单</label>
                         <div class="controls">
-                            <input id="parentMenu" name="parentMenu"  style="width:250px;"  >
+                            <input id="parentMenu" name="parentMenu"  style="width:284px;height:28px;"    >
                         </div>
                     </div>
                     <div class="control-group">
@@ -123,8 +123,11 @@
 
         using(['combotree'], function () {
             $('#parentMenu').combotree({
-                url : 'menu/getTree',
-                method:'get'
+                url : 'menu/getTree?ignoreNodeId=${entity.id}',
+                method:'get' ,
+                onLoadSuccess : function(){
+
+                }
             });
         })
 

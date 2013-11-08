@@ -46,7 +46,7 @@ public class AssetStylesheet extends SimpleTagSupport {
     }
 
     public String buildOut() {
-        return String.format(DEFAULT_OUT, getRealPath(), getType(), getRel(), getMedia());
+        return String.format(DEFAULT_OUT, getSrc(), getType(), getRel(), getMedia());
     }
 
     private String getRealPath() {

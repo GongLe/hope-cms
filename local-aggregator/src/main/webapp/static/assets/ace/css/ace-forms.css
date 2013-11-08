@@ -210,6 +210,18 @@ span.input-icon {
 .offset-20 .control-label{
     width: 140px ;
 }
+.offset-30 .controls{
+    margin-left: 150px;
+}
+.offset-30 .control-label{
+    width: 130px ;
+}
+.offset-40 .controls{
+    margin-left: 140px;
+}
+.offset-40 .control-label{
+    width: 120px ;
+}
 .control-group.warning .input-icon>[class*="icon-"] {
     color:#d3bd50
 }

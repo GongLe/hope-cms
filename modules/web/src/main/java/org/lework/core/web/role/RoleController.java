@@ -5,10 +5,12 @@ import org.lework.core.common.enumeration.Status;
 import org.lework.core.entity.role.Role;
 import org.lework.core.service.role.RoleService;
 import org.lework.runner.orm.support.SearchFilter;
+import org.lework.runner.utils.Collections3;
 import org.lework.runner.utils.Strings;
 import org.lework.runner.web.AbstractController;
 import org.lework.runner.web.NotificationType;
 import org.lework.runner.web.datatables.DataTableResult;
+import org.lework.runner.web.easyui.TreeResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,8 +39,6 @@ public class RoleController extends AbstractController {
 
     @Autowired
     private RoleService roleService;
-
-
 
     /**
      * list页面*
@@ -54,6 +55,7 @@ public class RoleController extends AbstractController {
     @RequestMapping(value = "/update", method = RequestMethod.GET)
     public String update(@ModelAttribute("entity") Role role ,Model model){
         model.addAttribute("statusList" , Status.values() ) ;
+        model.addAttribute("checkedPermissionIds" , null );
         return  "role/role-update" ;
     }
 
@@ -111,6 +113,25 @@ public class RoleController extends AbstractController {
         model.addAttribute("statusList" , Status.values() ) ;
         return "role/role-view";
     }
+
+    /**======================
+     *       ajax json data
+     * ======================
+     **/
+    /**
+     * 验证角色代码是否可用
+     *
+     * @return JSON true || false
+     */
+    @RequestMapping(value = "/validateRoleCode", method = {RequestMethod.GET, RequestMethod.POST})
+    public
+    @ResponseBody
+    Boolean validateRoleCode(@RequestParam(value = "roleId", required = false) String id,
+                             @RequestParam(value = "code", required = true) String code) {
+        return roleService.validateRoleCode(id, code);
+    }
+
+
     /**
      * datatables  json result*
      */
@@ -132,17 +153,33 @@ public class RoleController extends AbstractController {
     }
 
     /**
-     * 验证角色代码是否可用
-     *
-     * @return JSON true || false
+     *get Role's easyui tree json result
+     * @param status 过滤节点状态
      */
-    @RequestMapping(value = "/validateRoleCode", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/getTreeJson", method = {RequestMethod.GET, RequestMethod.POST})
     public
     @ResponseBody
-    Boolean validateRoleCode(@RequestParam(value = "roleId", required = false) String id,
-                             @RequestParam(value = "code", required = true) String code) {
+      List<TreeResult>  getTreeJson( @RequestParam(value = "checkbox", required = false) String checkbox ,
+                                  @RequestParam(value = "status", required = false) String status ) {
+        boolean isCheckbox = Strings.equals(checkbox, "true");
+        boolean filterStatus = Strings.isNotBlank(status);
+        boolean disable;
+        List<Role> entities;
+        List<TreeResult> nodeList = Lists.newArrayList();
+        //TreeResult root = new TreeResult("root","角色",Strings.EMPTY,Strings.EMPTY) ;
+        if (filterStatus) {
+            entities = roleService.getAllRoleByStatus(Status.valueOf(status));
+        } else {
+            entities = roleService.getAllRole();
+        }
+        if (!Collections3.isEmpty(entities)) {
+            for (Role r : entities) {
+                disable = Strings.equals(r.getStatus(), Status.disable.getCode());
+                nodeList.add(new TreeResult(r.getId(), r.getName(), disable ? "red" : Strings.EMPTY, Strings.EMPTY));
+            }
+        }
 
-        return roleService.validateRoleCode(id, code);
+       return  nodeList ;
     }
 
     /**

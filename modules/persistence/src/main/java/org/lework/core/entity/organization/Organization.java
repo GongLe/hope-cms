@@ -2,7 +2,10 @@ package org.lework.core.entity.organization;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.lework.core.entity.AuditorEntity;
+import org.lework.runner.utils.Collections3;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -27,8 +30,6 @@ public class Organization extends AuditorEntity {
     /**组织简称*/
     private String shortName;
 
-    /** 排序**/
-    private Integer sort = 0;
 
     /** 主管姓名**/
     private String manager;
@@ -53,12 +54,29 @@ public class Organization extends AuditorEntity {
      * ps:本来是用JPA OneToMany getChildren,出于效率考虑,直接用字段标识是否为叶子节点.
      */
     private Integer isleaf  ;
+    /** 排序**/
+    private String  sortNum;            //排序
 
     /**
      * 上级组织
      */
     private Organization parentOrganization;
 
+
+    @Transient
+    public boolean hasParent() {
+        return getParentOrganization() != null;
+    }
+
+
+    public String getSortNum() {
+        return sortNum;
+    }
+
+    public void setSortNum(String sortNum) {
+        this.sortNum = sortNum;
+    }
+    @NotBlank
     public String getCode() {
         return code;
     }
@@ -67,6 +85,7 @@ public class Organization extends AuditorEntity {
         this.code = code;
     }
 
+    @NotEmpty
     public String getName() {
         return name;
     }
@@ -81,14 +100,6 @@ public class Organization extends AuditorEntity {
 
     public void setShortName(String shortName) {
         this.shortName = shortName;
-    }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
     }
 
     public String getManager() {

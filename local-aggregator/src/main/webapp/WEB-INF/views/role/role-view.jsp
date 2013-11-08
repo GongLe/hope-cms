@@ -14,15 +14,18 @@
             <h4 class="blue bigger">Please fill the following form fields</h4>
         </div>
 
-        <div class="modal-body ">
+    <div class="modal-body ">
+        <div class="row-fluid ">
+            <div class="span12">
+                <h1>modal-body</h1>
 
-            <h1>modal-body</h1>
+                <h1>modal-body</h1>
 
-            <h1>modal-body</h1>
-
-            <h1>modal-body</h1>
-
+                <h1>modal-body</h1>
+            </div>
         </div>
+        <!--/.row-fluid -->
+    </div>
 
         <div class="modal-footer">
             <button type="button" class="btn btn-small" onclick="$.colorbox.close()">

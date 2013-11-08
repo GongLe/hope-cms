@@ -106,6 +106,7 @@ $(function () {
         if ($.pnotify) {
             $.pnotify.defaults.history = false;
             var stack_bottomright = {"dir1": "up", "dir2": "left", "firstpos1": 25, "firstpos2": 25};
+            var stack_bar_top = {"dir1": "down", "dir2": "right", "push": "top", "spacing1": 0, "spacing2": 0};
             /**
              *页面信息提示
              * 依赖于jquery pnotiy插件c
@@ -118,10 +119,12 @@ $(function () {
                     title: title || '',
                     text: message || '',
                     shadow: false,
-                    addclass: "stack-bottomright",
+                //  addclass: "stack-topright",
+                 //   addclass:"stack-bar-top" ,
                     labels: {redisplay: "重新显示", all: "所有", last: "最后", close: "关闭", stick: "播放/停止"},
-                    animate_speed: 'fast',
-                    stack: stack_bottomright
+                    animate_speed: 'fast' ,
+                    top : '35px'
+                //    stack: stack_bar_top
                 };
                 switch (type) {
                     case 'error':
