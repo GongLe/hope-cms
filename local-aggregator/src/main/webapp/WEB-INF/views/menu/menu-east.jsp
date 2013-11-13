@@ -70,7 +70,7 @@
                     <div id="profile3" class="tab-pane in active">
                         <div class="clearfix">
                             <div class="pull-right">
-                                <button class="btn btn-success btn-minier ">添加菜单到角色</button>
+                                <button class="btn btn-white btn-minier ">添加菜单到角色</button>
                             </div>
                         </div>
                         <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>

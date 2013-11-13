@@ -48,8 +48,8 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public void downSortNum(Menu entity) {
         List<Menu> siblings;
-        int curIndex = -1;
-        int temp = -1;
+        int curIndex  ;
+        Integer temp  ;
         Menu next;
         //如果是根节点
         if (!entity.hasParent()) {
@@ -67,13 +67,14 @@ public class MenuServiceImpl implements MenuService {
                 entity.setSortNum(temp);
             }
         }
+        menuDao.save(entity) ;
     }
 
     @Override
     public void upSortNum(Menu entity) {
         List<Menu> siblings;
-        int curIndex = -1;
-        int temp = -1;
+        int curIndex  ;
+        Integer temp  ;
         Menu previous;
         //如果是根节点
         if (!entity.hasParent()) {
@@ -81,7 +82,7 @@ public class MenuServiceImpl implements MenuService {
         } else {  //非根节点时,根据parentId获取同级所有节点
             siblings = menuDao.findChildMenusByParentId(entity.getParentId());
         }
-        if (Collections3.isNotEmpty(siblings) && siblings.size() > 1) {
+        if (Collections3.isNotEmpty(siblings) && siblings.size() > 2) {
             curIndex = siblings.indexOf(entity);
             if (curIndex > 0) {
                 previous = siblings.get(curIndex - 1);
@@ -91,6 +92,7 @@ public class MenuServiceImpl implements MenuService {
                 entity.setSortNum(temp);
             }
         }
+        menuDao.save(entity) ;
     }
 
     @Override
@@ -205,19 +207,25 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<MenuTreeGridDTO> getMenuTreeGrid(List<Menu> ignore ) {
+    public List<MenuTreeGridDTO> getMenuTreeGrid(List<Menu> ignore) {
         //roots node
         List<Menu> roots = menuDao.findRoots();
         List<MenuTreeGridDTO> rootsDTO = new ArrayList<MenuTreeGridDTO>();
-        MenuTreeGridDTO temp ;
-        for(Menu root : roots ){
-            if(contain(ignore,root) ){
+        MenuTreeGridDTO temp;
+        Menu curNode;
+        int size = roots.size();
+        for (int i = 0; i < size; i++) {
+            curNode = roots.get(i);
+            if (contain(ignore, curNode)) {
                 continue;
             }
-            temp    = new MenuTreeGridDTO(root) ;
-            rootsDTO.add(temp) ;
-            fetchChild4TreeGrid(root,temp,ignore);
+            temp = new MenuTreeGridDTO(curNode);
+            temp.setLevelSize(size);
+            temp.setLevelIndex(i);
+            rootsDTO.add(temp);
+            fetchChild4TreeGrid(curNode, temp, ignore);
         }
+
         return rootsDTO;
     }
 
@@ -289,22 +297,30 @@ public class MenuServiceImpl implements MenuService {
      * @param parent
      * @param parentDTO
      */
-    private void fetchChild4TreeGrid(Menu parent, MenuTreeGridDTO parentDTO ,List<Menu> ignore ) {
+    private void fetchChild4TreeGrid(Menu parent, MenuTreeGridDTO parentDTO, List<Menu> ignore) {
         List<MenuTreeGridDTO> child = new ArrayList<MenuTreeGridDTO>();
         List<Menu> childMenu;
         MenuTreeGridDTO node;
+        Menu curNode;
+        int size  ;
         if (parent.hasChild()) {
+
             childMenu = parent.getChildrenMenus();
-            for (Menu m : childMenu) {
-                if(contain(ignore,m) ){  //忽略节点
+            size = childMenu.size() ;
+            for (int i = 0; i < size ; i++) {
+                curNode = childMenu.get(i);
+                if (contain(ignore, curNode)) {  //忽略节点
                     continue;
                 }
-                node = new MenuTreeGridDTO(m);
+                node = new MenuTreeGridDTO(curNode);
+                node.setLevelIndex(i);
+                node.setLevelSize(size);
                 child.add(node);
-                if (m.hasChild()) {
-                    fetchChild4TreeGrid(m, node,ignore);
+                if (curNode.hasChild()) {
+                    fetchChild4TreeGrid(curNode, node, ignore);
                 }
             }
+
         }
         parentDTO.getChildren().addAll(child);
     }

@@ -153,24 +153,18 @@ public class MenuController extends AbstractController {
      * ajax上移序号
      */
     @RequestMapping(value = "/upSortNum", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    JsonResult upSortNum(@RequestParam(value = "menuId") String menuId) {
-        Menu entity = menuService.getMenu(menuId);
-        menuService.upSortNum(entity);
-        return JsonResult.success("菜单&quot;" + entity.getName() + "&quot;序号上移成功");
+    public void upSortNum(@Valid @ModelAttribute("entity") Menu menu, HttpServletResponse response) {
+        menuService.upSortNum(menu);
+        callback(response, CallbackData.build("doSortNumCallback", "操作提示", "菜单&quot;" + menu.getName() + "&quot;序号上移成功", NotificationType.SUCCESS));
     }
 
     /**
      * ajax下移序号
      */
     @RequestMapping(value = "/downSortNum", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    JsonResult downSortNum(@RequestParam(value = "menuId") String menuId) {
-        Menu entity = menuService.getMenu(menuId);
-        menuService.downSortNum(entity);
-        return JsonResult.success("菜单&quot;" + entity.getName() + "&quot;序号下移成功");
+    public void downSortNum(@Valid @ModelAttribute("entity") Menu menu,HttpServletResponse response) {
+        menuService.downSortNum(menu);
+        callback(response, CallbackData.build("doSortNumCallback", "操作提示", "菜单&quot;"+ menu.getName() +"&quot;序号下移成功", NotificationType.SUCCESS));
     }
 
     /**======================

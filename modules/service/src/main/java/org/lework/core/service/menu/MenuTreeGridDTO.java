@@ -36,6 +36,8 @@ public class MenuTreeGridDTO {
     private String status;        //状态 默认为有效状态
     private String url;                //URL
     private String icon;                //图标
+    private Integer levelIndex ; //同级节点index
+    private Integer levelSize ; //同级节点个数
     private List<MenuTreeGridDTO> children = new ArrayList<MenuTreeGridDTO>();
     //easyui  prop
     private String iconCls;
@@ -134,5 +136,21 @@ public class MenuTreeGridDTO {
 
     public void setIconCls(String iconCls) {
         this.iconCls = iconCls;
+    }
+
+    public Integer getLevelIndex() {
+        return levelIndex;
+    }
+
+    public void setLevelIndex(Integer levelIndex) {
+        this.levelIndex = levelIndex;
+    }
+
+    public Integer getLevelSize() {
+        return levelSize;
+    }
+
+    public void setLevelSize(Integer levelSize) {
+        this.levelSize = levelSize;
     }
 }

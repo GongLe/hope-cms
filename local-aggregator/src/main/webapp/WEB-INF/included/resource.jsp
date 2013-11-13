@@ -50,6 +50,7 @@
 <!-- easyui css custom theme    -->
 <le:stylesheet src="${src}/plugins/easyui/1.3.2/themes/bootstrap/easyui.custom.css"/>
 
+<le:javascript src="${src}/plugins/lework.prototype.js" />
 <!--jquery -->
 <le:javascript src="${src}/assets/js/jquery-1.10.2.js"/>
 <le:javascript src="${src}/assets/js/jquery-migrate-1.2.1.js"/>

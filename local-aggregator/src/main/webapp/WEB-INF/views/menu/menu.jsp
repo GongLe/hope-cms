@@ -5,6 +5,12 @@
 <html>
 <head>
     <title>菜单管理</title>
+    <style>
+        .datagrid-row-selected .icon-chevron-up,
+        .datagrid-row-selected .icon-chevron-down{
+            color: #fff;
+        }
+    </style>
 </head>
 
 <body>
@@ -25,30 +31,34 @@
 <div class="page-content">
     <div class="row-fluid">
         <div class="span12">
-            <div class="table-funtion-bar clear-both">
-                <div class="btn-group">
-                    <button class="btn no-border tooltips" id="create-function" data-original-title="新增" >
-                        <i class="icon-plus"></i>
-                    </button>
-                    <button class="btn no-border tooltips" id="refresh-function" data-original-title="刷新">
-                        <i class="icon-refresh"></i>
-                    </button>
-                    <button class="btn no-border tooltips" id="delete-function" style="display:none;" data-original-title="删除">
-                        <i class="icon-trash"></i>
-                    </button>
+            <div class="box">
+                <div class="box-title no-margin-top">
+                    <h3>菜单管理</h3>
                 </div>
+                <div class="box-content no-padding ">
+                    <div class="table-funtion-bar clear-both">
+                        <div class="btn-group">
+                            <button class="btn no-border tooltips" id="create-function" data-original-title="新增" >
+                                <i class="icon-plus"></i>
+                            </button>
+                            <button class="btn no-border tooltips" id="refresh-function" data-original-title="刷新">
+                                <i class="icon-refresh"></i>
+                            </button>
+                            <button class="btn no-border tooltips" id="delete-function" style="display:none;" data-original-title="删除">
+                                <i class="icon-trash"></i>
+                            </button>
+                        </div>
+                    </div><!--/.table-funtion-bar-->
 
-            </div><!--/.table-funtion-bar-->
+                    <div class="pull-left" id="menuTreeGridWrap">
+                        <table id="menuTreeGrid" style="width:540px;height:500px;" ></table>
+                    </div>
 
+                    <div id="eastMenuRelated"  style="margin-left:526px;padding:0 20px 0 20px;">
 
-             <div class="pull-left">
-                 <table id="menuTreeGrid" style="width:520px;height:500px;" ></table>
-             </div>
-
-            <div id="eastMenuRelated"  style="margin-left:506px;padding:0 20px 0 20px;">
-
-            </div><!--/.eastMenuRelated-->
-
+                    </div><!--/.eastMenuRelated-->
+                </div>
+            </div>  <!--/.box-->
 
         </div>
     </div>
@@ -64,10 +74,17 @@ $(function(){
         lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
         $('#menuTreeGrid').treegrid('reload');
     };
+
     window.deleteCallback = function (resp) {
         lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
         $('#menuTreeGrid').treegrid('reload');
     };
+    //调整序号iframe回调函数
+    window.doSortNumCallback = function(resp){
+        $.unblockUI();
+        lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
+        $('#menuTreeGrid').treegrid('reload');
+    }
 
     using(['treegrid'], function () {
         var $menuTreeGrid = $('#menuTreeGrid');
@@ -79,9 +96,24 @@ $(function(){
             treeField: 'name',
             columns: [
                 [
-                    {field: 'name', title: '菜单名称', width: 145},
-                    {field: 'code', title: '菜单代码', width: 145, align: 'left'},
-                    {field: 'url', title: 'URL', width: 200}
+                    {field: 'name', title: '菜单名称', width: 150},
+                    /*   {field: 'code', title: '菜单代码', width: 115, align: 'left'},*/
+                    {field: 'url', title: 'URL', width: 260} ,
+                    {field: 'id', title: '序号', align: 'left', width: 100, formatter: function (value, row) {
+                        var html = '&nbsp;&nbsp;&nbsp;&nbsp;';
+                        if (row.levelIndex > 0) {
+                            html += '<a href="javascript:;" class="sortNumAction up" data-id="{id}" title="上移序号">' +
+                                    '<i class="icon-chevron-up"></i></a>';
+                        } else {
+                            html += '&nbsp;&nbsp;&nbsp;';
+                        }
+                        if (row.levelIndex < row.levelSize - 1) {
+                            html += '&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" class="sortNumAction down" data-id="{id}"  title="下移序号">' +
+                                    '<i class="icon-chevron-down"></i></a>';
+                        }
+                        return html.format(row);
+                    }
+                    }
                 ]
             ],
             onClickRow: function (row) {
@@ -105,14 +137,36 @@ $(function(){
             onLoadSuccess: function () {
                 $('.tooltips').tooltip();
                 //修复 treegrid IE下border-right不可见bug.
-                var $wrap = $('.datagrid-wrap'), root;
+                var $wrap = $('.datagrid-wrap');
                 $wrap.width($wrap.width() - 2);
                 //默认选择根节点.
-                root = $menuTreeGrid.treegrid('getRoot');
-                loadEast(root.id);
+                var root = $menuTreeGrid.treegrid('getRoot');
+                $menuTreeGrid.treegrid('select', root.id);
+                //监听序号调整
+                listenerSortAction();
             }
         });
     })
+    //监听序号调整
+    var listenerSortAction = function(){
+
+        $('.sortNumAction' ,'#menuTreeGridWrap').click(function(event){
+            event.preventDefault() ;
+            if($(this).hasClass('up')){   //上移
+                $.blockUI();
+                $('#hiddenForm').prop({   //提交隐藏的表单域.
+                    'target': '$iframe',
+                    'action': 'menu/upSortNum?id=' + $(this).data('id')
+                }).submit();
+            } else if ($(this).hasClass('down')){  //下移
+                $.blockUI();
+                $('#hiddenForm').prop({   //提交隐藏的表单域.
+                    'target': '$iframe',
+                    'action': 'menu/downSortNum?id='  + $(this).data('id')
+                }).submit();
+            }
+        })
+    }  //listenerSortAction
     //新增
     $('#create-function').click(function () {
         $(this).colorbox({
