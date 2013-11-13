@@ -8,26 +8,27 @@ import java.util.Map;
 
 
 /**
- * @Description: easyui Tree TO对象
  * @author Gongle
- * 
- * <pre>
- * Every node can contains following properties:
- *  id: node id, which is important to load remote data
- *  text: node text to show
- *  state: node state, 'open' or 'closed', default is 'open'. When set to 'closed', the node have children nodes and will load them from remote site
- *  checked: Indicate whether the node is checked selected.
- *  attributes: custom attributes can be added to a node
- *  children: an array nodes defines some children nodes
- * </pre>
+ *         <p/>
+ *         <pre>
+ *                 Every node can contains following properties:
+ *                  id: node id, which is important to load remote data
+ *                  text: node text to show
+ *                  state: node state, 'open' or 'closed', default is 'open'. When set to 'closed', the node have children nodes and will load them from remote site
+ *                  checked: Indicate whether the node is checked selected.
+ *                  attributes: custom attributes can be added to a node
+ *                  children: an array nodes defines some children nodes
+ *                 </pre>
+ * @Description: easyui Tree TO对象
  */
 public class TreeResult implements Serializable {
     public TreeResult() {
     }
-    public TreeResult(String id ,String text  ,String iconCls ,String  type  ) {
-        this.id= id;
-        this.text = text ;
-        this.iconCls= iconCls;
+
+    public TreeResult(String id, String text, String iconCls, String type) {
+        this.id = id;
+        this.text = text;
+        this.iconCls = iconCls;
         this.attributes.put("type", type);
     }
 
@@ -35,17 +36,18 @@ public class TreeResult implements Serializable {
 
     private String text;
 
-    private String state  ;
+    private String state;
 
-    private Boolean  checked = false;
+    private Boolean checked = false;
     private String iconCls;
-    private Map attributes = new HashMap() ;
+    private Map attributes = new HashMap();
 
     private List<TreeResult> children = new ArrayList<TreeResult>();
 
-    public  void addAttribute(String name ,Object value){
+    public void addAttribute(String name, Object value) {
         attributes.put(name, value);
     }
+
     public String getId() {
         return id;
     }

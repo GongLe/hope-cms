@@ -53,6 +53,7 @@
 <!--jquery -->
 <le:javascript src="${src}/assets/js/jquery-1.10.2.js"/>
 <le:javascript src="${src}/assets/js/jquery-migrate-1.2.1.js"/>
+
 <script>
     if ("ontouchend" in document) document.write("<script src=${ctx}/static/assets/js/jquery.mobile.custom.js'>" + "<" + "/script>");
 
@@ -81,7 +82,7 @@
 <le:javascript src="${src}/plugins/colorbox/jquery.colorbox.js"/>
 <!-- pnotify-->
 <le:stylesheet src="${src}/plugins/pnotify/jquery.pnotify.default.css"/>
-<le:javascript src="${src}/plugins/pnotify/jquery.pnotify.min.js" />
+<le:javascript src="${src}/plugins/pnotify/jquery.pnotify.js" />
 <!-- jquery validation -->
 <le:javascript src="${src}/plugins/jquery-validation/1.11.1/jquery.validate.js" />
 <le:javascript src="${src}/plugins/jquery-validation/1.11.1/additional-methods.js" />

@@ -555,6 +555,7 @@
 .datagrid-row-over,
 .datagrid-header td.datagrid-header-over {
   background: #e6e6e6;
+    background: #c4e3f3;
   color: #00438a;
   cursor: default;
 }
@@ -1317,6 +1318,7 @@ a.m-btn-plain-active {
 .propertygrid .datagrid-view1 .datagrid-row-over,
 .propertygrid .datagrid-view1 .datagrid-row-selected {
   background: #F2F2F2;
+
 }
 .searchbox {
   display: inline-block;

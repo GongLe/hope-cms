@@ -676,7 +676,7 @@
 			}
 
 			// Add a title.
-			pnotify.title_container = $("<h4 />", {
+			pnotify.title_container = $("<div />", {
 				"class": "ui-pnotify-title"
 			})
 			.appendTo(pnotify.container);

@@ -78,57 +78,23 @@ public abstract class AbstractController {
      *          页面回调
      * =============================
      */
-    /**
-     * 页面提交到iframe,返回javascript函数,调用父页面回调函数"actionCallback()"
-     * 输出 : <script> self.parent.actionCallback.call({jsonObject})</script>
-     *
-     * @param response
-     * @param message
-     * @param attributes 附加属性
-     * @param type       通知类型枚举类
-     */
-    protected void actionCallback(HttpServletResponse response, String message, Map<String, Object> attributes, NotificationType type) {
-        callback("actionCallback", response, message, attributes, type);
-    }
-
-    /**
-     * 页面提交到iframe,返回javascript函数,调用父页面回调函数"deleteCallback()"
-     * 输出 : <script> self.parent.deleteCallback.call({jsonObject})</script>
-     *
-     * @param response
-     * @param message
-     * @param attributes 附加属性
-     * @param type       通知类型枚举类
-     */
-    protected void deleteCallback(HttpServletResponse response, String message, Map<String, Object> attributes, NotificationType type) {
-        callback("deleteCallback", response, message, attributes, type);
-
-    }
 
     /**
      * 页面提交到iframe,返回javascript函数,调用父页面回调函数"{functionName}"
      * 输出 : <script> self.parent.{functionName}.call({jsonObject})</script>
      *
-     * @param functionName 回调函数名称
      * @param response
-     * @param message
-     * @param attributes   附加属性
-     * @param type         通知类型枚举类
+     * @param callbackData 回调函数参数POJO
      */
-    protected void callback(String functionName, HttpServletResponse response, String message, Map<String, Object> attributes, NotificationType type) {
-        if (attributes == null) {
-            attributes = new HashMap<String, Object>();
-        }
-        JsonMapper jsonMapper = new JsonMapper();
-        attributes.put("message", message);
-        attributes.put("type", type.toString());
+    protected void callback( HttpServletResponse response,CallbackData callbackData) {
+
 
         try {
             Writer out = response.getWriter();
             out.flush();
             out.write("<script> \n ");
-            out.write("var actionParam = " + jsonMapper.toJson(attributes) + " ; \n");
-            out.write("self.parent." + functionName + " && self.parent." + functionName + ".call(actionParam) ; \n");
+            out.write("var actionParam = " + callbackData.toJson()  + " ; \n");
+            out.write("self.parent." + callbackData.getFunctionName() + " && self.parent." + callbackData.getFunctionName() + "(actionParam) ; \n");
             out.write("</script>");
         } catch (IOException e) {
             logger.error("json转换失败");

@@ -46,6 +46,54 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    public void downSortNum(Menu entity) {
+        List<Menu> siblings;
+        int curIndex = -1;
+        int temp = -1;
+        Menu next;
+        //如果是根节点
+        if (!entity.hasParent()) {
+            siblings = menuDao.findRoots();
+        } else {  //非根节点时,根据parentId获取同级所有节点
+            siblings = menuDao.findChildMenusByParentId(entity.getParentId());
+        }
+        if (Collections3.isNotEmpty(siblings) && siblings.size() > 1) {
+            curIndex = siblings.indexOf(entity);
+            if (curIndex < siblings.size() - 1) {
+                next = siblings.get(curIndex + 1);
+                //互换sortNum
+                temp = next.getSortNum();
+                next.setSortNum(entity.getSortNum());
+                entity.setSortNum(temp);
+            }
+        }
+    }
+
+    @Override
+    public void upSortNum(Menu entity) {
+        List<Menu> siblings;
+        int curIndex = -1;
+        int temp = -1;
+        Menu previous;
+        //如果是根节点
+        if (!entity.hasParent()) {
+            siblings = menuDao.findRoots();
+        } else {  //非根节点时,根据parentId获取同级所有节点
+            siblings = menuDao.findChildMenusByParentId(entity.getParentId());
+        }
+        if (Collections3.isNotEmpty(siblings) && siblings.size() > 1) {
+            curIndex = siblings.indexOf(entity);
+            if (curIndex > 0) {
+                previous = siblings.get(curIndex - 1);
+                //互换sortNum
+                temp = previous.getSortNum();
+                previous.setSortNum(entity.getSortNum());
+                entity.setSortNum(temp);
+            }
+        }
+    }
+
+    @Override
     public boolean validateMenuCode(String id, String code) {
         Menu entity = menuDao.findByCode(code);
         if (entity == null) {  //code不存在
@@ -59,6 +107,8 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Menu getMenu(String id) {
+        if(Strings.isBlank(id))
+            return  null ;
         return menuDao.findOne(id);
     }
 

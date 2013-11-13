@@ -390,7 +390,7 @@
 	
 	// Inherited from $.fn.panel.defaults
 	$.fn.window.defaults = $.extend({}, $.fn.panel.defaults, {
-		zIndex: 9999,
+		zIndex: 9000,
 		draggable: true,
 		resizable: true,
 		shadow: true,

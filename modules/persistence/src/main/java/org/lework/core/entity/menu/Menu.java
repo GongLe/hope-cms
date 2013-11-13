@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.lework.core.entity.AuditorEntity;
 import org.lework.core.entity.role.Role;
 import org.lework.runner.utils.Collections3;
+import org.lework.runner.utils.Strings;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,27 +28,34 @@ public class Menu extends AuditorEntity {
 
     private String name;            //菜单名
     private String code;            //代码
-    private String sortNum;            //排序
+    private Integer sortNum;            //排序
     private String type = "menu";        //类型  menu,url
     private String status;        //状态 默认为有效状态
     private String url;                //URL
     private String icon;                //图标
+    private String parentName;
     private Menu parentMenu;        //上级菜单
     private List<Menu> childrenMenus;    //下级菜单
     private List<Role> roles = new ArrayList<Role>();    //菜单对应的角色
 
     @Transient
-    public boolean hasChild(){
-        return Collections3.isNotEmpty(getChildrenMenus()) ;
+    public boolean hasChild() {
+        return Collections3.isNotEmpty(getChildrenMenus());
     }
 
     @Transient
-    public boolean hasParent(){
-        return getParentMenu() != null ;
+    public String getParentId() {
+        Menu parent = getParentMenu();
+        return parent != null ? parent.getId() : Strings.EMPTY;
+    }
+
+    @Transient
+    public boolean hasParent() {
+        return getParentMenu() != null;
     }
 
     @NotEmpty
-    @Length(max = 50 )
+    @Length(max = 50)
     public String getName() {
         return name;
     }
@@ -55,8 +63,9 @@ public class Menu extends AuditorEntity {
     public void setName(String name) {
         this.name = name;
     }
+
     @NotBlank
-    @Length(max = 50 )
+    @Length(max = 50)
     public String getCode() {
         return code;
     }
@@ -65,11 +74,11 @@ public class Menu extends AuditorEntity {
         this.code = code;
     }
 
-    public String getSortNum() {
+    public Integer getSortNum() {
         return sortNum;
     }
 
-    public void setSortNum(String sortNum) {
+    public void setSortNum(Integer sortNum) {
         this.sortNum = sortNum;
     }
 
@@ -92,7 +101,7 @@ public class Menu extends AuditorEntity {
     }
 
     @NotBlank
-    @Length(max = 200 )
+    @Length(max = 200)
     public String getUrl() {
         return url;
     }
@@ -118,6 +127,14 @@ public class Menu extends AuditorEntity {
 
     public void setParentMenu(Menu parentMenu) {
         this.parentMenu = parentMenu;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
     }
 
     @JsonIgnore

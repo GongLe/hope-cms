@@ -22,7 +22,7 @@
                 <div class="span12"  >
 
                     <!--隐藏域-->
-                    <form:hidden path="entity.id" />
+                    <form:hidden path="entity.id"  />
 
                     <div class="control-group">
                         <label class="control-label " for="name">菜单名称</label>
@@ -37,9 +37,12 @@
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="parentMenu">上级菜单</label>
+                        <label class="control-label" for="parentId">上级菜单</label>
                         <div class="controls">
-                            <input id="parentMenu" name="parentMenu"  style="width:284px;height:28px;"    >
+                            <input id="parentId" name="parentId"  style="width:284px;height:28px;" value="${entity.parentId}"   >
+                            <div class="help-inline">
+                                <a href="javascript:;" onclick="$('#parentId').combotree('clear');">清空</a>
+                            </div>
                         </div>
                     </div>
                     <div class="control-group">
@@ -62,7 +65,7 @@
                         <div class="controls">
                             <input class="input-xlarge" type="text" id="icon" name="icon" value="${entity.icon}" placeholder="输入菜单icon">
                             <div class="help-inline">
-                                <a href="javascript:;" id="selectIcon" class="smaller-60" title="Icons"
+                                <a href="javascript:;" id="selectIcon" class="smaller-90" title="Icons"
                                    onclick="$(this).text($(this).text() == '选择' ? '关闭' : '选择' );">选择</a>
                             </div>
                         </div>
@@ -86,16 +89,21 @@
 </div>
 <script>
     $(function(){
-
+        //页面icon弹出层回调
+        window.selectIconCallback = function () {
+            $('#icon', '#inputForm').val($(this).prop('class'));
+        }
         //from validater
         $('#inputForm').validate({rules: {
             name: {
                 required: true,
+                normalChar :true,
                 maxlength: 50
             },
             code : {
                 required: true ,
                 maxlength: 50,
+                account :true,
                 remote: {
                     url: 'menu/validateMenuCode', //后台处理程序
                     type: 'post',               //数据发送方式
@@ -122,11 +130,11 @@
         }); //end validate
 
         using(['combotree'], function () {
-            $('#parentMenu').combotree({
-                url : 'menu/getTree?ignoreNodeId=${entity.id}',
-                method:'get' ,
-                onLoadSuccess : function(){
-
+            $('#parentId').combotree({
+                url: 'menu/getTree?ignoreNodeId=${entity.id}',
+                method: 'get',
+                onSelect: function (node) {
+                  //  $('#parentId').val(node.id);
                 }
             });
         })
@@ -144,10 +152,6 @@
                 }).popover('show');
             });
         });
-        //页面icon弹出层回调
-        window.selectIconCallback = function () {
-            $('#icon', '#inputForm').val($(this).prop('class'));
-        }
 
     })  //dom ready
 </script>

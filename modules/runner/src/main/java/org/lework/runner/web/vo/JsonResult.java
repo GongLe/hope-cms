@@ -36,7 +36,7 @@ public class JsonResult implements Serializable {
     /**
      * 额外附带信息*
      */
-    private Map data = new HashMap();
+    private Map attributes = new HashMap();
 
 
     /**
@@ -65,18 +65,17 @@ public class JsonResult implements Serializable {
         return result;
     }
 
-    public void addData(String key, Object val) {
-        data.put(key, val);
+    public void addAttribute(String key, Object val) {
+        attributes.put(key, val);
     }
 
-    public Map getData() {
-        return data;
+    public Map getAttributes() {
+        return attributes;
     }
 
-    public void setData(Map data) {
-        this.data = data;
+    public void setAttributes(Map attributes) {
+        this.attributes = attributes;
     }
-
 
     public String getMsg() {
         return msg;

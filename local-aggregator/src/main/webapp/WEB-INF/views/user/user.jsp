@@ -21,9 +21,7 @@
     <!--.breadcrumb-->
 
 </div>
-<form name="hiddenForm"  id="hiddenForm" method="post" style="display: none;">
 
-</form>
 <div class="page-content">
     <div class="row-fluid">
         <div class="span12">
@@ -80,15 +78,15 @@
 
     $(function () {
         //表单提交后,iframe回调函数
-        window.actionCallback = function () {
+        window.actionCallback = function (resp) {
             $.colorbox.close();
             oTable.fnDraw();
-            lework.notify('操作提示', this.message, this.type);
+            lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
         };
         window.deleteCallback = function () {
             $.colorbox.close();
             oTable.fnDraw();
-            lework.notify('操作提示', this.message, this.type);
+            lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
         };
         var oTable = $('#table-list');
 
@@ -138,7 +136,6 @@
             fnDrawCallback :function(oSettings ){
                 // bootstrap-tooltip
                 $('.tooltips').tooltip();
-             //   $('.action-buttons').click(function(e){e.preventDefault();});
                 $('.confirmDelete').confirmDelete({onDelete: function () {
                     $('#hiddenForm').prop({   //提交隐藏的表单域.
                         'target': '$iframe',
@@ -171,7 +168,8 @@
         //刷新
         $('#refresh-function').click(function () {
             oTable.fnDraw();
-
+            //重置function bar状态
+            checkIconStatus(false);
         });
         //双击进入修改页面
         oTable.on('dblclick','tbody>tr',function(event){

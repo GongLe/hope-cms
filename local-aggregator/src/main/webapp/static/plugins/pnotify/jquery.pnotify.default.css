@@ -48,9 +48,10 @@ margin-bottom: .4em;
 display: block;
 }
 .ui-pnotify-icon, .ui-pnotify-icon span {
-display: block;
+display: inline-block;
 float: left;
 margin-right: .2em;
+    margin-top: .1em;
 }
 /* -- History Pulldown */
 .ui-pnotify-history-container {

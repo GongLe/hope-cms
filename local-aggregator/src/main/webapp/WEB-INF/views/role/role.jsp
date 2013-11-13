@@ -79,15 +79,15 @@
 
     $(function () {
         //表单提交后,iframe回调函数
-        window.actionCallback = function () {
+        window.actionCallback = function (resp) {
             $.colorbox.close();
             oTable.fnDraw();
-            lework.notify('操作提示', this.message, this.type);
+            lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
         };
-        window.deleteCallback = function () {
+        window.deleteCallback = function (resp) {
             $.colorbox.close();
             oTable.fnDraw();
-            lework.notify('操作提示', this.message, this.type);
+            lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
         };
         var oTable = $('#table-list');
 

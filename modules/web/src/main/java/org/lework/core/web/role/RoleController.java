@@ -8,6 +8,7 @@ import org.lework.runner.orm.support.SearchFilter;
 import org.lework.runner.utils.Collections3;
 import org.lework.runner.utils.Strings;
 import org.lework.runner.web.AbstractController;
+import org.lework.runner.web.CallbackData;
 import org.lework.runner.web.NotificationType;
 import org.lework.runner.web.datatables.DataTableResult;
 import org.lework.runner.web.easyui.TreeResult;
@@ -67,14 +68,14 @@ public class RoleController extends AbstractController {
                        HttpServletResponse response) {
 
         if (result.hasErrors()) {
-            actionCallback(response, "保存失败!" + result.toString() , null, NotificationType.ERROR);
+            callback(response, CallbackData.build("actionCallback", "操作提示", "角色&quot;" + role.getName() + "&quot;保存失败" + result.toString(), NotificationType.ERROR));
         }
         try {
             roleService.saveRole(role);
-            actionCallback(response, "保存成功!", null, NotificationType.SUCCESS);
+            callback(response, CallbackData.build("actionCallback", "操作提示", "角色&quot;" + role.getName() + "&quot;保存成功", NotificationType.SUCCESS));
         }catch (Exception e){
             e.printStackTrace();
-            actionCallback(response, "保存失败!" + e.toString(), null, NotificationType.ERROR);
+            callback(response, CallbackData.build("actionCallback", "操作提示", "角色&quot;" + role.getName() + "&quot;保存失败" + e.toString(), NotificationType.ERROR));
         }
 
     }
@@ -90,18 +91,19 @@ public class RoleController extends AbstractController {
         try {
             //单个删除
             if(Strings.isNotBlank(deleteId)){
-                roleService.deleteRole(deleteId);
-                actionCallback(response, "删除成功!", null, NotificationType.SUCCESS);
+                Role entity = roleService.getRole(deleteId);
+                roleService.deleteRole(entity);
+                callback(response, CallbackData.build("deleteCallback", "操作提示",
+                        "角色&quot;" + entity.getName() + "&quot;删除成功", NotificationType.SUCCESS));
             }else if(Strings.isNotBlank(deleteIds)){   //多个删除
                String []  ids  = Strings.split(deleteIds,",");
                roleService.deleteRoles(ids);
-                actionCallback(response, "删除多条成功!", null, NotificationType.SUCCESS);
+                callback(response, CallbackData.build("deleteCallback", "操作提示", "删除多个成功", NotificationType.SUCCESS));
             }
-
 
         } catch (Exception e) {
             e.printStackTrace();
-            actionCallback(response, "删除失败!" + e.toString(), null, NotificationType.ERROR);
+            callback(response, CallbackData.build("deleteCallback", "操作提示", "角色删除失败!" + e.toString(), NotificationType.ERROR));
         }
 
     }

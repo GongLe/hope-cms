@@ -2,11 +2,13 @@ package org.lework.core.web.account;
 
 import com.google.common.collect.Lists;
 import org.lework.core.common.enumeration.Status;
+import org.lework.core.entity.menu.Menu;
 import org.lework.core.entity.user.User;
 import org.lework.core.service.account.AccountService;
 import org.lework.runner.orm.support.SearchFilter;
 import org.lework.runner.utils.Strings;
 import org.lework.runner.web.AbstractController;
+import org.lework.runner.web.CallbackData;
 import org.lework.runner.web.NotificationType;
 import org.lework.runner.web.datatables.DataTableResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,14 +63,14 @@ public class UserController  extends AbstractController {
                        HttpServletResponse response) {
 
         if (result.hasErrors()) {
-            actionCallback(response, "保存失败!" + result.toString() , null, NotificationType.ERROR);
+            callback(response, CallbackData.build("actionCallback", "操作提示", "&quot;" + user.getName() + "&quot;保存失败" + result.toString(), NotificationType.ERROR));
         }
         try {
             accountService.saveUser(user);
-            actionCallback(response, "用户保存成功!", null, NotificationType.SUCCESS);
-        }catch (Exception e){
+            callback(response, CallbackData.build("actionCallback", "操作提示", "&quot;" + user.getName() + "&quot;保存成功", NotificationType.SUCCESS));
+        } catch (Exception e) {
             e.printStackTrace();
-            actionCallback(response, "保存失败!" + e.toString(), null, NotificationType.ERROR);
+            callback(response, CallbackData.build("actionCallback", "操作提示", "&quot;" + user.getName() + "&quot;保存失败" + e.toString(), NotificationType.ERROR));
         }
 
     }
@@ -84,19 +86,20 @@ public class UserController  extends AbstractController {
 
         try {
             //单个删除
-            if(Strings.isNotBlank(deleteId)){
-                accountService.deleteUser(deleteId);
-                actionCallback(response, "删除成功!", null, NotificationType.SUCCESS);
-            }else if(Strings.isNotBlank(deleteIds)){   //多个删除
-                String []  ids  = Strings.split(deleteIds,",");
+            if (Strings.isNotBlank(deleteId)) {
+                User  entity = accountService.getUser(deleteId);
+                accountService.deleteUser(entity);
+                callback(response, CallbackData.build("deleteCallback", "操作提示",
+                        "用户&quot;" + entity.getName() + "&quot;删除成功", NotificationType.SUCCESS));
+            } else if (Strings.isNotBlank(deleteIds)) {   //多个删除
+                String[] ids = Strings.split(deleteIds, ",");
                 accountService.deleteUsers(ids);
-                actionCallback(response, "删除多条成功!", null, NotificationType.SUCCESS);
+                callback(response, CallbackData.build("deleteCallback", "操作提示", "删除多个用户成功", NotificationType.SUCCESS));
             }
-
 
         } catch (Exception e) {
             e.printStackTrace();
-            actionCallback(response, "删除失败!" + e.toString(), null, NotificationType.ERROR);
+            callback(response, CallbackData.build("deleteCallback", "操作提示", "用户删除失败!" + e.toString(), NotificationType.ERROR));
         }
 
     }

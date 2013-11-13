@@ -116,7 +116,7 @@ $(function () {
              */
             lework.notify = function (title, message, type) {
                 var opts = {
-                    title: title || '',
+                    title: title || '提示',
                     text: message || '',
                     shadow: false,
                 //  addclass: "stack-topright",

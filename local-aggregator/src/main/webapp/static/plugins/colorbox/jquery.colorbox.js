@@ -359,7 +359,7 @@
              /**@author Gongle 模仿Chrome设置弹出层放大效果.
               * 仅支持Chrome
               * **/
-             if($.browser.webkit) {
+          //   if($.browser.webkit) {
                  $overlay.off('click.lework').on('click.lework', function (event) {
                         event.preventDefault();
                         $box.addClass('pulse') ;
@@ -368,7 +368,7 @@
                         }
                         window.TimeoutRemovePulse = setTimeout(function(){$box.removeClass('pulse') ;},800) ;
                     });
-             }
+            // }
 
 			if (className) {
 				$box.add($overlay).removeClass(className);

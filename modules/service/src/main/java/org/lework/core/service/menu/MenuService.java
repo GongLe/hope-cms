@@ -91,4 +91,16 @@ public interface MenuService {
      * @return
      */
     public  List<TreeResult>  getMenuTree(List<Menu> ignore);
+
+    /**
+     * 同级兄弟节点 上移排序
+     * @param entity
+     */
+    public void upSortNum(Menu entity);
+
+    /**
+     * 同级兄弟节点,下移序号
+     * @param entity
+     */
+    public void downSortNum(Menu entity);
 }
