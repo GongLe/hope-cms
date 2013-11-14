@@ -54,6 +54,10 @@ public interface MenuService {
      */
     public List<Menu> getRoleMenus(Role role) ;
 
+    /**
+     * 新增操作时,默认序号为{同级节点最大值}+1
+     * @param entity
+     */
     public void saveMenu(Menu entity);
 
     public void deleteMenu(String id);

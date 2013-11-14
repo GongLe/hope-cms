@@ -105,6 +105,7 @@
 <!--插件全局设置 -->
 <le:javascript src="${src}/plugins/lework.plugins.setting.js" />
 <le:javascript src="${src}/plugins/lework.utils.js" />
+<le:javascript src="${src}/plugins/lework.jquery.hiddenSubmit.js" />
 
 <!-- jquery easyui loader-->
 <script src="${src}/plugins/easyui/1.3.2/easyloader.js" ></script>

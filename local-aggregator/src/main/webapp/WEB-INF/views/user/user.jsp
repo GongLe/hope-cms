@@ -83,7 +83,7 @@
             oTable.fnDraw();
             lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
         };
-        window.deleteCallback = function () {
+        window.deleteCallback = function (resp) {
             $.colorbox.close();
             oTable.fnDraw();
             lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
@@ -128,6 +128,7 @@
             'bServerSide': true,
             'fnServerData': lework.springDataJpaPageableAdapter,
             'sAjaxSource': '${ctx}/user/getDatatablesJson',
+            // 'fnServerParams' :function(aoData ){ aoData.push( { "name": "more_data", "value": "my_value" } ); },
             'fnInitComplete': function () {     /**datatables ready**/
 
                 lework.initDatatablesSearchHolder('用户名/姓名');
@@ -137,13 +138,16 @@
                 // bootstrap-tooltip
                 $('.tooltips').tooltip();
                 $('.confirmDelete').confirmDelete({onDelete: function () {
-                    $('#hiddenForm').prop({   //提交隐藏的表单域.
-                        'target': '$iframe',
-                        action: 'user/delete?deleteId=' + $(this).data('id')
-                    }).submit();
+                    var id = $(this).data('id') ;
+                    $.hiddenSubmit({
+                        formAction: 'user/delete',
+                        data: [  {name: 'deleteId', value:  id } ],
+                        complete : function(){  checkFunbarStatus(false); }
+                    })
                     return true;
-                   }
+                 }
                 });
+
             }
         });//dataTables
 
@@ -151,7 +155,7 @@
         oTable.tableMutilDelete({
             afterSelect: function () {
                 var size = oTable.find('tr.selected').size();
-                checkIconStatus(size > 0);
+                checkFunbarStatus(size > 0);
             }
         });
 
@@ -169,7 +173,7 @@
         $('#refresh-function').click(function () {
             oTable.fnDraw();
             //重置function bar状态
-            checkIconStatus(false);
+            checkFunbarStatus(false);
         });
         //双击进入修改页面
         oTable.on('dblclick','tbody>tr',function(event){
@@ -186,27 +190,27 @@
                     ids.push($(this).data('id'))
                 });
                 ids = ids.join(',');
-                $('#hiddenForm').prop({   //提交隐藏的表单域.
-                    'target': '$iframe',
-                    action: 'user/delete?deleteIds=' + ids
-                }).submit();
-                checkIconStatus(false)
+                $.hiddenSubmit({
+                    formAction: 'user/delete',
+                    data: [  {name: 'deleteIds', value: ids } ] ,
+                    complete : function(){  checkFunbarStatus(false); }
+                })
             return true;
         }
         });
         //取消选择
         $('#cancelSelected').click(function () {
             oTable.find('tbody>tr').removeClass('selected warning');
-            checkIconStatus(false);
+            checkFunbarStatus(false);
         });
         //全选行
         $('#selectedAll').click(function () {
             oTable.find('tbody>tr').addClass('selected warning')
-            checkIconStatus(true);
+            checkFunbarStatus(true);
         });
 
         //根据所选行,修改function bar状态.
-        function checkIconStatus(hasSelected) {
+        function checkFunbarStatus(hasSelected) {
             if (hasSelected == true) {
                 $('#checkIcon').removeClass('icon-check-empty').addClass('icon-check')
                 $('#delete-function').show();

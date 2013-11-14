@@ -12,5 +12,14 @@
         lework.log = function (info) {
             lework.hasConsole  && window.console.log(info);
         };
+        var hiddenSubmitDefault = {
+            action :'',
+            method: 'POST',
+            target :'',
+            param : [], //[{'name':'{name}','value':'{value}',]
+            onSubmit : null,
+            afterSubmit :null
+        };
+
         return lework;
     })(window.lework || {}); // closure

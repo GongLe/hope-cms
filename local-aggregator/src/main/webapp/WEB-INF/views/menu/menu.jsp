@@ -117,7 +117,7 @@ $(function(){
                 ]
             ],
             onClickRow: function (row) {
-                checkIconStatus(true)
+                checkFunbarStatus(true)
             },
             onDblClickRow: function (row) {
                 //双击编辑
@@ -149,21 +149,24 @@ $(function(){
     })
     //监听序号调整
     var listenerSortAction = function(){
-
+        var id ;
         $('.sortNumAction' ,'#menuTreeGridWrap').click(function(event){
             event.preventDefault() ;
             if($(this).hasClass('up')){   //上移
                 $.blockUI();
-                $('#hiddenForm').prop({   //提交隐藏的表单域.
-                    'target': '$iframe',
-                    'action': 'menu/upSortNum?id=' + $(this).data('id')
-                }).submit();
+                id = $(this).data('id');
+                $.hiddenSubmit({
+                    formAction: 'menu/upSortNum',
+                    data: [  {name: 'id', value: id } ]
+                })
+
             } else if ($(this).hasClass('down')){  //下移
                 $.blockUI();
-                $('#hiddenForm').prop({   //提交隐藏的表单域.
-                    'target': '$iframe',
-                    'action': 'menu/downSortNum?id='  + $(this).data('id')
-                }).submit();
+                id = $(this).data('id');
+                $.hiddenSubmit({
+                    formAction: 'menu/downSortNum',
+                    data: [  {name: 'id', value: id } ]
+                })
             }
         })
     }  //listenerSortAction
@@ -182,22 +185,18 @@ $(function(){
     $('#refresh-function').click(function () {
         $('#menuTreeGrid').treegrid('reload');
         //重置function bar状态
-        checkIconStatus(false);
+        checkFunbarStatus(false);
     });
 
     //删除widget
     $('#delete-function').confirmDelete({text: '<span class="text-warning">确认删除？</span>',
         onDelete: function () {
             var row = $('#menuTreeGrid').treegrid('getSelected');
-            if(!row){
-                return lework.notify('操作提示','请选择要删除的记录')
-            }
-
-            $('#hiddenForm').prop({   //提交隐藏的表单域.
-                'target': '$iframe',
-                 action: 'menu/delete?deleteId=' + row.id
-            }).submit();
-            checkIconStatus(false);
+            $.hiddenSubmit({
+                formAction: 'menu/delete',
+                data: [  {name: 'deleteId', value: row.id } ],
+                complete : function(){  checkFunbarStatus(false); }
+            })
             return true;
         }
     });
@@ -212,7 +211,7 @@ $(function(){
     }
 
     //根据所选行,修改function bar状态.
-    function checkIconStatus(hasSelected) {
+    function checkFunbarStatus(hasSelected) {
         if (hasSelected == true) {
             $('#delete-function').show();
         } else {

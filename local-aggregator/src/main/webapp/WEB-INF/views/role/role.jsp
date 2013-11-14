@@ -129,21 +129,24 @@
             'bServerSide': true,
             'fnServerData': lework.springDataJpaPageableAdapter,
             'sAjaxSource': '${ctx}/role/getDatatablesJson',
+           // 'fnServerParams' :function(aoData ){ aoData.push( { "name": "more_data", "value": "my_value" } ); },
             'fnInitComplete': function () {     /**datatables ready**/
 
                 lework.initDatatablesSearchHolder('名称/值');
 
             } ,
             fnDrawCallback :function(oSettings ){
-                lework.log('DataTables has redrawn the table') ;
+               // lework.log('DataTables has redrawn the table') ;
                 // bootstrap-tooltip
                 $('.tooltips').tooltip();
                 $('.confirmDelete').confirmDelete({onDelete: function () {
-                    $('#hiddenForm').prop({   //提交隐藏的表单域.
-                        'target': '$iframe',
-                        action: 'role/delete?deleteId=' + $(this).data('id')
-                    }).submit();
-                    return true;
+                    var id = $(this).data('id') ;
+                    $.hiddenSubmit({
+                        formAction: 'role/delete',
+                        data: [  {name: 'deleteId', value:  id } ],
+                        complete : function(){  checkFunbarStatus(false); }
+                    })
+                     return true;
                    }
                 });
             }
@@ -153,7 +156,7 @@
         oTable.tableMutilDelete({
             afterSelect: function () {
                 var size = oTable.find('tr.selected').size();
-                checkIconStatus(size > 0);
+                checkFunbarStatus(size > 0);
             }
         });
 
@@ -187,27 +190,27 @@
                     ids.push($(this).data('id'))
                 });
                 ids = ids.join(',');
-                $('#hiddenForm').prop({   //提交隐藏的表单域.
-                    'target': '$iframe',
-                    action: 'role/delete?deleteIds=' + ids
-                }).submit();
-                checkIconStatus(false)
+                $.hiddenSubmit({
+                    formAction: 'role/delete',
+                    data: [  {name: 'deleteIds', value: ids } ] ,
+                    complete : function(){  checkFunbarStatus(false); }
+                })
             return true;
         }
         });
         //取消选择
         $('#cancelSelected').click(function () {
             oTable.find('tbody>tr').removeClass('selected warning');
-            checkIconStatus(false);
+            checkFunbarStatus(false);
         });
         //全选行
         $('#selectedAll').click(function () {
             oTable.find('tbody>tr').addClass('selected warning')
-            checkIconStatus(true);
+            checkFunbarStatus(true);
         });
 
         //根据所选行,修改function bar状态.
-        function checkIconStatus(hasSelected) {
+        function checkFunbarStatus(hasSelected) {
             if (hasSelected == true) {
                 $('#checkIcon').removeClass('icon-check-empty').addClass('icon-check')
                 $('#delete-function').show();

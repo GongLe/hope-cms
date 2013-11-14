@@ -86,14 +86,14 @@ public abstract class AbstractController {
      * @param response
      * @param callbackData 回调函数参数POJO
      */
-    protected void callback( HttpServletResponse response,CallbackData callbackData) {
-
-
+    protected void callback(HttpServletResponse response, CallbackData callbackData) {
         try {
+            response.setContentType("text/html");
+            response.setCharacterEncoding("UTF-8");
             Writer out = response.getWriter();
             out.flush();
             out.write("<script> \n ");
-            out.write("var actionParam = " + callbackData.toJson()  + " ; \n");
+            out.write("var actionParam = " + callbackData.toJson() + " ; \n");
             out.write("self.parent." + callbackData.getFunctionName() + " && self.parent." + callbackData.getFunctionName() + "(actionParam) ; \n");
             out.write("</script>");
         } catch (IOException e) {

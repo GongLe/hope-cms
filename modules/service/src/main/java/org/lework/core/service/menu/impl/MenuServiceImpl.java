@@ -65,16 +65,18 @@ public class MenuServiceImpl implements MenuService {
                 temp = next.getSortNum();
                 next.setSortNum(entity.getSortNum());
                 entity.setSortNum(temp);
+                menuDao.save(next) ;
+                menuDao.save(entity) ;
             }
         }
-        menuDao.save(entity) ;
+
     }
 
     @Override
     public void upSortNum(Menu entity) {
         List<Menu> siblings;
-        int curIndex  ;
-        Integer temp  ;
+        int curIndex;
+        Integer temp;
         Menu previous;
         //如果是根节点
         if (!entity.hasParent()) {
@@ -82,7 +84,7 @@ public class MenuServiceImpl implements MenuService {
         } else {  //非根节点时,根据parentId获取同级所有节点
             siblings = menuDao.findChildMenusByParentId(entity.getParentId());
         }
-        if (Collections3.isNotEmpty(siblings) && siblings.size() > 2) {
+        if (Collections3.isNotEmpty(siblings) && siblings.size() > 1) {
             curIndex = siblings.indexOf(entity);
             if (curIndex > 0) {
                 previous = siblings.get(curIndex - 1);
@@ -90,9 +92,10 @@ public class MenuServiceImpl implements MenuService {
                 temp = previous.getSortNum();
                 previous.setSortNum(entity.getSortNum());
                 entity.setSortNum(temp);
+                menuDao.save(previous);
+                menuDao.save(entity);
             }
         }
-        menuDao.save(entity) ;
     }
 
     @Override
@@ -152,6 +155,15 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public void saveMenu(Menu entity) {
+        Integer curSortNum;
+        if (entity.isNew()) { //新增操作,默认序号为{同级节点最大值}+1
+            if (!entity.hasParent()) {  //root node
+                curSortNum = menuDao.findRootMaxSortNum();
+            } else {
+                curSortNum = menuDao.findChildMaxSortNum(entity.getParentId());
+            }
+            entity.setSortNum(curSortNum);
+        }
         menuDao.save(entity);
     }
 
