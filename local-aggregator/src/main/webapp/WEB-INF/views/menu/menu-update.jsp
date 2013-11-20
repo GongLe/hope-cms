@@ -12,9 +12,9 @@
     <form action="menu/update"  method="post" id="inputForm" name="inputForm" target="$iframe"
           class="no-margin form-horizontal offset-30 error-inline" >
         <div class="modal-header" style="padding:5px 20px 5px 20px;">
-            <small class="grey">
+            <h3>
                 正在<c:if test="${entity.isNew == true}" >新建菜单</c:if><c:if test="${entity.isNew ==false}" >编辑菜单“${entity.name}”</c:if>
-            </small>
+            </h3>
         </div>
 
         <div class="modal-body ">
@@ -27,13 +27,13 @@
                     <div class="control-group">
                         <label class="control-label " for="name">菜单名称</label>
                         <div class="controls">
-                            <input  class="input-xlarge" type="text" id="name" name="name"   value="${entity.name}" placeholder="输入菜单名称">
+                            <input autocomplete="off"  class="input-xlarge" type="text" id="name" name="name"   value="${entity.name}" placeholder="输入菜单名称">
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="code">菜单代码</label>
                         <div class="controls">
-                            <input class="input-xlarge" type="text" id="code" name="code" value="${entity.code}" placeholder="输入菜单代码">
+                            <input  autocomplete="off" class="input-xlarge" type="text" id="code" name="code" value="${entity.code}" placeholder="输入菜单代码">
                         </div>
                     </div>
                     <div class="control-group">
@@ -63,7 +63,8 @@
                     <div class="control-group">
                         <label class="control-label" for="icon">icon</label>
                         <div class="controls">
-                            <input class="input-xlarge" type="text" id="icon" name="icon" value="${entity.icon}" placeholder="输入菜单icon">
+                            <input class="input-xlarge" type="text" id="icon" name="icon" value="${entity.icon}"
+                                   placeholder="输入菜单icon">
                             <div class="help-inline">
                                 <a href="javascript:;" id="selectIcon" class="smaller-90" title="Icons"
                                    onclick="$(this).text($(this).text() == '选择' ? '关闭' : '选择' );">选择</a>
@@ -75,70 +76,74 @@
             </div>
         </div><!--/.modal-body-->
         <div class="modal-footer">
-            <button type="button" class="btn btn-small" onclick="$.colorbox.close()">
-                <i class="icon-remove"></i>
-                关闭
-            </button>
-
-            <button type="submit" class="btn btn-small btn-primary" >
-                <i class="icon-ok"></i>
+            <button id="submitBtn" type="submit" class="btn btn-small btn-primary" >
                 保存
+            </button>
+            <button type="button" class="btn btn-small" onclick="$.colorbox.close()">
+                关闭
             </button>
         </div>
     </form>
 </div>
 <script>
+
     $(function(){
         //页面icon弹出层回调
         window.selectIconCallback = function () {
             $('#icon', '#inputForm').val($(this).prop('class'));
         }
         //from validater
-        $('#inputForm').validate({rules: {
-            name: {
-                required: true,
-                normalChar :true,
-                maxlength: 50
+        $('#inputForm').validate({
+            submitHandler: function (form) {
+                $('#submitBtn').prop('disable',true).text('保存中....')
+                 form.submit() ;
             },
-            code : {
-                required: true ,
-                maxlength: 50,
-                account :true,
-                remote: {
-                    url: 'menu/validateMenuCode', //后台处理程序
-                    type: 'post',               //数据发送方式
-                    dataType: 'json',           //接受数据格式
-                    data: {                     //要传递的数据
-                        menuId  : function() {
-                            return $('#id').val() ;
+            rules: {
+                name: {
+                    required: true,
+                    normalChar: true,
+                    maxlength: 50
+                },
+                code: {
+                    required: true,
+                    maxlength: 50,
+                    account: true,
+                    remote: {
+                        url: 'menu/validateMenuCode', //后台处理程序
+                        type: 'post',               //数据发送方式
+                        dataType: 'json',           //接受数据格式
+                        data: {                     //要传递的数据
+                            menuId: function () {
+                                return $('#id').val();
+                            }
                         }
                     }
+                },
+                url: {
+                    required: true,
+                    maxlength: 200
+                },
+                status: {
+                    required: true
                 }
-            },
-            url: {
-                required: true ,
-                maxlength : 200
-            },
-            status :{
-                required:true
+            }, messages: {
+                code: {
+                    remote: '该值已被占用'
+                }
             }
-        }, messages: {
-            code:{
-                remote :'该值已被占用'
-            }
-        }
         }); //end validate
 
-        using(['combotree'], function () {
-            $('#parentId').combotree({
-                url: 'menu/getTree?ignoreNodeId=${entity.id}',
-                method: 'get',
-                onSelect: function (node) {
-                  //  $('#parentId').val(node.id);
-                }
-            });
-        })
-
+        setTimeout(function () {
+            using(['combotree'], function () {
+                $('#parentId').combotree({
+                    url: 'menu/getTree?ignoreNodeId=${entity.id}',
+                    method: 'get',
+                    onLoadSuccess: function () {
+                      //  $('.combo-text', '#inputForm').data('rule-required', false); //修复IE8 validate
+                    }
+                });
+            }) //using
+        }, 100);//timeout
 
         $('#selectIcon').on('click.popover',function (e) {
             e.preventDefault();

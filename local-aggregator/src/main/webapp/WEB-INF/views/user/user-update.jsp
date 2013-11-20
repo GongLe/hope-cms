@@ -17,10 +17,9 @@
             </small>
         </div>
 
-<div class="modal-body ">
+<div class="modal-body" id="userInputBody">
     <div class="row-fluid ">
-      <div class="span9" >
-
+      <div class="span12" >
         <!--隐藏域-->
         <form:hidden path="entity.id" />
           <div class="control-group">
@@ -47,7 +46,24 @@
                   </div>
               </div>
           </div>
-
+          <div class="control-group">
+              <label class="control-label" for="orgId">所属部门</label>
+              <div class="controls">
+                  <input type="text" id="orgId" name="orgId"  value="${entity.org.id}"  style="width:284px;height:28px;" >
+                  <div class="help-inline">
+                      <a href="javascript:;" onclick="$('#inputForm #orgId').combotree('clear');">清空</a>
+                  </div>
+              </div>
+          </div>
+          <div class="control-group">
+              <label class="control-label" for="orgId">所属角色</label>
+              <div class="controls">
+                  <input type="text" id="roleIds" name="roleIds" value="${ownRoleIds}"  style="width:284px;height:28px;" >
+                  <div class="help-inline">
+                      <a href="javascript:;" onclick="$('#inputForm #roleIds').combotree('clear');">清空</a>
+                  </div>
+              </div>
+          </div>
 
           <div class="control-group">
               <label class="control-label " for="email">Email</label>
@@ -71,30 +87,33 @@
               </div>
           </div>
       </div>
-        <div class="span3">
-            <h5 class="header smaller lighter red no-margin-top no-margin-bottom no-border">所属角色</h5>
-            <div class="well" style="min-height:230px;max-height:300px;">
-                <ul id="roleTree" ></ul>
-            </div>
-        </div>
+
     </div> <!--/.row-fluid-->
 </div><!--/.modal-body-->
         <div class="modal-footer">
-            <button type="button" class="btn btn-small" onclick="$.colorbox.close()">
-                <i class="icon-remove"></i>
-                关闭
-            </button>                                                                                                      <%--仅修改时可见--%>
-            <button type="submit" class="btn btn-small btn-primary" >
-                <i class="icon-ok"></i>
+            <button id="submitBtn" type="submit" class="btn btn-small btn-primary" >
                 保存
             </button>
+            <button type="button" class="btn btn-small" onclick="$.colorbox.close()">
+                关闭
+            </button>                                                                                                      <%--仅修改时可见--%>
+
         </div>
     </form>
 </div>
 <script>
     $(function(){
+        $('#userInputBody').slimscroll({
+            height:'400px'
+        }); //slimscroll
+
         //from validater
-        $('#inputForm').validate({rules: {
+        $('#inputForm').validate({
+            submitHandler: function (form) {
+                $('#submitBtn').prop('disable', true).text('保存中....')
+                form.submit();
+            },
+            rules: {
             name: {
                 required: true,
                 normalChar :true,
@@ -147,20 +166,34 @@
             }
         }
        }); //end validate
-        //easyui loader
-        using(['tree'], function () {
-            $('#roleTree').tree({
-                url: 'role/getTreeJson',
-                method: 'get',
-                checkbox: true ,
-                onLoadSuccess : function(node, data){
-
-                },
-                onCheck : function(node, checked){
-
-                }
-            });
-        })
+        setTimeout(function () {
+            //easyui loader
+            using([ 'combotree'], function () {
+                $('#inputForm #roleIds').combotree({
+                    url: 'role/getTree',
+                    method: 'get',
+                    checkbox: true ,
+                    multiple:true ,
+                    onLoadSuccess : function(node, data){
+                        var ids = ${ownRoleIdsArr};
+                        if(ids) {
+                            $('#inputForm #roleIds').combotree('setValues', ids );
+                        }
+                    },
+                    onCheck : function(node, checked){
+                    }
+                });
+                //所属部门
+                $('#inputForm #orgId').combotree({
+                    url: 'organization/getTree?',
+                    method: 'get',
+                    onSelect: function (node) {
+                    },
+                    onLoadSuccess: function () {
+                    }
+                });
+            })
+        }, 100);//timeout
 
     })
 </script>

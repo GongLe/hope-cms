@@ -3,6 +3,7 @@ package org.lework.core.web.menu;
 import com.google.common.collect.Lists;
 import org.lework.core.common.enumeration.Status;
 import org.lework.core.entity.menu.Menu;
+import org.lework.core.entity.organization.Organization;
 import org.lework.core.entity.role.Role;
 import org.lework.core.service.menu.MenuService;
 import org.lework.core.service.menu.MenuTreeGridDTO;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -55,7 +57,7 @@ public class MenuController extends AbstractController {
      * 修改页面
      */
     @RequestMapping(value = "/update", method = RequestMethod.GET)
-    public String update(@ModelAttribute("entity") Menu menu ,Model model){
+    public String update(@ModelAttribute("entity") Menu entity ,Model model){
         model.addAttribute("statusList" , Status.values() ) ;
 
         return  "menu/menu-update" ;
@@ -65,28 +67,28 @@ public class MenuController extends AbstractController {
      * 保存
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public void update(@Valid @ModelAttribute("entity") Menu menu, BindingResult result,
-                       @RequestParam(value = "parentId" ,required = false) String parentId ,
+    public void update(@Valid @ModelAttribute("entity") Menu entity, BindingResult result,
+                       @RequestParam(value = "parentId", required = false) String parentId,
                        HttpServletResponse response) {
 
         if (result.hasErrors()) {
-            callback(response, CallbackData.build("actionCallback", "操作提示", "菜单&quot;" + menu.getName() + "&quot;保存失败" + result.toString(), NotificationType.ERROR));
+            callback(response, CallbackData.build("actionCallback", "操作提示", "菜单&quot;" + entity.getName() + "&quot;保存失败" + result.toString(), NotificationType.ERROR));
         }
         //关联父类
         Menu parent = menuService.getMenu(parentId);
         if (parent != null) {
-            menu.setParentMenu(parent);
-            menu.setParentName(parent.getName());
+            entity.setParentMenu(parent);
+            entity.setParentName(parent.getName());
         } else { //取消关联
-            menu.setParentMenu(null);
-            menu.setParentName(null);
+            entity.setParentMenu(null);
+            entity.setParentName(null);
         }
         try {
-            menuService.saveMenu(menu);
-            callback(response, CallbackData.build("actionCallback", "操作提示", "菜单&quot;" + menu.getName() + "&quot;保存成功", NotificationType.SUCCESS));
+            menuService.saveMenu(entity);
+            callback(response, CallbackData.build("actionCallback", "操作提示", "菜单&quot;" + entity.getName() + "&quot;保存成功", NotificationType.SUCCESS));
         } catch (Exception e) {
             e.printStackTrace();
-            callback(response, CallbackData.build("actionCallback", "操作提示", "菜单&quot;" + menu.getName() + "&quot;保存失败" + e.toString(), NotificationType.ERROR));
+            callback(response, CallbackData.build("actionCallback", "操作提示", "菜单&quot;" + entity.getName() + "&quot;保存失败" + e.toString(), NotificationType.ERROR));
         }
 
     }
@@ -95,8 +97,8 @@ public class MenuController extends AbstractController {
      * 删除
      */
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public void delete(@RequestParam(value = "deleteId" ,required = false) String deleteId,
-                       @RequestParam(value = "deleteIds" ,required = false) String deleteIds,
+    public void delete(@RequestParam(value = "deleteId", required = false) String deleteId,
+                       @RequestParam(value = "deleteIds", required = false) String deleteIds,
                        HttpServletResponse response) {
 
         try {
@@ -108,13 +110,16 @@ public class MenuController extends AbstractController {
                         "菜单&quot;" + entity.getName() + "&quot;删除成功", NotificationType.SUCCESS));
             } else if (Strings.isNotBlank(deleteIds)) {   //多个删除
                 String[] ids = Strings.split(deleteIds, ",");
-                menuService.deleteMenus(ids);
-                callback(response, CallbackData.build("deleteCallback", "操作提示", "菜单删除成功", NotificationType.SUCCESS));
+
+                List<Menu> entities = menuService.getMenusByIds(Arrays.asList(ids));
+                List<String> names = Collections3.extractToList(entities, "name");
+                //callback(response, CallbackData.build("deleteCallback", "操作提示", "菜单删除成功", NotificationType.SUCCESS));
+                callback(response, CallbackData.build("deleteCallback", "操作提示", "菜单&quot;" + Strings.join(names, ",") + "&quot;删除成功", NotificationType.SUCCESS));
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            callback(response, CallbackData.build("deleteCallback", "操作提示","菜单删除失败!" + e.toString(), NotificationType.ERROR));
+            callback(response, CallbackData.build("deleteCallback", "操作提示", "菜单删除失败!" + e.toString(), NotificationType.ERROR));
         }
 
     }
@@ -167,13 +172,8 @@ public class MenuController extends AbstractController {
         callback(response, CallbackData.build("doSortNumCallback", "操作提示", "菜单&quot;"+ menu.getName() +"&quot;序号下移成功", NotificationType.SUCCESS));
     }
 
-    /**======================
-     *       ajax json data
-     * ======================
-     **/
-
     /**
-     * 验证角色代码是否可用
+     * ajax验证角色代码是否可用
      *
      * @return JSON true || false
      */
@@ -187,7 +187,7 @@ public class MenuController extends AbstractController {
 
 
     /**
-     * datatables  json result*
+     * ajax : datatables  json result*
      */
     @RequestMapping(value = "/getDatatablesJson", method = {RequestMethod.GET, RequestMethod.POST})
     public
@@ -229,8 +229,8 @@ public class MenuController extends AbstractController {
     @ResponseBody
      List<TreeResult>  getTree(@RequestParam(value = "ignoreNodeId", required = false) String ignoreNodeId) {
         List<Menu> ignoreNodes = menuService.getSelfAndChildMenus(ignoreNodeId);
-        TreeResult root = new TreeResult("root","上级菜单",Strings.EMPTY,"root") ;
-        root.getChildren().addAll( menuService.getMenuTree(ignoreNodes))  ;
+       /* TreeResult root = new TreeResult("root","上级菜单",Strings.EMPTY,"root") ;
+        root.getChildren().addAll( menuService.getMenuTree(ignoreNodes))  ;*/
         return  menuService.getMenuTree(ignoreNodes) ;
     }
 

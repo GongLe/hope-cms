@@ -6,8 +6,10 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.lework.core.entity.AuditorEntity;
 import org.lework.core.entity.menu.Menu;
+import org.lework.core.entity.organization.OrgTypes;
 import org.lework.core.entity.permission.Permission;
 import org.lework.core.entity.user.User;
+import org.lework.runner.utils.Strings;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,11 +29,22 @@ public class Role extends AuditorEntity {
     /**角色代码**/
     private String code;
     private String status;
+    private String type;
+    /**角色所属组**/
+    private String groupId;
+    /**组名**/
+    private String groupName;
     private String description;
+    private Integer sortNum;
     private List<User> users = new ArrayList<User>();
     private List<Permission> permissions = new ArrayList<Permission>();
     private List<Menu> menus = new ArrayList<Menu>() ;
 
+    @Transient
+    public String getTypeName() {
+
+        return Strings.isNotBlank(getType()) ? RoleTypes.parse(getType()).getName() : Strings.EMPTY;
+    }
     @NotBlank
     public String getName() {
         return name;
@@ -65,6 +78,38 @@ public class Role extends AuditorEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getSortNum() {
+        return sortNum;
+    }
+
+    public void setSortNum(Integer sortNum) {
+        this.sortNum = sortNum;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     @JsonIgnore

@@ -1,15 +1,18 @@
 package org.lework.core.entity.organization;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.lework.core.entity.AuditorEntity;
+import org.lework.core.entity.Status;
 import org.lework.runner.utils.Collections3;
+import org.lework.runner.utils.Strings;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import java.util.List;
 
 /**
  * 组织机构Entity
@@ -18,33 +21,43 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "SS_ORGANIZATION")
-//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Organization extends AuditorEntity {
 
     /** 组织代码**/
     private String code;
-
     /** 组织名称**/
     private String name;
-
     /**组织简称*/
     private String shortName;
-
-
-    /** 主管姓名**/
+    /** 负责人**/
     private String manager;
-
+    /** 副负责人**/
+    private String assistantManager;
     /**联系电话**/
     private String phone;
-
+    /**内线**/
+    private String innerPhone;
     /**传真**/
     private String fax;
+    /**邮编**/
+    private String postalCode;
+    /**网址**/
+    private String url;
+    /**地址**/
+    private String address;
+    /**描述说明**/
+    private String description;
 
-    /** 组织机构类型编码**/
+    /**
+     <option value="corporation">集团</option>
+     <option value="region">区域</option>
+     <option value="company">公司</option>
+     <option value="subCompany">子公司</option>
+     <option value="part">部门</option>
+     <option value="subPart">子部门</option>
+     <option value="team">工作组</option>
+     */
     private String type;
-
-    /**系统内部编码*/
-    private String syscode;
 
     /**组织状态**/
     private String status  ;
@@ -55,27 +68,52 @@ public class Organization extends AuditorEntity {
      */
     private Integer isleaf  ;
     /** 排序**/
-    private String  sortNum;            //排序
+    private Integer  sortNum;            //排序
 
+    private String parentName;
     /**
      * 上级组织
      */
     private Organization parentOrganization;
 
+    private List<Organization> childrenOrganizations;    //下级菜单
+
+    @Transient
+    public boolean hasChild() {
+        return Collections3.isNotEmpty(getChildrenOrganizations());
+    }
+
+    @Transient
+    public String getParentId() {
+        Organization parent = getParentOrganization();
+        return parent != null ? parent.getId() : Strings.EMPTY;
+    }
 
     @Transient
     public boolean hasParent() {
         return getParentOrganization() != null;
     }
 
+    @Transient
+    public String getTypeName() {
 
-    public String getSortNum() {
+        return Strings.isNotBlank(getType()) ? OrgTypes.parse(getType()).getName() : Strings.EMPTY;
+    }
+    @Transient
+    public String getStatusName() {
+
+        return Strings.isNotBlank(getStatus()) ? Status.parse(getStatus()).getName() : Strings.EMPTY;
+    }
+
+
+    public Integer getSortNum() {
         return sortNum;
     }
 
-    public void setSortNum(String sortNum) {
+    public void setSortNum(Integer sortNum) {
         this.sortNum = sortNum;
     }
+
     @NotBlank
     public String getCode() {
         return code;
@@ -134,14 +172,6 @@ public class Organization extends AuditorEntity {
         this.type = type;
     }
 
-    public String getSyscode() {
-        return syscode;
-    }
-
-    public void setSyscode(String syscode) {
-        this.syscode = syscode;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -161,17 +191,105 @@ public class Organization extends AuditorEntity {
 
     @JsonIgnore
     @ManyToOne
-    @JoinTable(
-            name = "SS_ORGANIZATION_ORGANIZATION",
-            joinColumns = {@JoinColumn(name = "FK_ORGANIZATION_ID", referencedColumnName = "ID")},
-            inverseJoinColumns = {@JoinColumn(name = "FK_PARENT_ORGANIZATION_ID", referencedColumnName = "ID")
-            })
+    @JoinColumn(name = "fk_parent_org_id")
     public Organization getParentOrganization() {
         return parentOrganization;
     }
 
     public void setParentOrganization(Organization parentOrganization) {
         this.parentOrganization = parentOrganization;
+    }
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "parentOrganization", fetch = FetchType.LAZY)
+    @OrderBy(value = "sortNum asc")
+    public List<Organization> getChildrenOrganizations() {
+        return childrenOrganizations;
+    }
+
+    public void setChildrenOrganizations(List<Organization> childrenOrganizations) {
+        this.childrenOrganizations = childrenOrganizations;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
+    public String getAssistantManager() {
+        return assistantManager;
+    }
+
+    public void setAssistantManager(String assistantManager) {
+        this.assistantManager = assistantManager;
+    }
+
+    public String getInnerPhone() {
+        return innerPhone;
+    }
+
+    public void setInnerPhone(String innerPhone) {
+        this.innerPhone = innerPhone;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Organization rhs = (Organization) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(code, rhs.code)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).
+                append(code).
+                toHashCode();
     }
 
     @Override

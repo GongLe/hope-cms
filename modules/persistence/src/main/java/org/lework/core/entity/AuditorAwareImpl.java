@@ -2,6 +2,7 @@ package org.lework.core.entity;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.lework.runner.utils.Strings;
 import org.springframework.data.domain.AuditorAware;
 
 /**
@@ -15,6 +16,8 @@ public class AuditorAwareImpl implements AuditorAware<String> {
     @Override
     public String getCurrentAuditor() {
         Subject currentUser = SecurityUtils.getSubject();
+        if(currentUser == null)
+            return Strings.EMPTY;
         ShiroUser shiroUser = (ShiroUser) currentUser.getPrincipal();
         return shiroUser.getLoginName() ;
     }

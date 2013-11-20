@@ -22,6 +22,8 @@ import java.util.Map;
  * @Description: easyui Tree TO对象
  */
 public class TreeResult implements Serializable {
+    public final  static String STATE_OPEN ="open";
+    public final  static String STATE_CLOSED ="closed";
     public TreeResult() {
     }
 

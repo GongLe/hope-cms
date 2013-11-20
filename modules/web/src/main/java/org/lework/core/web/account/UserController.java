@@ -2,10 +2,13 @@ package org.lework.core.web.account;
 
 import com.google.common.collect.Lists;
 import org.lework.core.common.enumeration.Status;
-import org.lework.core.entity.menu.Menu;
+import org.lework.core.entity.role.Role;
 import org.lework.core.entity.user.User;
 import org.lework.core.service.account.AccountService;
+import org.lework.core.service.role.RoleService;
+import org.lework.runner.mapper.JsonMapper;
 import org.lework.runner.orm.support.SearchFilter;
+import org.lework.runner.utils.Collections3;
 import org.lework.runner.utils.Strings;
 import org.lework.runner.web.AbstractController;
 import org.lework.runner.web.CallbackData;
@@ -35,7 +38,8 @@ import java.util.List;
 public class UserController  extends AbstractController {
     @Autowired
     private AccountService accountService ;
-
+    @Autowired
+    private RoleService roleService;
 
     /**
      * list页面*
@@ -50,9 +54,16 @@ public class UserController  extends AbstractController {
      * 修改页面
      */
     @RequestMapping(value = "/update", method = RequestMethod.GET)
-    public String update(@ModelAttribute("entity") User user ,Model model){
-        model.addAttribute("statusList" , Status.values() ) ;
-        return  "user/user-update" ;
+    public String update(@ModelAttribute("entity") User user, Model model) {
+        model.addAttribute("statusList", Status.values());
+        List<Role> ownRoles = user.getRoles();
+        List<String> ids;
+        if (Collections3.isNotEmpty(ownRoles)) {
+            ids = Collections3.extractToList(ownRoles, "id");
+            model.addAttribute("ownRoleIdsArr", JsonMapper.nonDefaultMapper().toJson(ids));
+        }
+
+        return "user/user-update";
     }
 
     /**
@@ -60,8 +71,15 @@ public class UserController  extends AbstractController {
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public void update(@Valid @ModelAttribute("entity") User user , BindingResult result,
+                       @RequestParam(value = "roleIds" ,required = false) List<String> roleIds,
                        HttpServletResponse response) {
-
+        //关联角色
+        if (Collections3.isEmpty(roleIds)) {
+            user.setRoles(null);
+        } else {
+            List<Role> ownRoles = roleService.getRolesByIds(roleIds);
+            user.setRoles(ownRoles);
+        }
         if (result.hasErrors()) {
             callback(response, CallbackData.build("actionCallback", "操作提示", "&quot;" + user.getName() + "&quot;保存失败" + result.toString(), NotificationType.ERROR));
         }
@@ -120,12 +138,18 @@ public class UserController  extends AbstractController {
     @ResponseBody
     DataTableResult<User> getDatatablesJson(
             @PageableDefaults(pageNumber = 0, value = 10) Pageable pageable,
-            @RequestParam(value = "sSearch", required = false) String sSearch) {
+            @RequestParam(value = "search", required = false) String search,
+            @RequestParam(value = "orgId", required = false) String orgId
+    ) {
 
         List<SearchFilter> filters = Lists.newArrayList();
-        if (Strings.isNotBlank(sSearch)) {
+        if (Strings.isNotBlank(search)) {
             //匹配用户名 or 姓名
-            filters.add(new SearchFilter("LIKES_loginName_OR_name", sSearch));
+            filters.add(new SearchFilter("LIKES_loginName_OR_name", search));
+        }
+        if (Strings.isNotBlank(orgId)) {
+            //匹配组织机构
+            filters.add(new SearchFilter("EQS_org.id", orgId ));
         }
 
         Page<User> page = accountService.searchPageUser(pageable, filters);

@@ -12,14 +12,14 @@
     <form action="role/update"  method="post" id="inputForm" name="inputForm" target="$iframe"
           class="no-margin form-horizontal offset-40 error-inline" >
         <div class="modal-header" style="padding:5px 20px 5px 20px;">
-            <small class="grey">
+            <h3>
                  正在<c:if test="${entity.isNew == true}" >新建角色</c:if><c:if test="${entity.isNew ==false}" >编辑角色“${entity.name}”</c:if>
-            </small>
+            </h3>
         </div>
 
 <div class="modal-body ">
     <div class="row-fluid ">
-      <div class="span9"  >
+      <div class="span12"  >
 
         <!--隐藏域-->
         <form:hidden path="entity.id" />
@@ -27,15 +27,37 @@
         <div class="control-group">
             <label class="control-label " for="name">角色名称</label>
             <div class="controls">
-                <input  class="input-xlarge" type="text" id="name" name="name"   value="${entity.name}" placeholder="输入角色名称">
+                <input  class="input-xlarge" type="text" id="name" name="name"   value="${entity.name}"
+                        autocomplete="off" placeholder="输入角色名称">
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="code">角色代码</label>
             <div class="controls">
-                <input class="input-xlarge" type="text" id="code" name="code" value="${entity.code}" placeholder="输入角色代码">
+                <input class="input-xlarge" type="text" id="code" name="code" value="${entity.code}"
+                       autocomplete="off" placeholder="输入角色代码">
             </div>
         </div>
+
+          <div class="control-group">
+              <label class="control-label" for="groupId">所属角色组</label>
+              <div class="controls">
+                 <input type="text" id="groupId" name="groupId"  value="${entity.groupId}"  style="width:284px;height:28px;" >
+                  <div class="help-inline">
+                      <a href="javascript:;" onclick="$('#groupId').combotree('clear');">清空</a>
+                  </div>
+              </div>
+          </div>
+
+          <div class="control-group">
+              <label class="control-label" for="type">类别</label>
+              <div class="controls">
+                  <form:select  path="entity.type" cssClass="input-xlarge" cssStyle="width:284px"  >
+                      <form:options  items="${typeList}"  itemValue="code" itemLabel="name"/>
+                  </form:select>
+              </div>
+          </div>
+
         <div class="control-group">
             <label class="control-label" for="status">状态</label>
             <div class="controls">
@@ -45,6 +67,7 @@
             </div>
         </div>
 
+
         <div class="control-group">
             <label class="control-label" for="description">描述</label>
             <div class="controls">
@@ -52,23 +75,15 @@
             </div>
         </div>
     </div>
-     <div class="span3">
-         <h5 class="header smaller lighter red no-margin-top no-margin-bottom no-border">所属权限</h5>
-         <div class="well" style="min-height:230px;max-height:300px;">
-             <ul id="permissionTree" ></ul>
-         </div>
-     </div>
+
     </div>
 </div><!--/.modal-body-->
         <div class="modal-footer">
-            <button type="button" class="btn btn-small" onclick="$.colorbox.close()">
-                <i class="icon-remove"></i>
-                关闭
-            </button>
-
-            <button type="submit" class="btn btn-small btn-primary" >
-                <i class="icon-ok"></i>
+            <button id="submitBtn"  type="submit" class="btn btn-small btn-primary" >
                 保存
+            </button>
+            <button type="button" class="btn btn-small" onclick="$.colorbox.close()">
+                关闭
             </button>
         </div>
     </form>
@@ -76,53 +91,58 @@
 <script>
     $(function(){
         //from validater
-        $('#inputForm').validate({rules: {
-            name: {
-                required: true,
-                maxlength: 50
+        $('#inputForm').validate({
+            submitHandler: function (form) {
+                $('#submitBtn').prop('disable', true).text('保存中....')
+                form.submit();
             },
-            code : {
-                required: true ,
-                maxlength: 50,
-                remote: {
-                    url: 'role/validateRoleCode', //后台处理程序
-                    type: 'post',               //数据发送方式
-                    dataType: 'json',           //接受数据格式
-                    data: {                     //要传递的数据
-                      roleId  : function() {
-                            return $('#id').val() ;
+            rules: {
+                name: {
+                    required: true,
+                    maxlength: 50
+                },
+                code: {
+                    required: true,
+                    maxlength: 50,
+                    remote: {
+                        url: 'role/validateRoleCode', //后台处理程序
+                        type: 'post',               //数据发送方式
+                        dataType: 'json',           //接受数据格式
+                        data: {                     //要传递的数据
+                            roleId: function () {
+                                return $('#id').val();
+                            }
                         }
                     }
-                }
-            },
-            status :{
-                required:true
-            },
-            description :{
-                maxlength : 200
-            }
-        }, messages: {
-            code:{
-                remote :'该值已被占用'
-            }
-        }
-       }); //end validate
-
-        //easyui loader
-        using(['tree'], function () {
-            $('#permissionTree').tree({
-                url: 'role/getTreeJson',
-                method: 'get',
-                checkbox: true ,
-                onLoadSuccess : function(node, data){
-
                 },
-                onCheck : function(node, checked){
-
+                status: {
+                    required: true
+                },
+                description: {
+                    maxlength: 200
                 }
-            });
-        })
+            }, messages: {
+                code: {
+                    remote: '该值已被占用'
+                }
+            }
+        }); //end validate
 
+
+        setTimeout(function () {
+            //easyui loader
+            using(['tree','combotree'], function () {
+                $('#groupId').combotree({
+                    url: 'organization/getTree?',
+                    method: 'get',
+                    onSelect: function (node) {
+                    },
+                    onLoadSuccess: function () {
+                    }
+                });
+
+            }) //using
+        }, 100);//timeout
     })
 </script>
 </body>

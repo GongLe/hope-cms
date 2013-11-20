@@ -28,10 +28,10 @@ public interface MenuDao extends PagingAndSortingRepository<Menu, String>, JpaSp
     public List<Menu> findRoots( );
 
     @Query("select max(m.sortNum) from Menu m where  m.parentMenu is null ")
-    public int findRootMaxSortNum();
+    public Integer findRootMaxSortNum();
 
     @Query("select max(m.sortNum) from Menu m where  m.parentMenu.id=?1 ")
-    public int findChildMaxSortNum(String parentId) ;
+    public Integer findChildMaxSortNum(String parentId) ;
 
     /**
      * 获取角色所属的菜单

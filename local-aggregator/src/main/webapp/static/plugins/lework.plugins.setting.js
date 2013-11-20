@@ -89,10 +89,10 @@ $(function () {
                     sSearch: "<span>搜索:</span> ",
                     sInfo: "显示_START_到_END_条,共_TOTAL_条记录",
                     sInfoEmpty: "显示0到0条,共0条记录",
-                    sLengthMenu: "每页显示 _MENU_ 条记录",
+                    sLengthMenu: "每页_MENU_条",
                     sProcessing: "加载中...",
-                    sEmptyTable: "无可用数据",
-                    sZeroRecords: "无记录数据",
+                    sEmptyTable: '<div class="alert no-margin" style="font-size:12px;">无可用数据</div>',
+                    sZeroRecords: '<div class="alert no-margin" style="font-size:12px;">无记录数据/div>',
                     oPaginate: {  "sFirst": "首页", "sPrevious": " 上一页 ", "sNext": " 下一页 ", "sLast": " 尾页 " }
                 }
             };

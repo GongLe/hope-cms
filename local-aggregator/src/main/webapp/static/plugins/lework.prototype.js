@@ -57,3 +57,13 @@ if (!Array.prototype.indexOf) {
         return -1;
     };
 }
+/**
+ * concat 多个数组.
+ * @param 数据
+ */
+Array.prototype.pushArray = function() {
+    var toPush = this.concat.apply([], arguments);
+    for (var i = 0, len = toPush.length; i < len; ++i) {
+        this.push(toPush[i]);
+    }
+};

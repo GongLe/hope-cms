@@ -26,45 +26,64 @@
     <div class="row-fluid">
         <div class="span12">
 
-            <div class="box box-color box-bordered-no ">
-                <div class="box-title no-margin-top">
-                    <h3>
-                        <i class="icon-list-ul"></i>
-                        用户列表
-                    </h3>
+            <div class="box box-bordered-no ">
+                <div class="box-title no-margin-top no-padding-top" style="border-bottom:1px dashed #c5d0dc;">
+                    <h3 class="blue">用户管理</h3>
                 </div>
                 <div class="box-content no-padding ">
-                    <table id="table-list"
-                           class="table table-hover  table-nomargin table-bordered dataTable dataTable-nosort clear-both">
-                    </table>
-                    <div class="table-funtion-bar clear-both">
-                        <div class="btn-group">
-                            <button data-toggle="dropdown" class="btn no-border dropdown-toggle">
-                                <i id="checkIcon" class="icon-check-empty bigger-120"></i>
-                                <span class="caret"></span>
-                            </button>
-
-                            <ul class="dropdown-menu dropdown-default">
-                                <li id="selectedAll">
-                                    <a href="javascript:;"  >全选</a>
-                                </li>
-                                <li id="cancelSelected" >
-                                    <a href="javascript:;" >取消</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="btn-group">
-                            <button class="btn no-border tooltips" id="create-function" data-original-title="新建" >
-                                <i class="icon-plus"></i>
-                            </button>
-                            <button class="btn no-border tooltips" id="refresh-function" data-original-title="刷新">
-                                <i class="icon-refresh"></i>
-                            </button>
-                            <button class="btn no-border tooltips" id="delete-function" style="display:none;" data-original-title="删除">
-                                <i class="icon-trash"></i>
-                            </button>
-                        </div>
+                    <div class="pull-left" style="width:18%;min-height:520px;border-right:1px dashed  #c5d0dc;">
+                        <%--<h5 class="header smaller lighter blue" style="margin:5px 10px;" >角色组</h5>--%>
+                          <ul id="orgTree" style="padding:10px 10px 0 5px;" ></ul>
                     </div>
+                    <div class="pull-left" style="width:78%; padding:0 0 5px 10px;" >
+                        <div class="table-funtion-bar clear-both">
+                            <div class="btn-group">
+                                <button data-toggle="dropdown" class="btn no-border dropdown-toggle">
+                                    <i id="checkIcon" class="icon-check-empty bigger-120"></i>
+                                    <span class="caret"></span>
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-default">
+                                    <li id="selectedAll">
+                                        <a href="javascript:;"  >全选</a>
+                                    </li>
+                                    <li id="cancelSelected" >
+                                        <a href="javascript:;" >取消</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn no-border tooltips" id="create-function" data-original-title="新建" >
+                                    <i class="icon-plus"></i>
+                                </button>
+                                <button class="btn no-border tooltips" id="refresh-function" data-original-title="刷新">
+                                    <i class="icon-refresh"></i>
+                                </button>
+                                <button class="btn no-border tooltips" id="delete-function" style="display:none;" data-original-title="删除">
+                                    <i class="icon-trash"></i>
+                                </button>
+                                <button class="btn btn-danger no-border tooltips" id="role-function"  data-original-title="分配角色">
+                                    <i class="icon-group"></i>
+                                </button>
+                                <button class="btn btn-danger no-border tooltips" id="resetPwd-function" style="display:none;"   data-original-title="重置密码">
+                                    <i class="icon-key"></i>
+                                </button>
+                            </div>
+                            <div class="input-append no-margin-bottom pull-right">
+                                <!--自定义搜索-->
+                                <form id="searchForm" name="searchForm" class="no-margin no-padding">
+                                        <span class="input-icon input-icon-right">
+                                            <input class="input-medium" id="search" name="search" type="text" placeholder="用户名/姓名">
+                                            <i class="icon-search blue" onclick="$('#searchForm').submit()" ></i>
+                                        </span>
+                                </form> <!--/#searchForm-->
+                            </div>
+
+                        </div><!--/.table-funtion-bar-->
+                        <table id="table-list"
+                               class="table table-hover  table-nomargin table-bordered dataTable dataTable-nosort clear-both">
+                        </table>
+                    </div><!--/.pull-left-->
                 </div>
             </div>
             <!--/.box-->
@@ -75,7 +94,8 @@
 
 <!--/.page-content-->
 <script>
-
+    var $orgTree =  $('#orgTree') ,
+            oTable = $('#table-list');
     $(function () {
         //表单提交后,iframe回调函数
         window.actionCallback = function (resp) {
@@ -88,7 +108,25 @@
             oTable.fnDraw();
             lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
         };
-        var oTable = $('#table-list');
+        //自定义搜索表单
+        $('#searchForm').submit(function(event){
+            event.preventDefault() ;
+            oTable.fnDraw();
+        });
+        //easy ui org tree
+        using(['tree'], function () {
+            $orgTree.tree({
+                url: 'organization/getTree',
+                method: 'get',
+                checkbox: false,
+                onLoadSuccess: function (node, data) {
+                },
+                onSelect : function (node) {
+                    oTable.fnDraw();
+                }
+            });
+        }) //using
+
 
         oTable.dataTable({
             'aoColumns': [
@@ -123,16 +161,20 @@
                 //   { 'bVisible': false,  'aTargets': [ 1 ] },
                 { 'sClass': 'center', 'aTargets': [3] }
             ],
-            'bStateSave': true , /**state saving **/
+            'sDom' : 'rtlip',
+            'bStateSave': false  , /**state saving **/
             'bProcessing': true ,
             'bServerSide': true,
             'fnServerData': lework.springDataJpaPageableAdapter,
             'sAjaxSource': '${ctx}/user/getDatatablesJson',
-            // 'fnServerParams' :function(aoData ){ aoData.push( { "name": "more_data", "value": "my_value" } ); },
+             'fnServerParams' :function(aoData ){
+                 var orgNode = $.fn.tree && $('#orgTree').tree('getSelected');
+                 if (orgNode)
+                     aoData.push({ 'name': 'orgId', 'value': orgNode.id  });
+                 aoData.pushArray($('#searchForm').serializeArray());
+             },
             'fnInitComplete': function () {     /**datatables ready**/
-
-                lework.initDatatablesSearchHolder('用户名/姓名');
-
+                //lework.initDatatablesSearchHolder('用户名/姓名');
             } ,
             fnDrawCallback :function(oSettings ){
                 // bootstrap-tooltip
@@ -164,7 +206,7 @@
             $(this).colorbox({
                 href :'user/update?$SiteMesh=false' ,
                 adjustY:'40%',
-                width: '800px',
+                width: '700px',
                 overlayClose: false,
                 scrolling: false
             })
@@ -184,7 +226,6 @@
         //多行删除
         $('#delete-function').confirmDelete({text: '<span class="text-warning">确认删除多条记录？</span>',
             onDelete: function () {
-                //TODO
                 var ids = [];
                 oTable.find('tr.selected .confirmDelete').each(function () {
                     ids.push($(this).data('id'))
@@ -198,6 +239,7 @@
             return true;
         }
         });
+
         //取消选择
         $('#cancelSelected').click(function () {
             oTable.find('tbody>tr').removeClass('selected warning');
@@ -213,10 +255,10 @@
         function checkFunbarStatus(hasSelected) {
             if (hasSelected == true) {
                 $('#checkIcon').removeClass('icon-check-empty').addClass('icon-check')
-                $('#delete-function').show();
+                $('#delete-function,#resetPwd-function').show();
             } else {
                 $('#checkIcon').removeClass('icon-check').addClass('icon-check-empty');
-                $('#delete-function').hide();
+                $('#delete-function,#resetPwd-function').hide();
             }
         }
 
@@ -240,7 +282,7 @@
             <i class="icon-zoom-in bigger-140 filterSelected"></i>
         </a>
         <a class="blue tooltips update" href="user/update?id={{:id}}&$SiteMesh=false" data-original-title="编辑基本信息"
-           onclick="$(this).colorbox({ adjustY:'40%',width:'800px',overlayClose:false,scrolling:false });" >
+           onclick="$(this).colorbox({ adjustY:'40%',width:'700px',overlayClose:false,scrolling:false });" >
             <i class="icon-edit bigger-140 filterSelected"></i>
         </a>
         <a class="red tooltips confirmDelete" href="javascript:;" data-id="{{:id}}"  data-original-title="删除">

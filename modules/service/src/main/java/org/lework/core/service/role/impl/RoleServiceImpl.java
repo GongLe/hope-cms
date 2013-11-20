@@ -5,6 +5,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
 import org.lework.core.common.enumeration.Status;
 import org.lework.core.dao.role.RoleDao;
+import org.lework.core.entity.menu.Menu;
 import org.lework.core.entity.role.Role;
 import org.lework.core.entity.user.User;
 import org.lework.core.service.role.RoleService;
@@ -57,6 +58,19 @@ public class RoleServiceImpl implements RoleService {
     public List<Role> getAllRoleByStatus(Status status) {
         Validate.notNull(status) ;
         return  roleDao.findAllByStatus(status.getCode() ) ;
+    }
+
+    @Override
+    public List<Role> getAllRoleByGroupId(String groupId) {
+        return roleDao.findRolesByGroupId(groupId)  ;
+    }
+
+    @Override
+    public List<Role> getRolesByIds(List<String> ids) {
+        if (Collections3.isEmpty(ids)) {
+            return new ArrayList<Role>();
+        }
+        return (List<Role>) roleDao.findAll(ids);
     }
 
     /**

@@ -256,6 +256,7 @@
 .combo-arrow {
   width: 18px;
   height: 20px;
+  margin-left:-4px\9;
   overflow: hidden;
   display: inline-block;
   vertical-align: top;
@@ -279,9 +280,9 @@
   border-color: #D4D4D4;
   background-color: #ffffff;
 }
-.combo-arrow {
+/*.combo-arrow {
   background-color: #e4e4e4;
-}
+} */
 .combo-arrow-hover {
   background-color: #cdcdcd;
 }
@@ -2124,55 +2125,53 @@ a.s-btn-plain-active {
 
 /**重写,整合fontawesome icon font **/
 .tree-folde, .tree-folder, .tree-folder-open, .tree-file,
-.tree-file-text, .tree-folder-full, .tree-folder-open-full {
+.tree-file-text, .tree-folder-full, .tree-folder-open-full ,
+.tree-user-group,.tree-user {
     font-family: FontAwesome;
     font-weight: normal;
     font-style: normal;
     font-size:14px;
     text-decoration: inherit;
     -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    -ms-font-smoothing: antialiased;
 
 }
 
-.tree-folder {
+.tree-folder, .tree-folder-open, .tree-file,
+.tree-user-group, .tree-user {
     background-image: none;
 }
 
 .tree-folder:before {
     content: "\f114";
-
 }
 
 .tree-folder-full:before {
     content: "\f07b";
-
-}
-
-.tree-folder-open {
-    background-image: none;
-
 }
 
 .tree-folder-open:before {
     content: "\f115";
-
 }
 
 .tree-folder-open-full:before {
     content: "\f07c";
-
 }
-
-.tree-file {
-    background-image: none;
-}
-
 .tree-file:before {
     content: "\f016";
 }
 
 .tree-file-text:before {
     content: "\f15b";
+}
+
+.tree-user-group:before {
+    content: "\f0c0";
+}
+
+.tree-user:before {
+    content: "\f007";
 }
 /**end**/
 .tree-title {

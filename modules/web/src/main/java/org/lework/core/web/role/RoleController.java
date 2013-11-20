@@ -2,7 +2,10 @@ package org.lework.core.web.role;
 
 import com.google.common.collect.Lists;
 import org.lework.core.common.enumeration.Status;
+import org.lework.core.entity.organization.Organization;
 import org.lework.core.entity.role.Role;
+import org.lework.core.entity.role.RoleTypes;
+import org.lework.core.service.organization.OrganizationService;
 import org.lework.core.service.role.RoleService;
 import org.lework.runner.orm.support.SearchFilter;
 import org.lework.runner.utils.Collections3;
@@ -40,7 +43,8 @@ public class RoleController extends AbstractController {
 
     @Autowired
     private RoleService roleService;
-
+    @Autowired
+    private OrganizationService organizationService;
     /**
      * list页面*
      */
@@ -56,6 +60,7 @@ public class RoleController extends AbstractController {
     @RequestMapping(value = "/update", method = RequestMethod.GET)
     public String update(@ModelAttribute("entity") Role role ,Model model){
         model.addAttribute("statusList" , Status.values() ) ;
+        model.addAttribute("typeList", RoleTypes.values()) ;
         model.addAttribute("checkedPermissionIds" , null );
         return  "role/role-update" ;
     }
@@ -64,18 +69,28 @@ public class RoleController extends AbstractController {
      * 保存
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public void update(@Valid @ModelAttribute("entity") Role role, BindingResult result,
+    public void update(@Valid @ModelAttribute("entity") Role entity, BindingResult result,
+                       @RequestParam(value = "groupId" ,required = false) String groupId ,
                        HttpServletResponse response) {
-
+        //关联组
+        Organization group = organizationService.getOrganization(groupId);
+        if (group != null) {
+            entity.setGroupId(group.getId());
+            entity.setGroupName(group.getName());
+        } else { //取消关联
+            entity.setGroupId( null);
+            entity.setGroupName(null);
+        }
         if (result.hasErrors()) {
-            callback(response, CallbackData.build("actionCallback", "操作提示", "角色&quot;" + role.getName() + "&quot;保存失败" + result.toString(), NotificationType.ERROR));
+            callback(response, CallbackData.build("actionCallback", "操作提示", "角色&quot;" + entity.getName() + "&quot;保存失败" + result.toString(), NotificationType.ERROR));
         }
         try {
-            roleService.saveRole(role);
-            callback(response, CallbackData.build("actionCallback", "操作提示", "角色&quot;" + role.getName() + "&quot;保存成功", NotificationType.SUCCESS));
+            //保存
+            roleService.saveRole(entity);
+            callback(response, CallbackData.build("actionCallback", "操作提示", "角色&quot;" + entity.getName() + "&quot;保存成功", NotificationType.SUCCESS));
         }catch (Exception e){
             e.printStackTrace();
-            callback(response, CallbackData.build("actionCallback", "操作提示", "角色&quot;" + role.getName() + "&quot;保存失败" + e.toString(), NotificationType.ERROR));
+            callback(response, CallbackData.build("actionCallback", "操作提示", "角色&quot;" + entity.getName() + "&quot;保存失败" + e.toString(), NotificationType.ERROR));
         }
 
     }
@@ -142,13 +157,13 @@ public class RoleController extends AbstractController {
     @ResponseBody
     DataTableResult<Role> getDatatablesJson(
             @PageableDefaults(pageNumber = 0, value = 10) Pageable pageable,
-            @RequestParam(value = "sSearch", required = false) String sSearch) {
+            @RequestParam(value = "search", required = false) String search,
+            HttpServletRequest request ) {
 
-        List<SearchFilter> filters = Lists.newArrayList();
-        if (Strings.isNotBlank(sSearch)) {
-            filters.add(new SearchFilter("LIKES_name_OR_code", sSearch));
+        List<SearchFilter> filters =  SearchFilter.buildFromHttpRequest(request) ;
+        if (Strings.isNotBlank(search)) {
+            filters.add(new SearchFilter("LIKES_name_OR_code", search));
         }
-
         Page<Role> page = roleService.searchPageRole(pageable, filters);
 
         return DataTableResult.build(page);
@@ -158,10 +173,10 @@ public class RoleController extends AbstractController {
      *get Role's easyui tree json result
      * @param status 过滤节点状态
      */
-    @RequestMapping(value = "/getTreeJson", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/getTree", method = {RequestMethod.GET, RequestMethod.POST})
     public
     @ResponseBody
-      List<TreeResult>  getTreeJson( @RequestParam(value = "checkbox", required = false) String checkbox ,
+      List<TreeResult>  getTree( @RequestParam(value = "checkbox", required = false) String checkbox ,
                                   @RequestParam(value = "status", required = false) String status ) {
         boolean isCheckbox = Strings.equals(checkbox, "true");
         boolean filterStatus = Strings.isNotBlank(status);

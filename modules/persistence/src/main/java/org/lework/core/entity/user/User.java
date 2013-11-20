@@ -8,6 +8,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.lework.core.entity.AuditorEntity;
+import org.lework.core.entity.organization.Organization;
 import org.lework.core.entity.role.Role;
 
 import javax.persistence.*;
@@ -37,11 +38,9 @@ public class User extends AuditorEntity {
     private String type;
     private String telphone; //联系电话 eg:010-6552555
     private String mobile ;  //手机号码
+    private String orgName ; //组织机构名称
     private List<Role> roles = new ArrayList<Role>();
-
-
-    public User() {
-    }
+    private Organization  org ;
 
     public String getNiceName() {
         return niceName;
@@ -154,6 +153,25 @@ public class User extends AuditorEntity {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="FK_ORG_ID")
+    public Organization getOrg() {
+        return org;
+    }
+
+    public void setOrg(Organization org) {
+        this.org = org;
     }
 
     public String getTelphone() {

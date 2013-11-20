@@ -1,6 +1,7 @@
 package org.lework.core.service.role;
 
 import org.lework.core.common.enumeration.Status;
+import org.lework.core.entity.menu.Menu;
 import org.lework.core.entity.role.Role;
 import org.lework.core.entity.user.User;
 import org.lework.runner.orm.support.SearchFilter;
@@ -24,6 +25,9 @@ public interface RoleService {
 
     public List<Role> getAllRoleByStatus(Status status );
 
+    public List<Role> getAllRoleByGroupId(String groupId );
+
+    public List<Role> getRolesByIds(List<String> ids );
     /**
      * 获取用户拥有的角色
      * @param user

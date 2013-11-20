@@ -16,36 +16,28 @@
     </thead>
     <tbody>
     <tr>
-        <td class="table-lable">菜单名称：</td>
+        <td class="table-lable">组织名称：</td>
         <td >${entity.name}</td>
-        <td class="table-lable">菜单代码：</td>
+        <td class="table-lable">组织代码：</td>
         <td >${entity.code}</td>
     </tr>
     <tr>
-        <td class="table-lable">URL：</td>
-        <td colspan="3">${entity.url}</td>
+        <td class="table-lable">组织简称：</td>
+        <td > ${entity.shortName} </td>
+        <td class="table-lable">上级组织：</td>
+        <td > ${entity.parentName} </td>
     </tr>
     <tr>
-        <td class="table-lable">icon：</td>
-        <td >  <i class="bigger-140 ${entity.icon}"></i> </td>
+        <td class="table-lable">类别：</td>
+        <td > ${entity.typeName} </td>
         <td class="table-lable">状态：</td>
-        <td >  ${statusName} </td>
+        <td >${entity.statusName}</td>
     </tr>
     <tr>
-        <td class="table-lable">上级菜单：</td>
-        <td colspan="3"> ${entity.parentName} </td>
-    </tr>
-    <tr>
-        <td class="table-lable">创建人：</td>
-        <td>${entity.createdBy}1</td>
-        <td class="table-lable">创建时间：</td>
-        <td><fmt:formatDate value="${entity.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" /></td>
-    </tr>
-    <tr>
-        <td class="table-lable">最后修改人：</td>
-        <td>${entity.lastModifiedBy}</td>
-        <td class="table-lable">最后修改时间：</td>
-        <td><fmt:formatDate value="${entity.lastModifiedDate}" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+        <td class="table-lable">负责人：</td>
+        <td>${entity.manager}1</td>
+        <td class="table-lable">联系电话：</td>
+        <td>${entity.phone}</td>
     </tr>
 
     </tbody>
@@ -61,18 +53,13 @@
                     <li class="active">
                         <a data-toggle="tab" href="#profile3">
                           <%--  <i class="blue icon-user bigger-110"></i>--%>
-                            关联的角色
+                            所属用户
                         </a>
                     </li>
                 </ul>
 
                 <div class="tab-content">
                     <div id="profile3" class="tab-pane in active">
-                        <div class="clearfix">
-                            <div class="pull-right">
-                                <button class="btn btn-white btn-minier ">添加菜单到角色</button>
-                            </div>
-                        </div>
                         <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
 
                         <p>Raw denim you probably haven't heard of them jean shorts Austin.</p>

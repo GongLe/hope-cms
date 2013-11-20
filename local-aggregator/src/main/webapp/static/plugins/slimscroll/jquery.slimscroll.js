@@ -34,7 +34,7 @@
         start : 'top',
 
         // sets scrollbar opacity
-        opacity : .4,
+        opacity : .6,
 
         // enables always-on mode for the scrollbar
         alwaysVisible : false,
@@ -73,10 +73,10 @@
         touchScrollStep : 200,
 
         // sets border radius
-        borderRadius: '7px',
+        borderRadius: '0px',
 
         // sets border radius of the rail
-        railBorderRadius : '7px'
+        railBorderRadius : '0px'
       };
 
       var o = $.extend(defaults, options);

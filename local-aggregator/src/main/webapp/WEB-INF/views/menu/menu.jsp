@@ -33,7 +33,7 @@
         <div class="span12">
             <div class="box">
                 <div class="box-title no-margin-top">
-                    <h3>菜单管理</h3>
+                    <h3 class="no-margin-top">菜单管理</h3>
                 </div>
                 <div class="box-content no-padding ">
                     <div class="table-funtion-bar clear-both">
@@ -61,7 +61,7 @@
             </div>  <!--/.box-->
 
         </div>
-    </div>
+    </div> <!--/.row-fluid-->
 </div>
 
 <!--/.page-content-->
@@ -207,7 +207,7 @@ $(function(){
      */
     function loadEast(menuId) {
 
-        $('#eastMenuRelated').load('menu/eastMenuRelated?$SiteMesh=false', {'menuId': menuId, '_d': (new Date()).getTime()})
+        $('#eastMenuRelated').load('menu/eastMenuRelated?$SiteMesh=false', {'menuId': menuId, '_d': lework.time() })
     }
 
     //根据所选行,修改function bar状态.

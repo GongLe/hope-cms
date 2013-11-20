@@ -14,7 +14,7 @@
     // =======================
     TableMutilDelete.DEFAULTS = {
         target : null, //
-        targetElement:'tbody>tr',
+        targetElement:'tbody>tr:has(a)',
         selectedCssClass : 'selected warning',
         onSelect :null,
         beforeSelect: null,

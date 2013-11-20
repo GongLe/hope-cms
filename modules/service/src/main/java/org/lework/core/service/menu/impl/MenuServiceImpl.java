@@ -6,6 +6,7 @@ import org.lework.core.common.enumeration.Status;
 import org.lework.core.dao.menu.MenuDao;
 import org.lework.core.dao.permission.PermissionDao;
 import org.lework.core.entity.menu.Menu;
+import org.lework.core.entity.organization.Organization;
 import org.lework.core.entity.role.Role;
 import org.lework.core.service.menu.MenuService;
 import org.lework.core.service.menu.MenuTreeGridDTO;
@@ -51,8 +52,7 @@ public class MenuServiceImpl implements MenuService {
         int curIndex  ;
         Integer temp  ;
         Menu next;
-        //如果是根节点
-        if (!entity.hasParent()) {
+        if (!entity.hasParent()) {    //如果是根节点
             siblings = menuDao.findRoots();
         } else {  //非根节点时,根据parentId获取同级所有节点
             siblings = menuDao.findChildMenusByParentId(entity.getParentId());
@@ -118,6 +118,14 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    public List<Menu> getMenusByIds(List<String> ids) {
+        if (Collections3.isEmpty(ids)) {
+            return new ArrayList<Menu>();
+        }
+        return (List<Menu>) menuDao.findAll(ids);
+    }
+
+    @Override
     public List<Menu> getAllMenus() {
         return (List<Menu>) menuDao.findAll();
     }
@@ -162,7 +170,7 @@ public class MenuServiceImpl implements MenuService {
             } else {
                 curSortNum = menuDao.findChildMaxSortNum(entity.getParentId());
             }
-            entity.setSortNum(curSortNum);
+            entity.setSortNum(curSortNum == null ? 0 : curSortNum + 1);
         }
         menuDao.save(entity);
     }
@@ -222,9 +230,11 @@ public class MenuServiceImpl implements MenuService {
     public List<MenuTreeGridDTO> getMenuTreeGrid(List<Menu> ignore) {
         //roots node
         List<Menu> roots = menuDao.findRoots();
-        List<MenuTreeGridDTO> rootsDTO = new ArrayList<MenuTreeGridDTO>();
+        List<MenuTreeGridDTO> rootNodes = new ArrayList<MenuTreeGridDTO>();
         MenuTreeGridDTO temp;
         Menu curNode;
+        if(Collections3.isEmpty(roots))
+            return rootNodes ;
         int size = roots.size();
         for (int i = 0; i < size; i++) {
             curNode = roots.get(i);
@@ -234,28 +244,31 @@ public class MenuServiceImpl implements MenuService {
             temp = new MenuTreeGridDTO(curNode);
             temp.setLevelSize(size);
             temp.setLevelIndex(i);
-            rootsDTO.add(temp);
+            rootNodes.add(temp);
             fetchChild4TreeGrid(curNode, temp, ignore);
         }
 
-        return rootsDTO;
+        return rootNodes;
     }
 
     @Override
     public List<TreeResult> getMenuTree(List<Menu> ignore) {
         //roots node
         List<Menu> roots = menuDao.findRoots();
-        List<TreeResult> rootsDTO = new ArrayList<TreeResult>();
+        List<TreeResult> rootNodes = new ArrayList<TreeResult>();
+        if(Collections3.isEmpty(roots))
+            return rootNodes ;
         TreeResult temp;
         for (Menu root : roots) {
             if (contain(ignore, root)) {
                 continue;
             }
             temp = convert2TreeNode(root);
-            rootsDTO.add(temp);
+            rootNodes.add(temp);
+            //递归
             fetchChild4Tree(root, temp, ignore);
         }
-        return rootsDTO;
+        return rootNodes;
     }
 
     /**
@@ -271,6 +284,7 @@ public class MenuServiceImpl implements MenuService {
             collection.addAll(childMenu);
             for (Menu m : childMenu) {
                 if (m.hasChild()) {
+                    //递归
                     fetchChild(m, collection);
                 }
             }
@@ -281,9 +295,9 @@ public class MenuServiceImpl implements MenuService {
      * 递归查找子节点 for easyui tree
      *
      * @param parent
-     * @param parentDTO
+     * @param parentNode
      */
-    private void fetchChild4Tree(Menu parent, TreeResult parentDTO ,List<Menu> ignore ) {    
+    private void fetchChild4Tree(Menu parent, TreeResult parentNode ,List<Menu> ignore ) {
         List<TreeResult> child = new ArrayList<TreeResult>();
         List<Menu> childMenu;
         TreeResult node;
@@ -296,20 +310,21 @@ public class MenuServiceImpl implements MenuService {
                 node = convert2TreeNode(m) ;
                 child.add(node);
                 if (m.hasChild()) {
+                    //递归
                     fetchChild4Tree(m, node,ignore);
                 }
             }
         }
-        parentDTO.getChildren().addAll(child);
+        parentNode.getChildren().addAll(child);
     }
 
     /**
      * 递归查找子节点 for easyui treeGrid
      *
      * @param parent
-     * @param parentDTO
+     * @param parentNode
      */
-    private void fetchChild4TreeGrid(Menu parent, MenuTreeGridDTO parentDTO, List<Menu> ignore) {
+    private void fetchChild4TreeGrid(Menu parent, MenuTreeGridDTO parentNode, List<Menu> ignore) {
         List<MenuTreeGridDTO> child = new ArrayList<MenuTreeGridDTO>();
         List<Menu> childMenu;
         MenuTreeGridDTO node;
@@ -334,7 +349,7 @@ public class MenuServiceImpl implements MenuService {
             }
 
         }
-        parentDTO.getChildren().addAll(child);
+        parentNode.getChildren().addAll(child);
     }
 
     private TreeResult convert2TreeNode(Menu entity) {
@@ -344,7 +359,7 @@ public class MenuServiceImpl implements MenuService {
         if (Strings.equals(entity.getStatus(), Status.disable.getCode())) {
             ret.setIconCls("red");
         }
-        ret.setState("open");
+        ret.setState(TreeResult.STATE_OPEN);
         ret.addAttribute("code", entity.getCode());
         return ret;
 
@@ -356,7 +371,7 @@ public class MenuServiceImpl implements MenuService {
      * @param src
      */
     private boolean contain(List<Menu> dest, Menu src) {
-        if (Collections3.isEmpty(dest)) {
+        if (Collections3.isEmpty(dest) ) {
             return false;
         }
         return dest.contains(src);

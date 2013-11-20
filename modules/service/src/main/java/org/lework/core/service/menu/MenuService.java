@@ -25,6 +25,7 @@ public interface MenuService {
 
     public List<Menu> getAllMenus();
 
+    public List<Menu> getMenusByIds(List<String> ids );
     /**
      * 获取当前节点所有子节点,包含自身
      * @param id 菜单ID

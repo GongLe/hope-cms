@@ -95,7 +95,7 @@ jQuery.extend(jQuery.validator.defaults ,{
     jQuery.validator.addMethod("isTel", function (value, element) {
         var tel = /^\d{3,4}-?\d{7,9}$/;    //电话号码格式010-12345678
         return this.optional(element) || (tel.test(value));
-    }, "电话号码错误.eg:010-12345678");
+    }, "电话号码格式错误.eg:010-12345678");
 
     // 联系电话(手机/电话皆可)验证
     jQuery.validator.addMethod("isPhone", function (value, element) {

@@ -2,7 +2,10 @@ package org.lework.core.dao.organization;
 
 import org.lework.core.entity.organization.Organization;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+
+import java.util.List;
 
 /**
  * Organization Dao
@@ -12,4 +15,24 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface OrganizationDao extends PagingAndSortingRepository<Organization, String>, JpaSpecificationExecutor<Organization> {
 
     public Organization findByCode(String code);
+
+
+    public List<Organization> findAllByStatus(String status);
+
+    public List<Organization> findAllByType(String type);
+
+    @Query("from Organization o where o.parentOrganization is null order by o.sortNum")
+    public List<Organization> findRootOrgs();
+
+    @Query("from Organization o where  o.parentOrganization.id=?1 order by o.sortNum")
+    public List<Organization> findChildOrgsByParentId(String parentId);
+
+    @Query("from Organization o where  o.parentOrganization is null  order by o.sortNum")
+    public List<Organization> findRoots();
+
+    @Query("select max(o.sortNum) from Organization o where  o.parentOrganization is null ")
+    public Integer findRootMaxSortNum();
+
+    @Query("select max(o.sortNum) from Organization o where  o.parentOrganization.id=?1 ")
+    public Integer findChildMaxSortNum(String parentId);
 }

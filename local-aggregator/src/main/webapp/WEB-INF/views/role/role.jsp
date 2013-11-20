@@ -21,51 +21,64 @@
     <!--.breadcrumb-->
 
 </div>
-<form name="hiddenForm"  id="hiddenForm" method="post" style="display: none;">
 
-</form>
 <div class="page-content">
     <div class="row-fluid">
         <div class="span12">
 
-            <div class="box box-color box-bordered-no ">
-                <div class="box-title no-margin-top">
-                    <h3>
-                        <i class="icon-list-ul"></i>
-                        角色列表
-                    </h3>
+            <div class="box  box-bordered-no ">
+                <div class="box-title no-margin-top no-padding-top" style="border-bottom:1px dashed #c5d0dc;">
+                    <h3 class="blue">角色管理</h3>
                 </div>
                 <div class="box-content no-padding ">
-                    <table id="table-list"
-                           class="table table-hover  table-nomargin table-bordered dataTable dataTable-nosort clear-both">
-                    </table>
-                    <div class="table-funtion-bar clear-both">
-                        <div class="btn-group">
-                            <button data-toggle="dropdown" class="btn no-border dropdown-toggle">
-                                <i id="checkIcon" class="icon-check-empty bigger-120"></i>
-                                <span class="caret"></span>
-                            </button>
 
-                            <ul class="dropdown-menu dropdown-default">
-                                <li id="selectedAll">
-                                    <a href="javascript:;"  >全选</a>
-                                </li>
-                                <li id="cancelSelected" >
-                                    <a href="javascript:;" >取消</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="btn-group">
-                            <button class="btn no-border tooltips" id="create-function" data-original-title="新增" >
-                                <i class="icon-plus"></i>
-                            </button>
-                            <button class="btn no-border tooltips" id="refresh-function" data-original-title="刷新">
-                                <i class="icon-refresh"></i>
-                            </button>
-                            <button class="btn no-border tooltips" id="delete-function" style="display:none;" data-original-title="删除">
-                                <i class="icon-trash"></i>
-                            </button>
-                        </div>
+                    <div class="pull-left" style="width:18%;min-height:520px;border-right:1px dashed  #c5d0dc;">
+                           <h5 class="header smaller lighter blue" style="margin:5px 10px;" >角色组</h5>
+                        <ul id="orgTree" ></ul>
+                    </div>
+                    <div class="pull-left" style="width:78%; padding:0 0 5px 10px;" >
+                        <div class="table-funtion-bar clear-both"  >
+
+                            <div class="btn-group">
+                                <button data-toggle="dropdown"  class="btn no-border dropdown-toggle">
+                                    <i id="checkIcon" class="icon-check-empty bigger-120"></i>
+                                    <span class="caret"></span>
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-default">
+                                    <li id="selectedAll">
+                                        <a href="javascript:;"  >全选</a>
+                                    </li>
+                                    <li id="cancelSelected" >
+                                        <a href="javascript:;" >取消</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn no-border tooltips" id="create-function" data-original-title="新增" >
+                                    <i class="icon-plus"></i>
+                                </button>
+                                <button class="btn no-border tooltips" id="refresh-function" data-original-title="刷新">
+                                    <i class="icon-refresh"></i>
+                                </button>
+                                <button class="btn no-border tooltips" id="delete-function" style="display:none;" data-original-title="删除">
+                                    <i class="icon-trash"></i>
+                                </button>
+                            </div>
+                            <div class="input-append no-margin-bottom pull-right">
+                                <!--自定义搜索-->
+                                <form id="searchForm" name="searchForm" class="no-margin no-padding">
+                                    <span class="input-icon input-icon-right">
+                                        <input class="input-medium" id="search" name="search" type="text" placeholder="名称/代码">
+                                        <i class="icon-search blue" onclick="$('#searchForm').submit()" ></i>
+                                    </span>
+                                </form> <!--/#searchForm-->
+                            </div>
+
+                        </div> <!--/.table-funtion-bar-->
+                        <table id="table-list"
+                               class="table table-hover  table-nomargin table-bordered dataTable dataTable-nosort clear-both">
+                        </table>
                     </div>
                 </div>
             </div>
@@ -89,54 +102,61 @@
             oTable.fnDraw();
             lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
         };
+      $('#searchForm').submit(function(event){
+          event.preventDefault() ;
+          oTable.fnDraw();
+      });
         var oTable = $('#table-list');
 
         oTable.dataTable({
             'aoColumns': [
                 { 'mData': 'name', 'sTitle': '角色名称' },
                 { 'mData': 'code', 'sTitle': '角色代码'}  ,
+                { 'mData': 'typeName', 'sTitle': '类别'}  ,
                 { 'mData': 'status', 'sTitle': '状态'}  ,
-                { 'mData': 'createdBy', 'sTitle': '创建人'}  ,
-                { 'mData': 'createdDate', 'sTitle': '创建时间'}  ,
                 { 'mData': 'id', 'sTitle': '操作'}
             ],
             'aoColumnDefs': [
                 {
                     'mRender': function (data, type, full) {
-                        //  console.log(data)
                         if (data == 'enable') {
                             return   '<i class="icon-flag bigger-130 green" title="启用的"></i>';
                         }
                         return    '<i class="icon-flag bigger-130 red" title="禁用的"></i>';
                     },
-                    'aTargets': [2 ]
+                    'aTargets': [3 ]
                 },
                 {
                     'mRender': function (data, type, full) {
                       //  console.log(data)
                         return  $('#tableActionTpl').render({id: data});
                     },
-                    'aTargets': [5 ]
+                    'aTargets': [4 ]
                 },
                 { bSortable: false,
-                    aTargets: [5]
+                    aTargets: [4]
                 },
                 //   { 'bVisible': false,  'aTargets': [ 1 ] },
-                { 'sClass': 'center', 'aTargets': [ 2 ] }
+                { 'sClass': 'center', 'aTargets': [ 3 ] }
             ],
-            'bStateSave': true , /**state saving **/
+            'sDom': 'rtip',
+            'bStateSave': false  , /**state saving **/
             'bProcessing': true ,
             'bServerSide': true,
             'fnServerData': lework.springDataJpaPageableAdapter,
             'sAjaxSource': '${ctx}/role/getDatatablesJson',
-           // 'fnServerParams' :function(aoData ){ aoData.push( { "name": "more_data", "value": "my_value" } ); },
+            'fnServerParams' :function(aoData ){
+                var selectedNode = $.fn.tree && $('#orgTree').tree('getSelected');
+                if (selectedNode)
+                    aoData.push({ 'name': 'filter_EQS_groupId', 'value': selectedNode.id  });
+                //自定义参数
+                aoData.pushArray($('#searchForm').serializeArray());
+            },
             'fnInitComplete': function () {     /**datatables ready**/
-
-                lework.initDatatablesSearchHolder('名称/值');
-
             } ,
             fnDrawCallback :function(oSettings ){
-               // lework.log('DataTables has redrawn the table') ;
+                //resert function bar
+                checkFunbarStatus(false) ;
                 // bootstrap-tooltip
                 $('.tooltips').tooltip();
                 $('.confirmDelete').confirmDelete({onDelete: function () {
@@ -165,7 +185,7 @@
             $(this).colorbox({
                 href :'role/update?$SiteMesh=false' ,
                 adjustY:'40%',
-                width: '800px',
+                width: '700px',
                 overlayClose: false,
                 scrolling: false
             })
@@ -184,7 +204,6 @@
         //多行删除
         $('#delete-function').confirmDelete({text: '<span class="text-warning">确认删除多条记录？</span>',
             onDelete: function () {
-                //TODO
                 var ids = [];
                 oTable.find('tr.selected .confirmDelete').each(function () {
                     ids.push($(this).data('id'))
@@ -220,6 +239,19 @@
             }
         }
 
+        using(['tree'], function () {
+            $('#orgTree').tree({
+                url: 'organization/getTree',
+                method: 'get',
+                checkbox: false ,
+                onLoadSuccess : function(node, data){
+                },
+                onSelect : function(){
+                    oTable.fnDraw();
+                }
+            });
+        }) //using
+
     })  //dom ready
 
 
@@ -232,15 +264,12 @@
 <!--table action template-->
 <script id="tableActionTpl" type="text/x-jsrender">
     <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-        <a class="light-blue tooltips" href="javascript:;" data-original-title="配置"  >
-            <i class="icon-cog bigger-140 filterSelected"></i>
-        </a>
         <a class="green tooltips view"  href="role/view?id={{:id}}&$SiteMesh=false"   data-original-title="查看"
            onclick="$(this).colorbox({adjustY:'40%',width:'650px',overlayClose:false,scrolling:true,scrolling:false });" >
             <i class="icon-zoom-in bigger-140 filterSelected"></i>
         </a>
-        <a class="blue tooltips update" href="role/update?id={{:id}}&$SiteMesh=false" data-original-title="修改"
-           onclick="$(this).colorbox({ adjustY:'40%',width:'800px',overlayClose:false,scrolling:false });" >
+        <a class="blue tooltips update" href="role/update?id={{:id}}&$SiteMesh=false" data-original-title="编辑"
+           onclick="$(this).colorbox({ adjustY:'40%',width:'700px',overlayClose:false,scrolling:false });" >
             <i class="icon-edit bigger-140 filterSelected"></i>
         </a>
         <a class="red tooltips confirmDelete" href="javascript:;" data-id="{{:id}}"  data-original-title="删除">
