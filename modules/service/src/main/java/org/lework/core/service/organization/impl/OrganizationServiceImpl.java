@@ -40,6 +40,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     private static Logger logger = LoggerFactory.getLogger(OrganizationServiceImpl.class);
 
     private OrganizationDao organizationDao;
+
     @Autowired
     public void setOrganizationDao(OrganizationDao organizationDao) {
         this.organizationDao = organizationDao;
@@ -121,8 +122,10 @@ public class OrganizationServiceImpl implements OrganizationService {
     public Organization getOrganizationByCode(String code) {
         return organizationDao.findByCode(code);
     }
+
     /**
      * 新增操作时,默认序号为{同级节点最大值}+1
+     *
      * @param entity
      */
     @Override
@@ -185,12 +188,12 @@ public class OrganizationServiceImpl implements OrganizationService {
         List<OrgTreeGridDTO> rootsNodes = new ArrayList<OrgTreeGridDTO>();
         OrgTreeGridDTO temp;
         Organization curNode;
-        if(Collections3.isEmpty(roots))
-            return rootsNodes ;
+        if (Collections3.isEmpty(roots))
+            return rootsNodes;
         int size = roots.size();
         for (int i = 0; i < size; i++) {
             curNode = roots.get(i);
-            if (contain(ignore, curNode))
+            if (Collections3.contain(ignore, curNode))
                 continue;
             temp = new OrgTreeGridDTO(curNode);
             temp.setLevelSize(size);
@@ -209,10 +212,10 @@ public class OrganizationServiceImpl implements OrganizationService {
         List<Organization> roots = organizationDao.findRoots();
         List<TreeResult> rootNodes = new ArrayList<TreeResult>();
         TreeResult temp;
-        if(Collections3.isEmpty(roots))
-            return rootNodes ;
+        if (Collections3.isEmpty(roots))
+            return rootNodes;
         for (Organization root : roots) {
-            if (contain(ignore, root))
+            if (Collections3.contain(ignore, root))
                 continue;
             temp = convert2TreeNode(root);
             rootNodes.add(temp);
@@ -227,7 +230,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         List<Organization> siblings;
         int curIndex;
         Integer temp;
-        Organization previous;
+        Organization pre;
 
         if (!entity.hasParent()) {  //如果是根节点
             siblings = organizationDao.findRoots();
@@ -237,12 +240,12 @@ public class OrganizationServiceImpl implements OrganizationService {
         if (Collections3.isNotEmpty(siblings) && siblings.size() > 1) {
             curIndex = siblings.indexOf(entity);
             if (curIndex > 0) {
-                previous = siblings.get(curIndex - 1);
+                pre = siblings.get(curIndex - 1);
                 //互换sortNum
-                temp = previous.getSortNum();
-                previous.setSortNum(entity.getSortNum());
+                temp = pre.getSortNum();
+                pre.setSortNum(entity.getSortNum());
                 entity.setSortNum(temp);
-                organizationDao.save(previous);
+                organizationDao.save(pre);
                 organizationDao.save(entity);
             }
         }
@@ -251,8 +254,8 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     public void downSortNum(Organization entity) {
         List<Organization> siblings;
-        int curIndex  ;
-        Integer temp  ;
+        int curIndex;
+        Integer temp;
         Organization next;
         if (!entity.hasParent()) {  //如果是根节点
             siblings = organizationDao.findRoots();
@@ -267,8 +270,8 @@ public class OrganizationServiceImpl implements OrganizationService {
                 temp = next.getSortNum();
                 next.setSortNum(entity.getSortNum());
                 entity.setSortNum(temp);
-                organizationDao.save(next) ;
-                organizationDao.save(entity) ;
+                organizationDao.save(next);
+                organizationDao.save(entity);
             }
         }
 
@@ -287,7 +290,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         if (parent.hasChild()) {
             childOrgs = parent.getChildrenOrganizations();
             for (Organization o : childOrgs) {
-                if (contain(ignore, o)) {  //忽略节点
+                if (Collections3.contain(ignore, o)) {  //忽略节点
                     continue;
                 }
                 node = convert2TreeNode(o);
@@ -318,7 +321,7 @@ public class OrganizationServiceImpl implements OrganizationService {
             size = childMenu.size();
             for (int i = 0; i < size; i++) {
                 curNode = childMenu.get(i);
-                if (contain(ignore, curNode)) {  //忽略节点
+                if (Collections3.contain(ignore, curNode)) {  //忽略节点
                     continue;
                 }
                 node = new OrgTreeGridDTO(curNode);
@@ -333,6 +336,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         }
         parentNode.getChildren().addAll(childNodes);
     }
+
     /**
      * 递归查找子节点到集合
      *
@@ -365,17 +369,5 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     }
 
-    /**
-     * 是否包含在集合
-     *
-     * @param dest
-     * @param src
-     */
-    private boolean contain(List<Organization> dest, Organization src) {
-        if (Collections3.isEmpty(dest) ) {
-            return false;
-        }
-        return dest.contains(src);
-    }
 
 }

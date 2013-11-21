@@ -219,4 +219,19 @@ public class Collections3 {
             collection.add(elements[i]);
         }
     }
+
+    /**
+     * 元素是否包含于集合
+     *
+     * @param collection
+     * @param element
+     * @param <T>
+     * @return
+     */
+    public static <T> boolean contain(Collection<T> collection, T element) {
+        if (isEmpty(collection))
+            return false;
+        return collection.contains(element);
+    }
+
 }

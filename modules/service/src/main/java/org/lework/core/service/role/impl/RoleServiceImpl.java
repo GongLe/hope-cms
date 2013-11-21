@@ -1,11 +1,13 @@
 package org.lework.core.service.role.impl;
 
 
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
 import org.lework.core.common.enumeration.Status;
+import org.lework.core.dao.organization.OrganizationDao;
 import org.lework.core.dao.role.RoleDao;
-import org.lework.core.entity.menu.Menu;
+import org.lework.core.entity.organization.Organization;
 import org.lework.core.entity.role.Role;
 import org.lework.core.entity.user.User;
 import org.lework.core.service.role.RoleService;
@@ -13,6 +15,7 @@ import org.lework.runner.orm.support.SearchFilter;
 import org.lework.runner.orm.support.Specifications;
 import org.lework.runner.utils.Collections3;
 import org.lework.runner.utils.Strings;
+import org.lework.runner.web.vo.ChosenDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +28,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Role Service implement
+ *
  * @author Gongle
  */
 
@@ -38,6 +43,12 @@ public class RoleServiceImpl implements RoleService {
     private static Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 
     private RoleDao roleDao;
+    private OrganizationDao organizationDao;
+
+    @Autowired
+    public void setOrganizationDao(OrganizationDao organizationDao) {
+        this.organizationDao = organizationDao;
+    }
 
     @Autowired
     public void setRoleDao(RoleDao roleDao) {
@@ -56,13 +67,13 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Role> getAllRoleByStatus(Status status) {
-        Validate.notNull(status) ;
-        return  roleDao.findAllByStatus(status.getCode() ) ;
+        Validate.notNull(status);
+        return roleDao.findAllByStatus(status.getCode());
     }
 
     @Override
     public List<Role> getAllRoleByGroupId(String groupId) {
-        return roleDao.findRolesByGroupId(groupId)  ;
+        return roleDao.findRolesByGroupId(groupId);
     }
 
     @Override
@@ -114,10 +125,10 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void deleteRoles(List<String> ids) {
-        if(Collections3.isEmpty(ids)){
+        if (Collections3.isEmpty(ids)) {
             return;
         }
-        List<Role> entities = (List<Role>) roleDao.findAll(ids) ;
+        List<Role> entities = (List<Role>) roleDao.findAll(ids);
         roleDao.delete(entities);
     }
 
@@ -150,4 +161,35 @@ public class RoleServiceImpl implements RoleService {
         return roleDao.findOne(id);
 
     }
+
+    @Override
+    public Map<String, List<ChosenDTO>> getRoleGroupOptions(List<Role> selectedList, boolean ignoreEmpty) {
+        Map<String, List<ChosenDTO>> ret = Maps.newHashMap();
+        List<ChosenDTO> options = new ArrayList<ChosenDTO>();
+        //获取所有分组,
+        List<Organization> roleGroups = organizationDao.findAllByStatus(Status.enable.getCode());
+        if (Collections3.isNotEmpty(roleGroups)) {
+            //循环查找所属角色
+            for (Organization group : roleGroups) {
+                List<Role> member = roleDao.findRolesByGroupId(group.getId());
+                if (Collections3.isNotEmpty(member)) {
+                    for (Role m : member) {
+                        options.add(new ChosenDTO(m.getName(), m.getId(),Collections3.contain(selectedList, m)));
+                    }
+                } else if (ignoreEmpty) {
+                    continue;
+                }
+                //key format : {name}-({code})
+                ret.put(String.format("%s-(%s)", group.getName(), group.getCode()), options);
+                options = new ArrayList<ChosenDTO>();
+            }
+        }
+        return ret;
+    }
+
+    @Override
+    public Map<String, List<ChosenDTO>> getRoleGroupOptions() {
+        return getRoleGroupOptions(null, false);
+    }
+
 }

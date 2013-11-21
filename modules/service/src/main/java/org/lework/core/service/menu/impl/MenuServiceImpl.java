@@ -4,9 +4,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
 import org.lework.core.common.enumeration.Status;
 import org.lework.core.dao.menu.MenuDao;
-import org.lework.core.dao.permission.PermissionDao;
 import org.lework.core.entity.menu.Menu;
-import org.lework.core.entity.organization.Organization;
 import org.lework.core.entity.role.Role;
 import org.lework.core.service.menu.MenuService;
 import org.lework.core.service.menu.MenuTreeGridDTO;
@@ -77,7 +75,7 @@ public class MenuServiceImpl implements MenuService {
         List<Menu> siblings;
         int curIndex;
         Integer temp;
-        Menu previous;
+        Menu pre;
         //如果是根节点
         if (!entity.hasParent()) {
             siblings = menuDao.findRoots();
@@ -87,12 +85,12 @@ public class MenuServiceImpl implements MenuService {
         if (Collections3.isNotEmpty(siblings) && siblings.size() > 1) {
             curIndex = siblings.indexOf(entity);
             if (curIndex > 0) {
-                previous = siblings.get(curIndex - 1);
+                pre = siblings.get(curIndex - 1);
                 //互换sortNum
-                temp = previous.getSortNum();
-                previous.setSortNum(entity.getSortNum());
+                temp = pre.getSortNum();
+                pre.setSortNum(entity.getSortNum());
                 entity.setSortNum(temp);
-                menuDao.save(previous);
+                menuDao.save(pre);
                 menuDao.save(entity);
             }
         }
@@ -238,7 +236,7 @@ public class MenuServiceImpl implements MenuService {
         int size = roots.size();
         for (int i = 0; i < size; i++) {
             curNode = roots.get(i);
-            if (contain(ignore, curNode)) {
+            if (Collections3.contain(ignore, curNode)) {
                 continue;
             }
             temp = new MenuTreeGridDTO(curNode);
@@ -260,7 +258,7 @@ public class MenuServiceImpl implements MenuService {
             return rootNodes ;
         TreeResult temp;
         for (Menu root : roots) {
-            if (contain(ignore, root)) {
+            if (Collections3.contain(ignore, root)) {
                 continue;
             }
             temp = convert2TreeNode(root);
@@ -304,7 +302,7 @@ public class MenuServiceImpl implements MenuService {
         if (parent.hasChild()) {
             childMenu = parent.getChildrenMenus();
             for (Menu m : childMenu) {
-                if(contain(ignore,m) ){  //忽略节点
+                if(Collections3.contain(ignore, m) ){  //忽略节点
                     continue;
                 }
                 node = convert2TreeNode(m) ;
@@ -336,7 +334,7 @@ public class MenuServiceImpl implements MenuService {
             size = childMenu.size() ;
             for (int i = 0; i < size ; i++) {
                 curNode = childMenu.get(i);
-                if (contain(ignore, curNode)) {  //忽略节点
+                if (Collections3.contain(ignore, curNode)) {  //忽略节点
                     continue;
                 }
                 node = new MenuTreeGridDTO(curNode);
@@ -364,18 +362,7 @@ public class MenuServiceImpl implements MenuService {
         return ret;
 
     }
-    /**
-     * 是否包含在集合
-     *
-     * @param dest
-     * @param src
-     */
-    private boolean contain(List<Menu> dest, Menu src) {
-        if (Collections3.isEmpty(dest) ) {
-            return false;
-        }
-        return dest.contains(src);
-    }
+
 
 
 }

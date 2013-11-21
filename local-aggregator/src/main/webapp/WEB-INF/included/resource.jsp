@@ -99,8 +99,14 @@
 <le:javascript src="${src}/plugins/slimscroll/jquery.slimscroll.js" />
 
 <le:javascript src="${src}/plugins/blockUI/jquery.blockUI.js" />
-<!--系统jquery plugins :: ConfirmDelete -->
+
+<!--jquery chonse-->
+<le:javascript src="${src}/plugins/chosen/chosen.jquery.js" />
+<le:stylesheet src="${src}/plugins/chosen/chosen.css"/>
+
+<!--lework jquery plugins :: ConfirmDelete -->
 <le:javascript src="${src}/plugins/lework.jquery.confirmdelete.js" />
+<!--lework jquery plugins :: TableMutilDelete -->
 <le:javascript src="${src}/plugins/lework.jquery.TableMutilDelete.js" />
 <!--插件全局设置 -->
 <le:javascript src="${src}/plugins/lework.plugins.setting.js" />

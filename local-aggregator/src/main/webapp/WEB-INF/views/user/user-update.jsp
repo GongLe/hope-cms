@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 </head>
 
 <body>
@@ -58,10 +57,18 @@
           <div class="control-group">
               <label class="control-label" for="orgId">所属角色</label>
               <div class="controls">
-                  <input type="text" id="roleIds" name="roleIds" value="${ownRoleIds}"  style="width:284px;height:28px;" >
-                  <div class="help-inline">
-                      <a href="javascript:;" onclick="$('#inputForm #roleIds').combotree('clear');">清空</a>
-                  </div>
+
+                <select id="roleIds" name="roleIds" multiple    >
+                    <c:forEach items="${chosenRoleOptions}" var="group">
+                        <optgroup label="${group.key}">
+                            <c:forEach items="${group.value}" var="opt">
+                                <option
+                                        <c:if test="${opt.selected == true}">selected="selected"</c:if>
+                                        value="${opt.value}">${opt.name}</option>
+                            </c:forEach>
+                        </optgroup>
+                    </c:forEach>
+                </select>
               </div>
           </div>
 
@@ -166,23 +173,15 @@
             }
         }
        }); //end validate
+
+
+        $('#inputForm #roleIds').chosen({
+            width:'284px',
+            placeholder_text_multiple:'请选择角色'
+        }); //chosen
         setTimeout(function () {
             //easyui loader
             using([ 'combotree'], function () {
-                $('#inputForm #roleIds').combotree({
-                    url: 'role/getTree',
-                    method: 'get',
-                    checkbox: true ,
-                    multiple:true ,
-                    onLoadSuccess : function(node, data){
-                        var ids = ${ownRoleIdsArr};
-                        if(ids) {
-                            $('#inputForm #roleIds').combotree('setValues', ids );
-                        }
-                    },
-                    onCheck : function(node, checked){
-                    }
-                });
                 //所属部门
                 $('#inputForm #orgId').combotree({
                     url: 'organization/getTree?',

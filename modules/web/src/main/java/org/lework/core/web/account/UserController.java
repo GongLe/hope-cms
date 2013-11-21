@@ -62,7 +62,7 @@ public class UserController  extends AbstractController {
             ids = Collections3.extractToList(ownRoles, "id");
             model.addAttribute("ownRoleIdsArr", JsonMapper.nonDefaultMapper().toJson(ids));
         }
-
+        model.addAttribute("chosenRoleOptions",roleService.getRoleGroupOptions(ownRoles,true)  );
         return "user/user-update";
     }
 

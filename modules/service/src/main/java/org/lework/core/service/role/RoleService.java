@@ -1,14 +1,15 @@
 package org.lework.core.service.role;
 
 import org.lework.core.common.enumeration.Status;
-import org.lework.core.entity.menu.Menu;
 import org.lework.core.entity.role.Role;
 import org.lework.core.entity.user.User;
 import org.lework.runner.orm.support.SearchFilter;
+import org.lework.runner.web.vo.ChosenDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 角色Service层
@@ -17,24 +18,26 @@ import java.util.List;
  */
 public interface RoleService {
 
-    public  boolean validateRoleCode(String id ,String code ) ;
+    public boolean validateRoleCode(String id, String code);
 
     public Role getRole(String id);
 
     public List<Role> getAllRole();
 
-    public List<Role> getAllRoleByStatus(Status status );
+    public List<Role> getAllRoleByStatus(Status status);
 
-    public List<Role> getAllRoleByGroupId(String groupId );
+    public List<Role> getAllRoleByGroupId(String groupId);
 
-    public List<Role> getRolesByIds(List<String> ids );
+    public List<Role> getRolesByIds(List<String> ids);
+
     /**
      * 获取用户拥有的角色
+     *
      * @param user
      * @param status
      * @return
      */
-    public List<Role> getUserRolesByStatus(User user , Status status) ;
+    public List<Role> getUserRolesByStatus(User user, Status status);
 
     public Role getRoleByCode(String code);
 
@@ -43,9 +46,9 @@ public interface RoleService {
 
     public void deleteRole(String id);
 
-    public void deleteRoles(List<String> ids );
+    public void deleteRoles(List<String> ids);
 
-    public void deleteRoles(String[] ids );
+    public void deleteRoles(String[] ids);
 
     public void deleteRole(Role entity);
 
@@ -63,6 +66,20 @@ public interface RoleService {
      */
     public Page<Role> searchPageRole(Pageable pageable, List<SearchFilter> filters);
 
+    /**
+     * get jquery chosen group option DTO
+     *
+     * @param selectedList 已选择的节点集合
+     * @param ignoreEmpty  是否隐藏空角色组
+     * @return
+     */
+    public Map<String, List<ChosenDTO>> getRoleGroupOptions(List<Role> selectedList, boolean ignoreEmpty);
 
+    /**
+     * get jquery chosen group option DTO
+     *
+     * @return
+     */
+    public Map<String, List<ChosenDTO>> getRoleGroupOptions();
 
 }
