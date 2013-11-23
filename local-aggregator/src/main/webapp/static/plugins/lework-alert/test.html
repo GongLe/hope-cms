@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="../../assets/js/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" href="lework.jquery.alert.css">
+    <script src="lework.jquery.alert.js"></script>
+
+</head>
+<body>
+<!--<div class="lework-PopupPanel">
+    <div class="lework-alert " style="width:300px; margin:5px auto;">
+        <button type="button" class="close" >×</button>
+        <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.
+    </div>
+    <div class="lework-alert lework-alert-danger" style="width:300px; margin:5px auto;">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.
+    </div>
+</div>
+<hr/>-->
+<p style="margin:50px auto;"></p>
+ <button onclick="lework.alert({content:'default theme '})" >default </button>
+ <button onclick="lework.alert({content:'default theme ',type:'info'})" >info </button>
+ <button onclick="lework.alert({content:'default theme ',type:'success'})" >success </button>
+ <button onclick="lework.alert({content:'default theme ',type:'danger'})" >danger </button>
+ <button onclick="lework.alert({content:'default theme',type:'error'})"  >error </button>
+</body>
+<script>
+    lework.alert({content: 'test event',
+        onHide: function () {
+            console.log('onHide')
+        }
+    })
+</script>
+</html>
