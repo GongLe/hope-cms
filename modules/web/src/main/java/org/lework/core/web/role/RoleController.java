@@ -2,6 +2,7 @@ package org.lework.core.web.role;
 
 import com.google.common.collect.Lists;
 import org.lework.core.common.enumeration.Status;
+import org.lework.core.entity.menu.Menu;
 import org.lework.core.entity.organization.Organization;
 import org.lework.core.entity.role.Role;
 import org.lework.core.entity.role.RoleTypes;
@@ -30,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -82,15 +84,15 @@ public class RoleController extends AbstractController {
             entity.setGroupName(null);
         }
         if (result.hasErrors()) {
-            callback(response, CallbackData.build("actionCallback", "操作提示", "角色&quot;" + entity.getName() + "&quot;保存失败" + result.toString(), NotificationType.ERROR));
+            callback(response, CallbackData.build("actionCallback", "角色&quot;" + entity.getName() + "&quot;保存失败",NotificationType.ERROR));
         }
         try {
             //保存
             roleService.saveRole(entity);
-            callback(response, CallbackData.build("actionCallback", "操作提示", "角色&quot;" + entity.getName() + "&quot;保存成功", NotificationType.SUCCESS));
+            callback(response, CallbackData.build("actionCallback", "角色&quot;" + entity.getName() + "&quot;保存成功",NotificationType.DEFAULT));
         }catch (Exception e){
             e.printStackTrace();
-            callback(response, CallbackData.build("actionCallback", "操作提示", "角色&quot;" + entity.getName() + "&quot;保存失败" + e.toString(), NotificationType.ERROR));
+            callback(response, CallbackData.build("actionCallback", "角色&quot;" + entity.getName() + "&quot;保存失败",NotificationType.ERROR));
         }
 
     }
@@ -105,15 +107,17 @@ public class RoleController extends AbstractController {
 
         try {
             //单个删除
-            if(Strings.isNotBlank(deleteId)){
+            if (Strings.isNotBlank(deleteId)) {
                 Role entity = roleService.getRole(deleteId);
                 roleService.deleteRole(entity);
-                callback(response, CallbackData.build("deleteCallback", "操作提示",
-                        "角色&quot;" + entity.getName() + "&quot;删除成功", NotificationType.SUCCESS));
-            }else if(Strings.isNotBlank(deleteIds)){   //多个删除
-               String []  ids  = Strings.split(deleteIds,",");
-               roleService.deleteRoles(ids);
-                callback(response, CallbackData.build("deleteCallback", "操作提示", "删除多个成功", NotificationType.SUCCESS));
+                callback(response, CallbackData.build("deleteCallback", "角色&quot;" + entity.getName() + "&quot;删除成功", NotificationType.DEFAULT));
+            } else if (Strings.isNotBlank(deleteIds)) {   //多个删除
+                String[] ids = Strings.split(deleteIds, ",");
+                List<Role> entities = roleService.getRoleByIds(Arrays.asList(ids));
+                List<String> names = Collections3.extractToList(entities, "name");
+                roleService.deleteRoles(entities);
+                //   callback(response, CallbackData.build("deleteCallback", "操作提示", "删除多个成功", NotificationType.SUCCESS));
+                callback(response, CallbackData.build("deleteCallback", "角色&quot;" + Strings.omit(Strings.join(names, ","), 30) + "&quot;删除失败", NotificationType.DEFAULT));
             }
 
         } catch (Exception e) {

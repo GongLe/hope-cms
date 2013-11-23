@@ -12,6 +12,7 @@
     height:0;
     visibility: visible;
     overflow: visible;
+    font-size:12px;
 }
 
 .lework-alert button.close {
@@ -23,19 +24,24 @@
     font-weight: bold;
     line-height: 15px;
     color: #000;
+    color: #727272\0;
     text-shadow: 0 1px 0 #fff;
     opacity: .2;
     background: transparent;
     -webkit-appearance: none;
 
 }
-
+ .lework-alert:first-child{
+    margin-top:45px;
+}
 .lework-alert {
     position: relative;
-    padding: 8px 5px 8px 10px;
+    padding:5px;
     margin:5px auto;
     text-shadow: none;
     text-align: center;
+    font-size: 1.2em;
+    font-size: 1.0em\9;
     -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);

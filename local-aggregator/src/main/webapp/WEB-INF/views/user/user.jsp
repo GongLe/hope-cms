@@ -101,12 +101,12 @@
         window.actionCallback = function (resp) {
             $.colorbox.close();
             oTable.fnDraw();
-            lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
+            lework.alert({content: resp.attributes.message, type: resp.attributes.type })
         };
         window.deleteCallback = function (resp) {
             $.colorbox.close();
             oTable.fnDraw();
-            lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
+            lework.alert({content:resp.attributes.message ,type: resp.attributes.type ,width:'250px'})
         };
         //自定义搜索表单
         $('#searchForm').submit(function(event){
@@ -177,6 +177,8 @@
                 //lework.initDatatablesSearchHolder('用户名/姓名');
             } ,
             fnDrawCallback :function(oSettings ){
+                //resert function bar
+                checkFunbarStatus(false) ;
                 // bootstrap-tooltip
                 $('.tooltips').tooltip();
                 $('.confirmDelete').confirmDelete({onDelete: function () {

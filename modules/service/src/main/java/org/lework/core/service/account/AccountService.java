@@ -16,6 +16,8 @@ public interface AccountService {
     public static final int SALT_SIZE = 8;
 
 
+    public List<User> getUserByIds(List<String> ids ) ;
+
     public List<User> getAllUser();
 
     public User getUser(String id);
@@ -64,9 +66,8 @@ public interface AccountService {
 
     public void deleteUser(String id);
 
-    public void deleteUsers(List<String> ids);
+    public void deleteUsers(List<User> entities);
 
-    public void deleteUsers(String[] ids);
 
     /**
      * 验证用户名是否可用

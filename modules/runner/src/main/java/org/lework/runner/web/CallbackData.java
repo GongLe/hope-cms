@@ -3,6 +3,7 @@ package org.lework.runner.web;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.lework.runner.mapper.JsonMapper;
+import org.lework.runner.utils.Strings;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +28,16 @@ public class CallbackData {
         ret.addAttribute("type", type.toString());
         return ret;
     }
+
+    @JsonIgnore
+    public static CallbackData build(String functionName, String message, NotificationType type) {
+        CallbackData ret = new CallbackData();
+        ret.setFunctionName(functionName);
+        ret.addAttribute("message", message);
+        ret.addAttribute("type", type.toString());
+        return ret;
+    }
+
 
     /**
      * 增加函调函数属性

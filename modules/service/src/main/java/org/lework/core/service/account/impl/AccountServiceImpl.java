@@ -3,6 +3,7 @@ package org.lework.core.service.account.impl;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.lework.core.dao.user.UserDao;
+import org.lework.core.entity.menu.Menu;
 import org.lework.core.entity.role.Role;
 import org.lework.core.entity.user.User;
 import org.lework.core.service.account.AccountService;
@@ -21,6 +22,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -38,15 +40,24 @@ public class AccountServiceImpl implements AccountService {
         this.userDao = userDao;
     }
 
+    @Override
+    public List<User> getUserByIds(List<String> ids) {
+        if (Collections3.isEmpty(ids)) {
+            return new ArrayList<User>();
+        }
+        return (List<User>) userDao.findAll(ids);
+    }
+
     /**
      * 验证用户名是否可用
-     * @param id User主键
+     *
+     * @param id        User主键
      * @param loginName 用户名
-     * @return  true:代码值可用,false:代码值不可用
+     * @return true:代码值可用,false:代码值不可用
      */
     @Override
     public boolean validateLoginName(String id, String loginName) {
-        User  entity = userDao.findByLoginName(loginName) ;
+        User entity = userDao.findByLoginName(loginName);
         if (entity == null) {  //loginName
             return true;
         } else if (Strings.isBlank(id)) {   //新增操作
@@ -58,7 +69,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean validateEmail(String id, String email) {
-        User  entity = userDao.findByEmail(email)   ;
+        User entity = userDao.findByEmail(email);
         if (entity == null) {  //email
             return true;
         } else if (Strings.isBlank(id)) {   //新增操作
@@ -68,21 +79,12 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
-    @Override
-    public void deleteUsers(String[] ids) {
-        if (ArrayUtils.isEmpty(ids)) {
-            return;
-        }
-        List<User> entities = (List<User>) userDao.findAll(Arrays.asList(ids));
-        userDao.delete(entities);
-    }
 
     @Override
-    public void deleteUsers(List<String> ids) {
-        if (Collections3.isEmpty(ids)) {
+    public void deleteUsers(List<User> entities) {
+        if (Collections3.isEmpty(entities)) {
             return;
         }
-        List<User> entities = (List<User>) userDao.findAll(ids);
         userDao.delete(entities);
     }
 
@@ -98,9 +100,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void saveUser(User entity) {
-        userDao.save(entity) ;
+        userDao.save(entity);
     }
-
 
 
     @Override
@@ -110,7 +111,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public User getUserByLoginName(String loginName) {
-        return  userDao.findByLoginName(loginName);
+        return userDao.findByLoginName(loginName);
     }
 
     public List<User> getAllUser() {
@@ -118,14 +119,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public Page<User> getPageUser(Pageable pageable) {
-        return userDao.findAll(pageable) ;
+        return userDao.findAll(pageable);
     }
 
     /**
      * 获取一个分页用户
      *
      * @param pageable 分页信息
-     * @param filters 属性过滤器
+     * @param filters  属性过滤器
      * @return Page<User>
      * @see Page
      * @see Pageable
@@ -140,6 +141,7 @@ public class AccountServiceImpl implements AccountService {
     public User getUser(String id) {
         return userDao.findOne(id);
     }
+
     public void registerUser(User user) {
         entryptPassword(user);
         user.setUserRegistered(new Date());

@@ -7,6 +7,7 @@ import org.apache.commons.lang3.Validate;
 import org.lework.core.common.enumeration.Status;
 import org.lework.core.dao.organization.OrganizationDao;
 import org.lework.core.dao.role.RoleDao;
+import org.lework.core.entity.menu.Menu;
 import org.lework.core.entity.organization.Organization;
 import org.lework.core.entity.role.Role;
 import org.lework.core.entity.user.User;
@@ -124,26 +125,23 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void deleteRoles(List<String> ids) {
-        if (Collections3.isEmpty(ids)) {
+    public void deleteRoles(  List<Role> entities) {
+        if(Collections3.isEmpty(entities))
             return;
-        }
-        List<Role> entities = (List<Role>) roleDao.findAll(ids);
-        roleDao.delete(entities);
-    }
-
-    @Override
-    public void deleteRoles(String[] ids) {
-        if (ArrayUtils.isEmpty(ids)) {
-            return;
-        }
-        List<Role> entities = (List<Role>) roleDao.findAll(Arrays.asList(ids));
         roleDao.delete(entities);
     }
 
     @Override
     public void saveRole(Role entity) {
         roleDao.save(entity);
+    }
+
+    @Override
+    public List<Role> getRoleByIds(List<String> ids) {
+        if (Collections3.isEmpty(ids)) {
+            return new ArrayList<Role>();
+        }
+        return (List<Role>) roleDao.findAll(ids);
     }
 
     @Override

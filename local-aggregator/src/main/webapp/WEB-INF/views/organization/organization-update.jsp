@@ -14,7 +14,8 @@
             </h3>
         </div>
 
-        <div class="modal-body" id="orgUpdateBody">
+        <div class="modal-body" >
+            <div  id="inputBody">
             <div class="row-fluid ">
                 <div class="span12"  >
 
@@ -119,6 +120,7 @@
                 </div>
 
             </div>
+            </div><!--/#inputBody-->
         </div><!--/.modal-body-->
         <div class="modal-footer">
             <button id="submitBtn"  type="submit" class="btn btn-small btn-primary"   >
@@ -133,7 +135,7 @@
 <script>
 
     $(function(){
-        $('#orgUpdateBody').slimscroll({
+        $('#inputBody').slimscroll({
             height:'400px'
         }); //slimscroll
 

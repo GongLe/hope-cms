@@ -16,7 +16,8 @@
             </small>
         </div>
 
-<div class="modal-body" id="userInputBody">
+<div class="modal-body">
+    <div  id="userInputBody">
     <div class="row-fluid ">
       <div class="span12" >
         <!--隐藏域-->
@@ -40,14 +41,15 @@
               <div class="controls">
                   <div class="input-prepend">
                       <span class="add-on"><i class="icon-key"></i></span>
-                      <input style="width: 245px;" type="password" placeholder="输入密码" name="plainPassword" id="plainPassword"
-                        <c:if test="${entity.isNew == true }">  value="123456" title="默认密码为123456"  </c:if>    >
+                      <input style="width: 245px;" type="password"  name="plainPassword" id="plainPassword"
+                        <c:if test="${entity.isNew == true }">  value="123456" title="默认密码为123456" placeholder="输入密码" </c:if>
+                      <c:if test="${entity.isNew == false }"> placeholder="更新密码"</c:if>    >
                   </div>
               </div>
           </div>
           <div class="control-group">
               <label class="control-label" for="orgId">所属部门</label>
-              <div class="controls">
+              <div class="controls" >
                   <input type="text" id="orgId" name="orgId"  value="${entity.org.id}"  style="width:284px;height:28px;" >
                   <div class="help-inline">
                       <a href="javascript:;" onclick="$('#inputForm #orgId').combotree('clear');">清空</a>
@@ -96,6 +98,7 @@
       </div>
 
     </div> <!--/.row-fluid-->
+    </div><!--/#inputBody-->
 </div><!--/.modal-body-->
         <div class="modal-footer">
             <button id="submitBtn" type="submit" class="btn btn-small btn-primary" >
@@ -110,10 +113,10 @@
 </div>
 <script>
     $(function(){
+
         $('#userInputBody').slimscroll({
             height:'400px'
         }); //slimscroll
-
         //from validater
         $('#inputForm').validate({
             submitHandler: function (form) {
@@ -189,6 +192,7 @@
                     onSelect: function (node) {
                     },
                     onLoadSuccess: function () {
+
                     }
                 });
             })

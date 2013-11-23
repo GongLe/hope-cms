@@ -5,6 +5,16 @@
 <html>
 <head>
     <title>角色权限控制</title>
+    <style type="text/css">
+        .box-title{border-bottom: 1px dashed #c5d0dc;}
+        .west{ width:15%;min-height:550px;border-right:1px dashed  #c5d0dc;  }
+        .west h5{  margin:5px 10px; }
+        .center{width:20%;min-height:550px;border-right:1px dashed  #c5d0dc;
+            overflow: auto;}
+        .center h5{margin:5px 10px;}
+        .east{width:60%; padding:0 0 5px 10px;}
+        .east h5{margin:5px 10px;}
+    </style>
 </head>
 
 <body>
@@ -27,17 +37,17 @@
         <div class="span12">
 
             <div class="box  box-bordered-no ">
-                <div class="box-title no-margin-top no-padding-top" style="border-bottom-style: dashed ; border-bottom-color: #c5d0dc;">
+                <div class="box-title no-margin-top no-padding-top" >
                     <h3 class="blue">角色权限控制</h3>
                 </div>
                 <div class="box-content no-padding ">
 
-                    <div class="pull-left" style="width:15%;min-height:550px;border-right:1px dashed  #c5d0dc;">
-                          <h5 style="margin:5px 10px;" class="header smaller lighter blue">  角色组</h5>
+                    <div class="pull-left west" >
+                          <h5  class="header smaller lighter blue">  角色组</h5>
                           <ul id="orgTree" style="padding:5px 10px 0 5px;" ></ul>
                     </div>
-                    <div class="pull-left" style="width:20%;min-height:550px;border-right:1px dashed  #c5d0dc;">
-                        <h5 style="margin:5px 10px;" class="header smaller lighter blue ">角色</h5>
+                    <div class="pull-left center"  >
+                        <h5  class="header smaller lighter blue ">角色</h5>
                         <ul id="roleTree" style="padding:5px 10px 0 5px;" ></ul>
                         <div id="alertNullRoleData" class="alert alert-warning" style="margin:0 8px;">
                             <button type="button" class="close" data-dismiss="alert">
@@ -47,8 +57,8 @@
                             <br>
                         </div><!--/.alert-->
                     </div>
-                    <div class="pull-left" style="width:60%; padding:0 0 5px 10px;" id="shouQuan">
-                            <h5 style="margin:5px 10px;" class="header smaller lighter blue "> 角色授权</h5>
+                    <div class="pull-left east" id="shouQuan">
+                            <h5  class="header smaller lighter blue "> 角色授权</h5>
                             <div class="alert alert-warning">
                                 <button type="button" class="close" data-dismiss="alert">
                                     <i class="icon-remove"></i>

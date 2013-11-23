@@ -323,7 +323,7 @@
 .chosen-container-active .chosen-choices {
  /* border: 1px solid #5897fb;*/
     border: 1px solid #A5C5F8;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);*/
 }
 .chosen-container-active .chosen-choices li.search-field input[type="text"] {
   color: #111 !important;

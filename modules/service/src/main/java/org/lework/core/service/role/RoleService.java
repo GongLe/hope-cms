@@ -39,6 +39,8 @@ public interface RoleService {
      */
     public List<Role> getUserRolesByStatus(User user, Status status);
 
+    public List<Role> getRoleByIds(List<String> ids );
+
     public Role getRoleByCode(String code);
 
 
@@ -46,9 +48,8 @@ public interface RoleService {
 
     public void deleteRole(String id);
 
-    public void deleteRoles(List<String> ids);
 
-    public void deleteRoles(String[] ids);
+    public void deleteRoles(List<Role> entities);
 
     public void deleteRole(Role entity);
 

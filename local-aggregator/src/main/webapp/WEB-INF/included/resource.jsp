@@ -108,6 +108,9 @@
 <le:javascript src="${src}/plugins/lework.jquery.confirmdelete.js" />
 <!--lework jquery plugins :: TableMutilDelete -->
 <le:javascript src="${src}/plugins/lework.jquery.TableMutilDelete.js" />
+<!--lework   plugins :: Alert -->
+<le:stylesheet src="${ctx}/static/plugins/lework-alert/lework.jquery.alert.css" />
+<le:javascript src="${ctx}/static/plugins/lework-alert/lework.jquery.alert.js" />
 <!--插件全局设置 -->
 <le:javascript src="${src}/plugins/lework.plugins.setting.js" />
 <le:javascript src="${src}/plugins/lework.utils.js" />

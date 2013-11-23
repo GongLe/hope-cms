@@ -2,9 +2,11 @@ package org.lework.core.web.account;
 
 import com.google.common.collect.Lists;
 import org.lework.core.common.enumeration.Status;
+import org.lework.core.entity.organization.Organization;
 import org.lework.core.entity.role.Role;
 import org.lework.core.entity.user.User;
 import org.lework.core.service.account.AccountService;
+import org.lework.core.service.organization.OrganizationService;
 import org.lework.core.service.role.RoleService;
 import org.lework.runner.mapper.JsonMapper;
 import org.lework.runner.orm.support.SearchFilter;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,6 +43,8 @@ public class UserController  extends AbstractController {
     private AccountService accountService ;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private OrganizationService organizationService;
 
     /**
      * list页面*
@@ -70,25 +75,37 @@ public class UserController  extends AbstractController {
      * 保存
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public void update(@Valid @ModelAttribute("entity") User user , BindingResult result,
+    public void update(@Valid @ModelAttribute("entity") User entity , BindingResult result,
+                       @RequestParam(value = "orgId" ,required = false) String orgId,
                        @RequestParam(value = "roleIds" ,required = false) List<String> roleIds,
                        HttpServletResponse response) {
         //关联角色
         if (Collections3.isEmpty(roleIds)) {
-            user.setRoles(null);
+            entity.setRoles(null);
         } else {
             List<Role> ownRoles = roleService.getRolesByIds(roleIds);
-            user.setRoles(ownRoles);
+            entity.setRoles(ownRoles);
         }
+        //关联组织机构
+        if (Strings.isBlank(orgId)) {
+            entity.setOrg(null);
+            entity.setOrgName(null);
+        } else {
+            Organization ownOrg = organizationService.getOrganization(orgId);
+            entity.setOrgName(ownOrg.getName());
+            entity.setOrg(ownOrg);
+        }
+
         if (result.hasErrors()) {
-            callback(response, CallbackData.build("actionCallback", "操作提示", "&quot;" + user.getName() + "&quot;保存失败" + result.toString(), NotificationType.ERROR));
+            callback(response, CallbackData.build("actionCallback", "用户&quot;" + entity.getName() + "&quot;保存失败",NotificationType.ERROR));
+            logger.warn(result.toString());
         }
         try {
-            accountService.saveUser(user);
-            callback(response, CallbackData.build("actionCallback", "操作提示", "&quot;" + user.getName() + "&quot;保存成功", NotificationType.SUCCESS));
+            accountService.saveUser(entity);
+            callback(response, CallbackData.build("actionCallback", "用户&quot;" + entity.getName() + "&quot;保存成功",NotificationType.DEFAULT));
         } catch (Exception e) {
             e.printStackTrace();
-            callback(response, CallbackData.build("actionCallback", "操作提示", "&quot;" + user.getName() + "&quot;保存失败" + e.toString(), NotificationType.ERROR));
+            callback(response, CallbackData.build("actionCallback", "用户&quot;" + entity.getName() + "&quot;保存失败",NotificationType.ERROR));
         }
 
     }
@@ -98,26 +115,28 @@ public class UserController  extends AbstractController {
      * 删除
      */
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public void delete(@RequestParam(value = "deleteId" ,required = false) String deleteId,
-                       @RequestParam(value = "deleteIds" ,required = false) String deleteIds,
+    public void delete(@RequestParam(value = "deleteId", required = false) String deleteId,
+                       @RequestParam(value = "deleteIds", required = false) String deleteIds,
                        HttpServletResponse response) {
 
         try {
             //单个删除
             if (Strings.isNotBlank(deleteId)) {
-                User  entity = accountService.getUser(deleteId);
+                User entity = accountService.getUser(deleteId);
                 accountService.deleteUser(entity);
-                callback(response, CallbackData.build("deleteCallback", "操作提示",
-                        "用户&quot;" + entity.getName() + "&quot;删除成功", NotificationType.SUCCESS));
+                callback(response, CallbackData.build("deleteCallback", "用户&quot;" + entity.getName() + "&quot;删除成功", NotificationType.DEFAULT));
             } else if (Strings.isNotBlank(deleteIds)) {   //多个删除
                 String[] ids = Strings.split(deleteIds, ",");
-                accountService.deleteUsers(ids);
-                callback(response, CallbackData.build("deleteCallback", "操作提示", "删除多个用户成功", NotificationType.SUCCESS));
+
+                List<User> entities = accountService.getUserByIds(Arrays.asList(ids));
+                List<String> names = Collections3.extractToList(entities, "name");
+                accountService.deleteUsers(entities);
+                callback(response, CallbackData.build("deleteCallback", "用户&quot;" + Strings.omit(Strings.join(names, ","), 30) + "&quot;删除成功", NotificationType.DEFAULT));
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            callback(response, CallbackData.build("deleteCallback", "操作提示", "用户删除失败!" + e.toString(), NotificationType.ERROR));
+            callback(response, CallbackData.build("deleteCallback", "用户删除失败.", NotificationType.ERROR));
         }
 
     }

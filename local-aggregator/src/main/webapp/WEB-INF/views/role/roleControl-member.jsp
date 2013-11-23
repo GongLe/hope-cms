@@ -46,7 +46,7 @@
         </form> <!--/#searchForm-->
     </div>
 </div> <!--/.table-funtion-bar-->
-TODO user table
+
 <script>
 
     $(function () {

@@ -53,6 +53,10 @@ public class Strings extends StringUtils{
     }
 
     /**
+     * 省略的字符串...
+     */
+    public static final String  OMIT_STRING= "..." ;
+    /**
      * Represents a failed index search.
      */
     public static final int INDEX_NOT_FOUND = -1;
@@ -189,4 +193,37 @@ public class Strings extends StringUtils{
         return m.matches();
     }
 
+    /**
+     * 省略字符串，只取字符串前面length个字符加上省略号返回.
+     *
+     * @param str    字符串。
+     * @param length 要保留的长度（英文字符长度，一个汉字占两个字符长度）。
+     * @return 如果pStr的长度小于length，则返回原串。
+     */
+    public static String omit(String str, int length) {
+        if (str == null || str.length() == 0 || length <= 0)
+            return str;
+        int len = 0;
+        int count = 0; // 最终要返回的中英文字符个数.
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            // 转换成英文字符长度.
+            if (c > 256) {
+                len += 2;
+            } else {
+                len += 1;
+            }
+            // 小于要返回的英文字符个数。
+            if (len <= length) {
+                count++;
+            } else {
+                break;
+            }
+        }
+        if (count >= str.length())
+            return str;
+        // 要去掉省略号的长度(1个字符).
+        String ret = str.substring(0, count - 1);
+        return ret + OMIT_STRING;
+    }
 }

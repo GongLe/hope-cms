@@ -95,12 +95,13 @@
         window.actionCallback = function (resp) {
             $.colorbox.close();
             oTable.fnDraw();
-            lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
+           // lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
+            lework.alert({content: resp.attributes.message, type: resp.attributes.type })
         };
         window.deleteCallback = function (resp) {
             $.colorbox.close();
             oTable.fnDraw();
-            lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
+            lework.alert({content:resp.attributes.message ,type: resp.attributes.type ,width:'250px'})
         };
       $('#searchForm').submit(function(event){
           event.preventDefault() ;
