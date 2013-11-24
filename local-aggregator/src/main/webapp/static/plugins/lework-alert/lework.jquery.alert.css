@@ -16,7 +16,9 @@
 }
 
 .lework-alert button.close {
-    float: right;
+    position:absolute;
+    top: 6px;
+    right: 3px;
     padding: 0;
     cursor: pointer;
     border: 0;
@@ -34,14 +36,15 @@
  .lework-alert:first-child{
     margin-top:45px;
 }
+
 .lework-alert {
     position: relative;
-    padding:5px;
-    margin:5px auto;
+    padding: 5px 18px 5px 5px;
+    margin: 5px auto;
     text-shadow: none;
     text-align: center;
-    font-size: 1.2em;
-    font-size: 1.0em\9;
+    font-size: 1.0em;
+    font-size: 0.9em\9;
     -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -52,6 +55,10 @@
     -moz-border-radius: 2px;
     border-radius: 2px;
     color: #333333;
+    /**内容超出后自动换行**/
+    overflow: auto;
+    word-break: break-all;
+
 }
 
 .lework-alert-success {

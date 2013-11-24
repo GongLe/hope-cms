@@ -93,15 +93,16 @@
     $(function () {
         //表单提交后,iframe回调函数
         window.actionCallback = function (resp) {
+            var json =  resp.attributes ;
             $.colorbox.close();
             oTable.fnDraw();
-           // lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
-            lework.alert({content: resp.attributes.message, type: resp.attributes.type })
+            lework.alert({content: json.message, type: json.type })
         };
         window.deleteCallback = function (resp) {
+            var json =  resp.attributes ;
             $.colorbox.close();
             oTable.fnDraw();
-            lework.alert({content:resp.attributes.message ,type: resp.attributes.type ,width:'250px'})
+            lework.alert({content:json.message ,type: json.type ,width:'250px'})
         };
       $('#searchForm').submit(function(event){
           event.preventDefault() ;

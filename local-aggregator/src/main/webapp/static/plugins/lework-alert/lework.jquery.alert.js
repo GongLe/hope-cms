@@ -18,7 +18,7 @@ var lework = (function ($, lework) {
         content: '', /**html or text **/
         timer: 6000, /** 6秒后关闭 **/
         id: null,
-        width: '200px',
+        width: '150px',
         type: '', /**info,success,danger,error**/
         parentEl: 'body' /**父容器,默认为body**/
     };
@@ -69,7 +69,7 @@ var lework = (function ($, lework) {
                 that.settings.onHide.apply(this);
                 that.destroy();
             }).html(that.settings.content || '&nbsp;&nbsp;')
-        this.$alert.append(' <button type="button" class="close" >×</button> ')
+        this.$alert.append(' <button type="button" class="close" title="关闭" >×</button> ')
         //关闭按钮
         this.$alert.on('click', '.close', function (e) {
             e.preventDefault();

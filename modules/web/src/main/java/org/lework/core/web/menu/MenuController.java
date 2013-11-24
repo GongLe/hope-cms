@@ -3,8 +3,6 @@ package org.lework.core.web.menu;
 import com.google.common.collect.Lists;
 import org.lework.core.common.enumeration.Status;
 import org.lework.core.entity.menu.Menu;
-import org.lework.core.entity.organization.Organization;
-import org.lework.core.entity.role.Role;
 import org.lework.core.service.menu.MenuService;
 import org.lework.core.service.menu.MenuTreeGridDTO;
 import org.lework.runner.orm.support.SearchFilter;
@@ -15,11 +13,10 @@ import org.lework.runner.web.CallbackData;
 import org.lework.runner.web.NotificationType;
 import org.lework.runner.web.datatables.DataTableResult;
 import org.lework.runner.web.easyui.TreeResult;
-import org.lework.runner.web.vo.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefaults;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -72,7 +68,8 @@ public class MenuController extends AbstractController {
                        HttpServletResponse response) {
 
         if (result.hasErrors()) {
-            callback(response, CallbackData.build("actionCallback", "操作提示", "菜单&quot;" + entity.getName() + "&quot;保存失败" + result.toString(), NotificationType.ERROR));
+            callback(response, CallbackData.build("actionCallback", "菜单&quot;" + entity.getName() + "&quot;保存失败",NotificationType.ERROR));
+            logger.warn(result.toString());
         }
         //关联父类
         Menu parent = menuService.getMenu(parentId);
@@ -85,10 +82,10 @@ public class MenuController extends AbstractController {
         }
         try {
             menuService.saveMenu(entity);
-            callback(response, CallbackData.build("actionCallback", "操作提示", "菜单&quot;" + entity.getName() + "&quot;保存成功", NotificationType.SUCCESS));
+            callback(response, CallbackData.build("actionCallback", "菜单&quot;" + entity.getName() + "&quot;保存成功",NotificationType.DEFAULT));
         } catch (Exception e) {
             e.printStackTrace();
-            callback(response, CallbackData.build("actionCallback", "操作提示", "菜单&quot;" + entity.getName() + "&quot;保存失败" + e.toString(), NotificationType.ERROR));
+            callback(response, CallbackData.build("actionCallback", "菜单&quot;" + entity.getName() + "&quot;保存失败",NotificationType.ERROR));
         }
 
     }
@@ -106,20 +103,19 @@ public class MenuController extends AbstractController {
             if (Strings.isNotBlank(deleteId)) {
                 Menu entity = menuService.getMenu(deleteId);
                 menuService.deleteMenu(entity);
-                callback(response, CallbackData.build("deleteCallback", "操作提示",
-                        "菜单&quot;" + entity.getName() + "&quot;删除成功", NotificationType.SUCCESS));
+                callback(response, CallbackData.build("deleteCallback", "菜单&quot;" + entity.getName() + "&quot;删除成功", NotificationType.DEFAULT));
             } else if (Strings.isNotBlank(deleteIds)) {   //多个删除
                 String[] ids = Strings.split(deleteIds, ",");
 
                 List<Menu> entities = menuService.getMenusByIds(Arrays.asList(ids));
                 List<String> names = Collections3.extractToList(entities, "name");
-                //callback(response, CallbackData.build("deleteCallback", "操作提示", "菜单删除成功", NotificationType.SUCCESS));
-                callback(response, CallbackData.build("deleteCallback", "操作提示", "菜单&quot;" + Strings.join(names, ",") + "&quot;删除成功", NotificationType.SUCCESS));
+                menuService.deleteMenus(entities);
+                callback(response, CallbackData.build("deleteCallback", "菜单&quot;" + Strings.join(names, ",") + "&quot;删除成功", NotificationType.DEFAULT));
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            callback(response, CallbackData.build("deleteCallback", "操作提示", "菜单删除失败!" + e.toString(), NotificationType.ERROR));
+            callback(response, CallbackData.build("deleteCallback", "菜单删除失败.", NotificationType.ERROR));
         }
 
     }
@@ -158,18 +154,18 @@ public class MenuController extends AbstractController {
      * ajax上移序号
      */
     @RequestMapping(value = "/upSortNum", method = RequestMethod.POST)
-    public void upSortNum(@Valid @ModelAttribute("entity") Menu menu, HttpServletResponse response) {
-        menuService.upSortNum(menu);
-        callback(response, CallbackData.build("doSortNumCallback", "操作提示", "菜单&quot;" + menu.getName() + "&quot;序号上移成功", NotificationType.SUCCESS));
+    public void upSortNum(@Valid @ModelAttribute("entity") Menu entity, HttpServletResponse response) {
+        menuService.upSortNum(entity);
+        callback(response, CallbackData.build("doSortNumCallback", "菜单&quot;" + entity.getName() + "&quot序号上移成功", NotificationType.DEFAULT));
     }
 
     /**
      * ajax下移序号
      */
     @RequestMapping(value = "/downSortNum", method = RequestMethod.POST)
-    public void downSortNum(@Valid @ModelAttribute("entity") Menu menu,HttpServletResponse response) {
-        menuService.downSortNum(menu);
-        callback(response, CallbackData.build("doSortNumCallback", "操作提示", "菜单&quot;"+ menu.getName() +"&quot;序号下移成功", NotificationType.SUCCESS));
+    public void downSortNum(@Valid @ModelAttribute("entity") Menu entity, HttpServletResponse response) {
+        menuService.downSortNum(entity);
+        callback(response, CallbackData.build("doSortNumCallback", "菜单&quot;" + entity.getName() + "&quot序号下移成功", NotificationType.DEFAULT));
     }
 
     /**
@@ -193,7 +189,7 @@ public class MenuController extends AbstractController {
     public
     @ResponseBody
     DataTableResult<Menu> getDatatablesJson(
-            @PageableDefaults(pageNumber = 0, value = 10) Pageable pageable,
+            @PageableDefault(page = 0, size = 10)  Pageable pageable,
             @RequestParam(value = "sSearch", required = false) String sSearch) {
 
         List<SearchFilter> filters = Lists.newArrayList();

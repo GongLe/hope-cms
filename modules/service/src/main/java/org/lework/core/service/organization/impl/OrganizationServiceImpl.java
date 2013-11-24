@@ -153,22 +153,13 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public void deleteOrganization(List<String> ids) {
-        if (Collections3.isEmpty(ids)) {
+    public void deleteOrganization(List<Organization> entities) {
+        if (Collections3.isEmpty(entities)) {
             return;
         }
-        List<Organization> entities = (List<Organization>) organizationDao.findAll(ids);
         organizationDao.delete(entities);
     }
 
-    @Override
-    public void deleteOrganization(String[] ids) {
-        if (ArrayUtils.isEmpty(ids)) {
-            return;
-        }
-        List<Organization> entities = (List<Organization>) organizationDao.findAll(Arrays.asList(ids));
-        organizationDao.delete(entities);
-    }
 
     @Override
     public Page<Organization> getPageOrganization(Pageable pageable) {

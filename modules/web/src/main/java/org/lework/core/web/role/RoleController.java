@@ -2,7 +2,6 @@ package org.lework.core.web.role;
 
 import com.google.common.collect.Lists;
 import org.lework.core.common.enumeration.Status;
-import org.lework.core.entity.menu.Menu;
 import org.lework.core.entity.organization.Organization;
 import org.lework.core.entity.role.Role;
 import org.lework.core.entity.role.RoleTypes;
@@ -19,18 +18,16 @@ import org.lework.runner.web.easyui.TreeResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefaults;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,6 +44,7 @@ public class RoleController extends AbstractController {
     private RoleService roleService;
     @Autowired
     private OrganizationService organizationService;
+
     /**
      * list页面*
      */
@@ -60,11 +58,11 @@ public class RoleController extends AbstractController {
      * 修改页面
      */
     @RequestMapping(value = "/update", method = RequestMethod.GET)
-    public String update(@ModelAttribute("entity") Role role ,Model model){
-        model.addAttribute("statusList" , Status.values() ) ;
-        model.addAttribute("typeList", RoleTypes.values()) ;
-        model.addAttribute("checkedPermissionIds" , null );
-        return  "role/role-update" ;
+    public String update(@ModelAttribute("entity") Role role, Model model) {
+        model.addAttribute("statusList", Status.values());
+        model.addAttribute("typeList", RoleTypes.values());
+        model.addAttribute("checkedPermissionIds", null);
+        return "role/role-update";
     }
 
     /**
@@ -72,7 +70,7 @@ public class RoleController extends AbstractController {
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public void update(@Valid @ModelAttribute("entity") Role entity, BindingResult result,
-                       @RequestParam(value = "groupId" ,required = false) String groupId ,
+                       @RequestParam(value = "groupId", required = false) String groupId,
                        HttpServletResponse response) {
         //关联组
         Organization group = organizationService.getOrganization(groupId);
@@ -80,19 +78,19 @@ public class RoleController extends AbstractController {
             entity.setGroupId(group.getId());
             entity.setGroupName(group.getName());
         } else { //取消关联
-            entity.setGroupId( null);
+            entity.setGroupId(null);
             entity.setGroupName(null);
         }
         if (result.hasErrors()) {
-            callback(response, CallbackData.build("actionCallback", "角色&quot;" + entity.getName() + "&quot;保存失败",NotificationType.ERROR));
+            callback(response, CallbackData.build("actionCallback", "角色&quot;" + entity.getName() + "&quot;保存失败", NotificationType.ERROR));
         }
         try {
             //保存
             roleService.saveRole(entity);
-            callback(response, CallbackData.build("actionCallback", "角色&quot;" + entity.getName() + "&quot;保存成功",NotificationType.DEFAULT));
-        }catch (Exception e){
+            callback(response, CallbackData.build("actionCallback", "角色&quot;" + entity.getName() + "&quot;保存成功", NotificationType.DEFAULT));
+        } catch (Exception e) {
             e.printStackTrace();
-            callback(response, CallbackData.build("actionCallback", "角色&quot;" + entity.getName() + "&quot;保存失败",NotificationType.ERROR));
+            callback(response, CallbackData.build("actionCallback", "角色&quot;" + entity.getName() + "&quot;保存失败", NotificationType.ERROR));
         }
 
     }
@@ -101,8 +99,8 @@ public class RoleController extends AbstractController {
      * 删除
      */
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public void delete(@RequestParam(value = "deleteId" ,required = false) String deleteId,
-                       @RequestParam(value = "deleteIds" ,required = false) String deleteIds,
+    public void delete(@RequestParam(value = "deleteId", required = false) String deleteId,
+                       @RequestParam(value = "deleteIds", required = false) String deleteIds,
                        HttpServletResponse response) {
 
         try {
@@ -116,8 +114,7 @@ public class RoleController extends AbstractController {
                 List<Role> entities = roleService.getRoleByIds(Arrays.asList(ids));
                 List<String> names = Collections3.extractToList(entities, "name");
                 roleService.deleteRoles(entities);
-                //   callback(response, CallbackData.build("deleteCallback", "操作提示", "删除多个成功", NotificationType.SUCCESS));
-                callback(response, CallbackData.build("deleteCallback", "角色&quot;" + Strings.omit(Strings.join(names, ","), 30) + "&quot;删除失败", NotificationType.DEFAULT));
+                callback(response, CallbackData.build("deleteCallback", "角色&quot;" + Strings.join(names, ",") + "&quot;删除失败", NotificationType.DEFAULT));
             }
 
         } catch (Exception e) {
@@ -126,12 +123,13 @@ public class RoleController extends AbstractController {
         }
 
     }
+
     /**
      * 查看
      */
     @RequestMapping(value = "/view", method = RequestMethod.GET)
-    public String view(@ModelAttribute("entity") Role role ,Model model) {
-        model.addAttribute("statusList" , Status.values() ) ;
+    public String view(@ModelAttribute("entity") Role role, Model model) {
+        model.addAttribute("statusList", Status.values());
         return "role/role-view";
     }
 
@@ -160,11 +158,11 @@ public class RoleController extends AbstractController {
     public
     @ResponseBody
     DataTableResult<Role> getDatatablesJson(
-            @PageableDefaults(pageNumber = 0, value = 10) Pageable pageable,
+            @PageableDefault(page = 0, size = 10) Pageable pageable,
             @RequestParam(value = "search", required = false) String search,
-            HttpServletRequest request ) {
+            HttpServletRequest request) {
 
-        List<SearchFilter> filters =  SearchFilter.buildFromHttpRequest(request) ;
+        List<SearchFilter> filters = SearchFilter.buildFromHttpRequest(request);
         if (Strings.isNotBlank(search)) {
             filters.add(new SearchFilter("LIKES_name_OR_code", search));
         }
@@ -174,14 +172,15 @@ public class RoleController extends AbstractController {
     }
 
     /**
-     *get Role's easyui tree json result
+     * get Role's easyui tree json result
+     *
      * @param status 过滤节点状态
      */
     @RequestMapping(value = "/getTree", method = {RequestMethod.GET, RequestMethod.POST})
     public
     @ResponseBody
-      List<TreeResult>  getTree( @RequestParam(value = "checkbox", required = false) String checkbox ,
-                                  @RequestParam(value = "status", required = false) String status ) {
+    List<TreeResult> getTree(@RequestParam(value = "checkbox", required = false) String checkbox,
+                             @RequestParam(value = "status", required = false) String status) {
         boolean isCheckbox = Strings.equals(checkbox, "true");
         boolean filterStatus = Strings.isNotBlank(status);
         boolean disable;
@@ -200,7 +199,7 @@ public class RoleController extends AbstractController {
             }
         }
 
-       return  nodeList ;
+        return nodeList;
     }
 
     /**

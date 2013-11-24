@@ -65,9 +65,8 @@ public interface MenuService {
 
     public void deleteMenu(Menu entity);
 
-    public void deleteMenus(List<String> ids );
+    public void deleteMenus(List<Menu> entities );
 
-    public void deleteMenus(String[] ids );
 
     public Page<Menu> getPageMenu(Pageable pageable);
 

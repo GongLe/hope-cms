@@ -62,9 +62,8 @@ public interface OrganizationService {
 
     public void deleteOrganization(Organization entity);
 
-    public void deleteOrganization(List<String> ids);
+    public void deleteOrganization(List<Organization> entities);
 
-    public void deleteOrganization(String[] ids);
 
     public Page<Organization> getPageOrganization(Pageable pageable);
 

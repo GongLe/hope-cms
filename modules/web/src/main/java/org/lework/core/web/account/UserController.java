@@ -19,7 +19,7 @@ import org.lework.runner.web.datatables.DataTableResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefaults;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -131,7 +131,7 @@ public class UserController  extends AbstractController {
                 List<User> entities = accountService.getUserByIds(Arrays.asList(ids));
                 List<String> names = Collections3.extractToList(entities, "name");
                 accountService.deleteUsers(entities);
-                callback(response, CallbackData.build("deleteCallback", "用户&quot;" + Strings.omit(Strings.join(names, ","), 30) + "&quot;删除成功", NotificationType.DEFAULT));
+                callback(response, CallbackData.build("deleteCallback", "用户&quot;" + Strings.join(names, ",")  + "&quot;删除成功", NotificationType.DEFAULT));
             }
 
         } catch (Exception e) {
@@ -156,7 +156,7 @@ public class UserController  extends AbstractController {
     public
     @ResponseBody
     DataTableResult<User> getDatatablesJson(
-            @PageableDefaults(pageNumber = 0, value = 10) Pageable pageable,
+            @PageableDefault(page = 0, size = 10)  Pageable pageable,
             @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "orgId", required = false) String orgId
     ) {

@@ -47,8 +47,8 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public void downSortNum(Menu entity) {
         List<Menu> siblings;
-        int curIndex  ;
-        Integer temp  ;
+        int curIndex;
+        Integer temp;
         Menu next;
         if (!entity.hasParent()) {    //如果是根节点
             siblings = menuDao.findRoots();
@@ -63,8 +63,8 @@ public class MenuServiceImpl implements MenuService {
                 temp = next.getSortNum();
                 next.setSortNum(entity.getSortNum());
                 entity.setSortNum(temp);
-                menuDao.save(next) ;
-                menuDao.save(entity) ;
+                menuDao.save(next);
+                menuDao.save(entity);
             }
         }
 
@@ -110,8 +110,8 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Menu getMenu(String id) {
-        if(Strings.isBlank(id))
-            return  null ;
+        if (Strings.isBlank(id))
+            return null;
         return menuDao.findOne(id);
     }
 
@@ -141,12 +141,12 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<Menu> getRootMenus() {
-        return    menuDao.findRootMenus();
+        return menuDao.findRootMenus();
     }
 
     @Override
     public List<Menu> getChildMenusByParentId(String parentId) {
-        return  menuDao.findChildMenusByParentId(parentId) ;
+        return menuDao.findChildMenusByParentId(parentId);
     }
 
     @Override
@@ -184,22 +184,13 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public void deleteMenus(List<String> ids) {
-        if (Collections3.isEmpty(ids)) {
+    public void deleteMenus(List<Menu> entities) {
+        if (Collections3.isEmpty(entities)) {
             return;
         }
-        List<Menu> entities = (List<Menu>) menuDao.findAll(ids);
         menuDao.delete(entities);
     }
 
-    @Override
-    public void deleteMenus(String[] ids) {
-        if (ArrayUtils.isEmpty(ids)) {
-            return;
-        }
-        List<Menu> entities = (List<Menu>) menuDao.findAll(Arrays.asList(ids));
-        menuDao.delete(entities);
-    }
 
     @Override
     public Page<Menu> getPageMenu(Pageable pageable) {
@@ -231,8 +222,8 @@ public class MenuServiceImpl implements MenuService {
         List<MenuTreeGridDTO> rootNodes = new ArrayList<MenuTreeGridDTO>();
         MenuTreeGridDTO temp;
         Menu curNode;
-        if(Collections3.isEmpty(roots))
-            return rootNodes ;
+        if (Collections3.isEmpty(roots))
+            return rootNodes;
         int size = roots.size();
         for (int i = 0; i < size; i++) {
             curNode = roots.get(i);
@@ -254,8 +245,8 @@ public class MenuServiceImpl implements MenuService {
         //roots node
         List<Menu> roots = menuDao.findRoots();
         List<TreeResult> rootNodes = new ArrayList<TreeResult>();
-        if(Collections3.isEmpty(roots))
-            return rootNodes ;
+        if (Collections3.isEmpty(roots))
+            return rootNodes;
         TreeResult temp;
         for (Menu root : roots) {
             if (Collections3.contain(ignore, root)) {
@@ -295,21 +286,21 @@ public class MenuServiceImpl implements MenuService {
      * @param parent
      * @param parentNode
      */
-    private void fetchChild4Tree(Menu parent, TreeResult parentNode ,List<Menu> ignore ) {
+    private void fetchChild4Tree(Menu parent, TreeResult parentNode, List<Menu> ignore) {
         List<TreeResult> child = new ArrayList<TreeResult>();
         List<Menu> childMenu;
         TreeResult node;
         if (parent.hasChild()) {
             childMenu = parent.getChildrenMenus();
             for (Menu m : childMenu) {
-                if(Collections3.contain(ignore, m) ){  //忽略节点
+                if (Collections3.contain(ignore, m)) {  //忽略节点
                     continue;
                 }
-                node = convert2TreeNode(m) ;
+                node = convert2TreeNode(m);
                 child.add(node);
                 if (m.hasChild()) {
                     //递归
-                    fetchChild4Tree(m, node,ignore);
+                    fetchChild4Tree(m, node, ignore);
                 }
             }
         }
@@ -327,12 +318,12 @@ public class MenuServiceImpl implements MenuService {
         List<Menu> childMenu;
         MenuTreeGridDTO node;
         Menu curNode;
-        int size  ;
+        int size;
         if (parent.hasChild()) {
 
             childMenu = parent.getChildrenMenus();
-            size = childMenu.size() ;
-            for (int i = 0; i < size ; i++) {
+            size = childMenu.size();
+            for (int i = 0; i < size; i++) {
                 curNode = childMenu.get(i);
                 if (Collections3.contain(ignore, curNode)) {  //忽略节点
                     continue;
@@ -362,7 +353,6 @@ public class MenuServiceImpl implements MenuService {
         return ret;
 
     }
-
 
 
 }

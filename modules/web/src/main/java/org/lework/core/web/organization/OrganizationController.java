@@ -2,12 +2,8 @@ package org.lework.core.web.organization;
 
 import com.google.common.collect.Lists;
 import org.lework.core.common.enumeration.Status;
-import org.lework.core.entity.menu.Menu;
 import org.lework.core.entity.organization.OrgTypes;
 import org.lework.core.entity.organization.Organization;
-import org.lework.core.entity.role.Role;
-import org.lework.core.service.menu.MenuService;
-import org.lework.core.service.menu.MenuTreeGridDTO;
 import org.lework.core.service.organization.OrgTreeGridDTO;
 import org.lework.core.service.organization.OrganizationService;
 import org.lework.runner.orm.support.SearchFilter;
@@ -21,7 +17,7 @@ import org.lework.runner.web.easyui.TreeResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefaults;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -69,7 +64,8 @@ public class OrganizationController extends AbstractController {
                        HttpServletResponse response) {
 
         if (result.hasErrors()) {
-            callback(response, CallbackData.build("actionCallback", "操作提示", "组织机构&quot;" + entity.getName() + "&quot;保存失败" + result.toString(), NotificationType.ERROR));
+            callback(response, CallbackData.build("actionCallback", "组织机构&quot;" + entity.getName() + "&quot;保存失败",NotificationType.ERROR));
+            logger.warn(result.toString());
         }
         //关联父类
         Organization parent = organizationService.getOrganization(parentId);
@@ -83,10 +79,10 @@ public class OrganizationController extends AbstractController {
 
         try {
             organizationService.saveOrganization(entity);
-            callback(response, CallbackData.build("actionCallback", "操作提示", "组织机构&quot;" + entity.getName() + "&quot;保存成功", NotificationType.SUCCESS));
+            callback(response, CallbackData.build("actionCallback", "组织机构&quot;" + entity.getName() + "&quot;保存成功",NotificationType.DEFAULT));
         } catch (Exception e) {
             e.printStackTrace();
-            callback(response, CallbackData.build("actionCallback", "操作提示", "组织机构&quot;" + entity.getName() + "&quot;保存失败" + e.toString(), NotificationType.ERROR));
+            callback(response, CallbackData.build("actionCallback", "组织机构&quot;" + entity.getName() + "&quot;保存失败",NotificationType.ERROR));
         }
 
     }
@@ -113,19 +109,19 @@ public class OrganizationController extends AbstractController {
             if (Strings.isNotBlank(deleteId)) {
                 Organization entity = organizationService.getOrganization(deleteId);
                 organizationService.deleteOrganization(entity);
-                callback(response, CallbackData.build("deleteCallback", "操作提示",
-                        "组织机构&quot;" + entity.getName() + "&quot;删除成功", NotificationType.SUCCESS));
+                callback(response, CallbackData.build("deleteCallback", "组织机构&quot;" + entity.getName() + "&quot;删除成功", NotificationType.DEFAULT));
             } else if (Strings.isNotBlank(deleteIds)) {   //多个删除
                 String[] ids = Strings.split(deleteIds, ",");
 
                 List<Organization> entities = organizationService.getOrganizationsByIds(Arrays.asList(ids));
                 List<String> names = Collections3.extractToList(entities, "name");
-                callback(response, CallbackData.build("deleteCallback", "操作提示", "组织机构&quot;" + Strings.join(names, ",") + "&quot;删除成功", NotificationType.SUCCESS));
+                organizationService.deleteOrganization(entities);
+                callback(response, CallbackData.build("deleteCallback", "组织机构&quot;" +  Strings.join(names, ",") + "&quot;删除成功", NotificationType.DEFAULT));
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            callback(response, CallbackData.build("deleteCallback", "操作提示","组织机构删除失败!" + e.toString(), NotificationType.ERROR));
+            callback(response, CallbackData.build("deleteCallback", "组织机构删除失败.", NotificationType.ERROR));
         }
 
     }
@@ -185,7 +181,7 @@ public class OrganizationController extends AbstractController {
     public
     @ResponseBody
     DataTableResult<Organization> getDatatablesJson(
-            @PageableDefaults(pageNumber = 0, value = 10) Pageable pageable,
+            @PageableDefault(page = 0, size = 10)  Pageable pageable,
             @RequestParam(value = "sSearch", required = false) String sSearch) {
 
         List<SearchFilter> filters = Lists.newArrayList();

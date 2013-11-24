@@ -70,19 +70,22 @@
 $(function(){
     //表单提交后,iframe回调函数
     window.actionCallback = function (resp) {
+        var json =  resp.attributes ;
         $.colorbox.close();
-        lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
+        lework.alert({content: json.message, type: json.type })
         $('#menuTreeGrid').treegrid('reload');
     };
 
     window.deleteCallback = function (resp) {
-        lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
+        var json =  resp.attributes ;
+        lework.alert({content: json.message, type: json.type })
         $('#menuTreeGrid').treegrid('reload');
     };
     //调整序号iframe回调函数
     window.doSortNumCallback = function(resp){
+        var json =  resp.attributes ;
         $.unblockUI();
-        lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
+        lework.alert({content: json.message, type: json.type })
         $('#menuTreeGrid').treegrid('reload');
     }
 

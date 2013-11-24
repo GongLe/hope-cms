@@ -62,25 +62,28 @@
 </div>  <!--/.page-content-->
 <script>
   $(function(){
-    //表单提交后,iframe回调函数
-    window.actionCallback = function (resp) {
-        $.colorbox.close();
-        lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
-        $('#orgTreeGrid').treegrid('reload');
-    };
+      //表单提交后,iframe回调函数
+      window.actionCallback = function (resp) {
+          var json = resp.attributes;
+          $.colorbox.close();
+          lework.alert({content: json.message, type: json.type, width: '200px'})
+          $('#orgTreeGrid').treegrid('reload');
+      };
 
-    window.deleteCallback = function (resp) {
-        lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
-        $('#orgTreeGrid').treegrid('reload');
-    };
-    //调整序号iframe回调函数
-    window.doSortNumCallback = function(resp){
-        $.unblockUI();
-        lework.notify(resp.attributes.title, resp.attributes.message, resp.attributes.type);
-        $('#orgTreeGrid').treegrid('reload');
-    }
+      window.deleteCallback = function (resp) {
+          var json = resp.attributes;
+          lework.alert({content: json.message, type: json.type, width: '200px'})
+          $('#orgTreeGrid').treegrid('reload');
+      };
+      //调整序号iframe回调函数
+      window.doSortNumCallback = function (resp) {
+          var json = resp.attributes;
+          $.unblockUI();
+          lework.alert({content: json.message, type: json.type, width: '200px' })
+          $('#orgTreeGrid').treegrid('reload');
+      }
 
-    using(['treegrid'], function () {
+      using(['treegrid'], function () {
         var $orgTreeGrid = $('#orgTreeGrid');
         $orgTreeGrid.treegrid({
             url: 'organization/getTreeGrid',
