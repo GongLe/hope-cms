@@ -6,7 +6,7 @@
 <head>
     <title>角色权限控制</title>
     <style type="text/css">
-        .box-title{border-bottom: 1px dashed #c5d0dc;}
+        .box-title{border-bottom: 1px dashed #c5d0dc!important;}
         .west{ width:15%;min-height:550px;border-right:1px dashed  #c5d0dc;  }
         .west h5{  margin:5px 10px; }
         .center{width:20%;min-height:550px;border-right:1px dashed  #c5d0dc;

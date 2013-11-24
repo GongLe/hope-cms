@@ -4,8 +4,10 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
 import org.lework.core.common.enumeration.Status;
 import org.lework.core.dao.menu.MenuDao;
+import org.lework.core.dao.role.RoleDao;
 import org.lework.core.entity.menu.Menu;
 import org.lework.core.entity.role.Role;
+import org.lework.core.service.menu.Menu2RoleVO;
 import org.lework.core.service.menu.MenuService;
 import org.lework.core.service.menu.MenuTreeGridDTO;
 import org.lework.runner.orm.support.SearchFilter;
@@ -38,7 +40,11 @@ public class MenuServiceImpl implements MenuService {
     private static Logger logger = LoggerFactory.getLogger(MenuServiceImpl.class);
 
     private MenuDao menuDao;
-
+    private RoleDao roleDao;
+    @Autowired
+    public void setRoleDao(RoleDao roleDao) {
+        this.roleDao = roleDao;
+    }
     @Autowired
     public void setMenuDao(MenuDao menuDao) {
         this.menuDao = menuDao;
@@ -354,5 +360,29 @@ public class MenuServiceImpl implements MenuService {
 
     }
 
-
+    /**
+     * 菜单关联角色select VO
+     * @param roleGroupId 角色组ID
+     * @param menuId 菜单ID
+     * @return
+     */
+    @Override
+    public List<Menu2RoleVO> convertVO(String roleGroupId, String menuId) {
+        List<Menu2RoleVO> ret = new ArrayList<Menu2RoleVO>() ;
+        Menu2RoleVO temp ;
+        //菜单关联的角色
+        List<Role> selecedRoles =  roleDao.findMenuRelatedRoles(menuId) ;
+        //当前角色组的角色
+        List<Role> groupRoles =   roleDao.findRolesByGroupId(roleGroupId);
+        //转换成VO
+        if(Collections3.isNotEmpty(groupRoles)){
+            for(Role r : groupRoles){
+                temp =new Menu2RoleVO(r);
+                //是否已关联
+                temp.setSelected(Collections3.contain(selecedRoles,r));
+                ret.add(temp);
+            }
+        }
+        return ret;
+    }
 }

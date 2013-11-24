@@ -1,0 +1,49 @@
+/**item 选中效果**/
+.checkbuttonNo {
+    margin: 5px;
+    width: auto;
+    border: solid 1px #ccc;
+    height: 40px;
+    background: #F7F7F7;
+    float: left;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.checkbuttonOk {
+    margin: 5px;
+    width: auto;
+    border: solid 1px #6699cc;
+    height: 40px;
+    background: #F7F7F7;
+    float: left;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.checkbuttonNo .triangleNo {
+    display: block;
+    height: 0px;
+    width: 0px;
+    border: 20px solid #ccc;
+    border-color: #ccc #ccc transparent transparent;
+    border-style: solid solid dashed dashed;
+    line-height: 0px;
+    float: right;
+}
+.checkbuttonOk .triangleOk {
+    display: block;
+    height: 40px;
+    width: 40px;
+    float: right;
+    background: url('../images/checkicon.png');
+}
+.checktext {
+    float: left;
+    width: auto;
+    padding-left: 8px;
+    line-height: 40px;
+    text-align: center;
+}

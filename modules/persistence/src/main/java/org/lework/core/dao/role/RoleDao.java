@@ -24,4 +24,7 @@ public interface RoleDao extends PagingAndSortingRepository<Role, String>, JpaSp
 
     @Query(" from Role where groupId=?1 order by sortNum ")
     public List<Role> findRolesByGroupId(String groupId );
+
+    @Query("select r from Role r inner join r.menus m  where m.id=?1 order by r.sortNum ")
+    public List<Role> findMenuRelatedRoles(String menuId );
 }

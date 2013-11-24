@@ -151,6 +151,28 @@ public class MenuController extends AbstractController {
     }
 
     /**
+     * 添加菜单到角色
+     */
+    @RequestMapping(value = "/addMenuToRole", method = RequestMethod.GET)
+    public String addMenuToRole(@RequestParam(value = "menuId") String menuId, Model model) {
+        Menu entity = menuService.getMenu(menuId) ;
+        model.addAttribute("menu",entity)  ;
+        return "menu/menu-addToRole";
+    }
+    /**
+     * 菜单到关联角色页面
+     */
+    @RequestMapping(value = "/relatedRole", method = RequestMethod.GET)
+    public String relatedRole(@RequestParam(value = "menuId") String menuId,
+                               @RequestParam(value = "roleGroupId") String roleGroupId,Model model) {
+        //菜单关联的角色
+        //当前角色组的角色
+        //转换成VO
+        model.addAttribute("roles",menuService.convertVO(roleGroupId,menuId)) ;
+        return "menu/menu-relatedRole";
+    }
+
+    /**
      * ajax上移序号
      */
     @RequestMapping(value = "/upSortNum", method = RequestMethod.POST)

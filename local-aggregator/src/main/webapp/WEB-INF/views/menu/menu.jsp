@@ -47,6 +47,9 @@
                             <button class="btn no-border tooltips" id="delete-function" style="display:none;" data-original-title="删除">
                                 <i class="icon-trash"></i>
                             </button>
+                            <button class="btn btn-danger no-border tooltips" id="addToRole-function" style="display:none;" data-original-title="添加菜单到角色">
+                                <i class="icon-group"></i>
+                            </button>
                         </div>
                     </div><!--/.table-funtion-bar-->
 
@@ -68,6 +71,7 @@
 <script>
     var selectedMenuId;
 $(function(){
+    var $menuTreeGrid
     //表单提交后,iframe回调函数
     window.actionCallback = function (resp) {
         var json =  resp.attributes ;
@@ -85,12 +89,12 @@ $(function(){
     window.doSortNumCallback = function(resp){
         var json =  resp.attributes ;
         $.unblockUI();
-        lework.alert({content: json.message, type: json.type })
+        lework.alert({content: json.message, type: json.type ,width:'200px'})
         $('#menuTreeGrid').treegrid('reload');
     }
 
     using(['treegrid'], function () {
-        var $menuTreeGrid = $('#menuTreeGrid');
+          $menuTreeGrid = $('#menuTreeGrid');
         $menuTreeGrid.treegrid({
             url: 'menu/getTreeGrid',
             method: 'post',
@@ -136,6 +140,7 @@ $(function(){
             onSelect: function (node) {
                 //加载选中节点east界面
                 loadEast(node.id);
+                checkFunbarStatus(true)
             },
             onLoadSuccess: function () {
                 $('.tooltips').tooltip();
@@ -191,7 +196,7 @@ $(function(){
         checkFunbarStatus(false);
     });
 
-    //删除widget
+    //删除
     $('#delete-function').confirmDelete({text: '<span class="text-warning">确认删除？</span>',
         onDelete: function () {
             var row = $('#menuTreeGrid').treegrid('getSelected');
@@ -202,6 +207,18 @@ $(function(){
             })
             return true;
         }
+    });
+    //添加菜单到角色
+    $('#addToRole-function').click(function () {
+        //当前选中的菜单
+        var selectRow =  $menuTreeGrid.treegrid('getSelected');
+        $(this).colorbox({
+            href :'menu/addMenuToRole?$SiteMesh=false&menuId=' + selectRow.id  ,
+            adjustY:'40%',
+            width: '760px',
+            overlayClose: false,
+            scrolling: false
+        })
     });
 
     /**
@@ -216,9 +233,9 @@ $(function(){
     //根据所选行,修改function bar状态.
     function checkFunbarStatus(hasSelected) {
         if (hasSelected == true) {
-            $('#delete-function').show();
+            $('#delete-function,#addToRole-function').show();
         } else {
-            $('#delete-function').hide();
+            $('#delete-function,#addToRole-function').hide();
         }
     }
 })

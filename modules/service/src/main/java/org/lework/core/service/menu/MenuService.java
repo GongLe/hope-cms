@@ -10,6 +10,8 @@ import org.lework.runner.web.easyui.KVResult;
 import org.lework.runner.web.easyui.TreeResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -107,4 +109,12 @@ public interface MenuService {
      * @param entity
      */
     public void downSortNum(Menu entity);
+
+    /**
+     * 菜单关联角色select VO
+     * @param roleGroupId 角色组ID
+     * @param menuId 菜单ID
+     * @return
+     */
+    public List<Menu2RoleVO> convertVO(String roleGroupId, String menuId);
 }

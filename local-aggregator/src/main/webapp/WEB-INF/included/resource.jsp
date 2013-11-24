@@ -38,10 +38,11 @@
 <!--table-->
 <le:stylesheet src="${src}/assets/ace/css/table.css"/>
 <!--tree-->
-<%--<le:stylesheet src="${src}/assets/ace/css/ace-tree.css"/>--%>
+<%--<le:stylesheet src="${src}/assets/ace/css/ace-tree.css"/>
 <!--gallery-->
-<le:stylesheet src="${src}/assets/ace/css/ace-gallery.css"/>
-
+<le:stylesheet src="${src}/assets/ace/css/ace-gallery.css"/>   --%>
+<!--lework custom component style-->
+<le:stylesheet src="${src}/assets/css/lework.component.css"/>
 
 <!--[if lt IE 9]>
 <le:stylesheet src="${src}/assets/ace/css/ace-ie.min.css"/>
