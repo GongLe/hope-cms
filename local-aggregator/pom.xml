@@ -29,6 +29,18 @@
             <groupId>org.hope</groupId>
             <artifactId>hope-web</artifactId>
         </dependency>
+        <!--yuicompressor-->
+        <dependency>
+            <groupId>com.yahoo.platform.yui</groupId>
+            <artifactId>yuicompressor</artifactId>
+            <version>2.4.7</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>js</artifactId>
+                    <groupId>rhino</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
         <!-- SPRING basic begin -->
         <!-- email/scheduler/freemarker -->

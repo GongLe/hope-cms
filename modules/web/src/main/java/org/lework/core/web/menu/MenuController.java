@@ -3,8 +3,10 @@ package org.lework.core.web.menu;
 import com.google.common.collect.Lists;
 import org.lework.core.common.enumeration.Status;
 import org.lework.core.entity.menu.Menu;
+import org.lework.core.entity.role.Role;
 import org.lework.core.service.menu.MenuService;
 import org.lework.core.service.menu.MenuTreeGridDTO;
+import org.lework.core.service.role.RoleService;
 import org.lework.runner.orm.support.SearchFilter;
 import org.lework.runner.utils.Collections3;
 import org.lework.runner.utils.Strings;
@@ -39,6 +41,8 @@ public class MenuController extends AbstractController {
 
     @Autowired
     private MenuService menuService;
+    @Autowired
+    private RoleService roleService;
 
     /**
      * list页面*
@@ -138,7 +142,7 @@ public class MenuController extends AbstractController {
         if (Strings.isNotBlank(status)) {
             model.addAttribute("statusName", Status.valueOf(status).getName());
         }
-        model.addAttribute("entity",entity)  ;
+        model.addAttribute("menu",entity)  ;
         return "menu/menu-east";
     }
 
@@ -160,16 +164,34 @@ public class MenuController extends AbstractController {
         return "menu/menu-addToRole";
     }
     /**
-     * 菜单到关联角色页面
+     * 菜单关联角色 ajax load 页面
      */
     @RequestMapping(value = "/relatedRole", method = RequestMethod.GET)
-    public String relatedRole(@RequestParam(value = "menuId") String menuId,
+    public String getMenuRelatedRole(@RequestParam(value = "menuId") String menuId,
                                @RequestParam(value = "roleGroupId") String roleGroupId,Model model) {
         //菜单关联的角色
         //当前角色组的角色
         //转换成VO
         model.addAttribute("roles",menuService.convertVO(roleGroupId,menuId)) ;
         return "menu/menu-relatedRole";
+    }
+
+    /**
+     * 获取菜单关联的角色
+     *
+     * @param pageable
+     * @param menuId   菜单ID
+     * @return Datatables Json Data
+     */
+    @RequestMapping(value = "/getMenuRelatedRoleJson", method = {RequestMethod.GET, RequestMethod.POST})
+    public
+    @ResponseBody
+    DataTableResult<Role> getMenuRelatedRoleJson(@PageableDefault(page = 0, size = 10) Pageable pageable,
+                                                 @RequestParam(value = "menuId") String menuId,
+                                                 @RequestParam(value = "search", required = false) String search) {
+
+        Page<Role> page = roleService.searchRolePageByMenu(pageable, menuId, search);
+        return DataTableResult.build(page);
     }
 
     /**

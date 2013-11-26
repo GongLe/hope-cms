@@ -50,11 +50,14 @@ public class RoleControlController extends AbstractController {
      * 修改页面
      */
     @RequestMapping(value = "/update", method = RequestMethod.GET)
-    public String update(@ModelAttribute("entity") Role role ,Model model){
-        model.addAttribute("statusList" , Status.values() ) ;
-        model.addAttribute("typeList", RoleTypes.values()) ;
-        model.addAttribute("checkedPermissionIds" , null );
-        return  "role/roleControl-update" ;
+    public String update(@ModelAttribute("entity") Role role,
+                         Model model) {
+        model.addAttribute("statusList", Status.values());
+        model.addAttribute("typeList", RoleTypes.values());
+
+        model.addAttribute("checkedPermissionIds", null);
+
+        return "role/roleControl-update";
     }
 
     /**

@@ -58,7 +58,7 @@
                     </div>
 
                     <div id="eastMenuRelated"  style="margin-left:526px;padding:0 20px 0 20px;">
-
+                        加载中...
                     </div><!--/.eastMenuRelated-->
                 </div>
             </div>  <!--/.box-->

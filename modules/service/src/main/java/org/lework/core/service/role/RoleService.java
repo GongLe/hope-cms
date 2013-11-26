@@ -66,7 +66,15 @@ public interface RoleService {
      * @see org.lework.runner.orm.support.SearchFilter
      */
     public Page<Role> searchPageRole(Pageable pageable, List<SearchFilter> filters);
-
+    /**
+     * 获取菜单关联的角色.
+     *
+     * @param pageable
+     * @param menuId   菜单ID
+     * @param search   过滤条件:name or code
+     * @return
+     */
+    public Page<Role> searchRolePageByMenu(Pageable pageable, String menuId, String search) ;
     /**
      * get jquery chosen group option DTO
      *

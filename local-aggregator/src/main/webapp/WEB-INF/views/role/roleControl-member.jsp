@@ -40,7 +40,7 @@
         <!--自定义搜索-->
         <form id="searchForm" name="searchForm" class="no-margin no-padding">
             <span class="input-icon input-icon-right">
-                <input class="input-medium" id="search" name="search" type="text" placeholder="名称/代码">
+                <input class="input-medium" id="search" name="search" type="text" placeholder="姓名">
                 <i class="icon-search blue" onclick="$('#searchForm').submit()" ></i>
             </span>
         </form> <!--/#searchForm-->

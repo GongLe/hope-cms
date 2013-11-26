@@ -76,6 +76,7 @@
                             </div>
 
                         </div> <!--/.table-funtion-bar-->
+                        <input type="checkbox"> ::checkbox
                         <table id="table-list"
                                class="table table-hover  table-nomargin table-bordered dataTable dataTable-nosort clear-both">
                         </table>
@@ -114,11 +115,17 @@
             'aoColumns': [
                 { 'mData': 'name', 'sTitle': '角色名称' },
                 { 'mData': 'code', 'sTitle': '角色代码'}  ,
-                { 'mData': 'typeName', 'sTitle': '类别'}  ,
+                { 'mData': 'type', 'sTitle': '类别'}  ,
                 { 'mData': 'status', 'sTitle': '状态'}  ,
                 { 'mData': 'id', 'sTitle': '操作'}
             ],
             'aoColumnDefs': [
+                {
+                    'mRender': function (data, type, full) {
+                        return    full['typeName'];
+                    },
+                    'aTargets': [2 ]
+                },
                 {
                     'mRender': function (data, type, full) {
                         if (data == 'enable') {
@@ -130,7 +137,7 @@
                 },
                 {
                     'mRender': function (data, type, full) {
-                      //  console.log(data)
+                        //  console.log(data)
                         return  $('#tableActionTpl').render({id: data});
                     },
                     'aTargets': [4 ]
@@ -184,8 +191,10 @@
 
         //新增
         $('#create-function').click(function () {
+            var roleGroup  = $('#orgTree').tree('getSelected') ;
+            var roleGroupId = (roleGroup && roleGroup['id']) ? roleGroup.id : '' ;
             $(this).colorbox({
-                href :'role/update?$SiteMesh=false' ,
+                href: 'role/update?' + $.param( {$SiteMesh:false,'roleGroupId':roleGroupId}  ) ,
                 adjustY:'40%',
                 width: '700px',
                 overlayClose: false,
@@ -242,6 +251,7 @@
         }
 
         using(['tree'], function () {
+            //角色组
             $('#orgTree').tree({
                 url: 'organization/getTree',
                 method: 'get',

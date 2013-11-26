@@ -47,7 +47,7 @@ $(function () {
                 }
 
 
-                //page calculations
+                //page calculations ,仅支持单列排序
                 var pageSize = paramMap.iDisplayLength;
                 var start = paramMap.iDisplayStart;
                 var pageNum = (start == 0) ? 1 : (start / pageSize) + 1; // pageNum is 1 based
@@ -55,10 +55,11 @@ $(function () {
                 // extract sort information
                 var sortCol, sortDir, sortName;
                 for (var i = 0; i < parseInt(paramMap['iColumns']); i++) {
-                    if (paramMap['bSortable_' + i] == true) {
+
+                    if (paramMap['bSortable_' + i] == true && paramMap['iSortCol_0'] == i) {
+                        sortCol = i;
                         sortName = paramMap['mDataProp_' + i];
-                        sortDir = paramMap['sSortDir_' + i];
-                        sortCol = paramMap['bSortable_' + i];
+                        sortDir = paramMap['sSortDir_0' ];
                         break;
                     }
                 }
@@ -70,7 +71,6 @@ $(function () {
                 restParams.push({'name': 'page.page', 'value': pageNum });
                 restParams.push({'name': 'page.sort', 'value': sortName });
                 restParams.push({'name': 'page.sort.dir', 'value': sortDir ? sortDir : 'asc' });
-
                 //finally, make the request
                 oSettings.jqXHR = $.ajax({
                     'dataType': 'json',

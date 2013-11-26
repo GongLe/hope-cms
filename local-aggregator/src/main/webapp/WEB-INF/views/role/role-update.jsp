@@ -90,6 +90,8 @@
 </div>
 <script>
     $(function(){
+        var isNew = ${entity.isNew} ,
+                selectedGroupId = '${roleGroupId}' ;
         //from validater
         $('#inputForm').validate({
             submitHandler: function (form) {
@@ -138,12 +140,16 @@
                     onSelect: function (node) {
                     },
                     onLoadSuccess: function () {
+                        //新增时,默认选中父页面 角色组.
+                       if(isNew && selectedGroupId){
+                           $('#groupId').combotree('setValue',selectedGroupId)
+                       }
                     }
                 });
 
             }) //using
         }, 100);//timeout
-    })
+    })  //dom ready
 </script>
 </body>
 </html>

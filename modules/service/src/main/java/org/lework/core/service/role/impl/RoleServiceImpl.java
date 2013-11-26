@@ -7,6 +7,7 @@ import org.apache.commons.lang3.Validate;
 import org.lework.core.common.enumeration.Status;
 import org.lework.core.dao.organization.OrganizationDao;
 import org.lework.core.dao.role.RoleDao;
+import org.lework.core.dao.role.RoleNativeDao;
 import org.lework.core.entity.menu.Menu;
 import org.lework.core.entity.organization.Organization;
 import org.lework.core.entity.role.Role;
@@ -44,7 +45,12 @@ public class RoleServiceImpl implements RoleService {
     private static Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 
     private RoleDao roleDao;
+    private RoleNativeDao roleNativeDao;
     private OrganizationDao organizationDao;
+    @Autowired
+    public void setRoleNativeDao(RoleNativeDao roleNativeDao) {
+        this.roleNativeDao = roleNativeDao;
+    }
 
     @Autowired
     public void setOrganizationDao(OrganizationDao organizationDao) {
@@ -107,6 +113,11 @@ public class RoleServiceImpl implements RoleService {
 
         Specification<Role> spec = Specifications.build(filters, Role.class);
         return roleDao.findAll(spec, pageable);
+    }
+
+    @Override
+    public Page<Role> searchRolePageByMenu(Pageable pageable, String menuId, String search) {
+         return  roleNativeDao.findRolePageByMenuId(pageable, menuId, search) ;
     }
 
     @Override

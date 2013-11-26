@@ -9,9 +9,9 @@
         .box-title{border-bottom: 1px dashed #c5d0dc!important;}
         .west{ width:15%;min-height:550px;border-right:1px dashed  #c5d0dc;  }
         .west h5{  margin:5px 10px; }
-        .center{width:20%;min-height:550px;border-right:1px dashed  #c5d0dc;
+        .middle{width:20%;min-height:550px;border-right:1px dashed  #c5d0dc;
             overflow: auto;}
-        .center h5{margin:5px 10px;}
+        .middle h5{margin:5px 10px;}
         .east{width:60%; padding:0 0 5px 10px;}
         .east h5{margin:5px 10px;}
     </style>
@@ -46,7 +46,7 @@
                           <h5  class="header smaller lighter blue">  角色组</h5>
                           <ul id="orgTree" style="padding:5px 10px 0 5px;" ></ul>
                     </div>
-                    <div class="pull-left center"  >
+                    <div class="pull-left middle"  >
                         <h5  class="header smaller lighter blue ">角色</h5>
                         <ul id="roleTree" style="padding:5px 10px 0 5px;" ></ul>
                         <div id="alertNullRoleData" class="alert alert-warning" style="margin:0 8px;">

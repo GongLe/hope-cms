@@ -1,9 +1,13 @@
 package org.lework.core.dao.role;
 
 import org.lework.core.entity.role.Role;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -19,12 +23,13 @@ public interface RoleDao extends PagingAndSortingRepository<Role, String>, JpaSp
     //@Query(value = "from Role where s")
     public List<Role> findAllByStatus(String status);
 
-   @Query("select r from User u inner join u.roles r where u.id=?1 and r.status=?2 ")
-    public List<Role> findUserRolesByStatus(String userId ,String status );
+    @Query("select r from User u inner join u.roles r where u.id=?1 and r.status=?2 ")
+    public List<Role> findUserRolesByStatus(String userId, String status);
 
     @Query(" from Role where groupId=?1 order by sortNum ")
-    public List<Role> findRolesByGroupId(String groupId );
+    public List<Role> findRolesByGroupId(String groupId);
 
     @Query("select r from Role r inner join r.menus m  where m.id=?1 order by r.sortNum ")
-    public List<Role> findMenuRelatedRoles(String menuId );
+    public List<Role> findMenuRelatedRoles(String menuId);
+
 }
