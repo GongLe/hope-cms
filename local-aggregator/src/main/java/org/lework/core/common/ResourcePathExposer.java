@@ -31,15 +31,15 @@ public class ResourcePathExposer implements ServletContextAware {
      */
     public void init() {
         //配置为本地上下文根
-
         AppConfigConstant.CTX = getServletContext().getContextPath();
         AppConfigConstant.SRC = getServletContext().getContextPath() + "/static";
-
-
+        AppConfigConstant.REAL_PATH = getServletContext().getRealPath("");
         getServletContext().setAttribute("src", AppConfigConstant.SRC);
         getServletContext().setAttribute("ctx", AppConfigConstant.CTX);
         logger.info("ctx:{}", AppConfigConstant.CTX);
         logger.info("src:{}", AppConfigConstant.SRC);
+        logger.info("RealPath:{}", AppConfigConstant.REAL_PATH);
+        logger.warn("AppConfigConstant.REAL_PATH变量在BAE,SAE,GAE环境不可用,不能通过 ServletContext#getRealPath获取");
     }
 
     public void setServletContext(ServletContext servletContext) {

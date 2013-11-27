@@ -15,10 +15,16 @@
         <body-content>JSP</body-content>
         <!-- 配置标签属性 -->
         <attribute>
-            <description>bundle unique name ,defalut name is : scirpt.name ...+ stylesheet.name</description>
+            <description>bundle unique name ,defalut name is hash value of(resource names) </description>
             <name>name</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue> <!--rtexprvalue的全称是 Run-time Expression Value， 它用于表示是否可以使用JSP表达式. -->
+        </attribute>
+        <attribute>
+            <description>merge file size,default size is 10</description>
+            <name>size</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
         </attribute>
     </tag>
 

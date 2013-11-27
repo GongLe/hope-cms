@@ -24,6 +24,10 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
+    <listener>
+        <listener-class>org.lework.core.common.servlet.OnlineCounterListener</listener-class>
+    </listener>
+
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -86,7 +90,7 @@
         <servlet-name>springServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-    <!--js,css file Concat Servlet-->
+    <!--js,css file Concat Servlet
     <servlet>
         <servlet-name>concat</servlet-name>
         <servlet-class>org.lework.core.common.servlet.ConcatServlet</servlet-class>
@@ -94,7 +98,7 @@
     <servlet-mapping>
         <servlet-name>concat</servlet-name>
         <url-pattern>/concat</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>    -->
 
     <!--本地静态内容展示与下载的Servlet-->
     <servlet>

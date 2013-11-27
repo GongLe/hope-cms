@@ -98,15 +98,17 @@ public class ConcatServlet extends HttpServlet {
         _clean = "true".equals(req.getParameter("clean"));
         String q = req.getParameter("src");
         if (q == null) {
-            resp.sendError(HttpServletResponse.SC_NO_CONTENT);
+            logger.debug("concat file paramter  not find - returning 400");
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
         // 获取请求内容的基本信息.
         ContentInfo contentInfo = getContentInfo();
 
         // 根据Etag或ModifiedSince Header判断客户端的缓存文件是否有效, 如仍有效则设置返回码为304,直接返回.
-        if (!Servlets.checkIfModifiedSince(req, resp, getLastModified())
+        if (!_clean || !Servlets.checkIfModifiedSince(req, resp, getLastModified())
                 || !Servlets.checkIfNoneMatchEtag(req, resp, getEtag())) {
+            logger.debug("Resource not modified - returning 304");
             return;
         }
         // 设置Etag/过期时间
@@ -136,7 +138,7 @@ public class ConcatServlet extends HttpServlet {
         if (type != null)
             resp.setContentType(type);
         //TODO 获取本地文件,合并到单个文件
-        Vector<File> srcFiles = new Vector<File>();
+        Vector<FileInputStream> srcFiles = new Vector<FileInputStream>();
         for (int i = 0; i < parts.length; i++) {
             String realFilePath = getServletContext().getRealPath(parts[i]);
             File file = new File(realFilePath);
@@ -144,19 +146,16 @@ public class ConcatServlet extends HttpServlet {
                 logger.warn("file:{} no exist ", parts[i]);
                 continue;
             }
-            logger.info("待压缩文件:{}", file.getAbsolutePath());
-            srcFiles.add(file);
+            logger.debug("预合并文件:{}", file.getAbsolutePath());
+            srcFiles.add(new FileInputStream(file));
         }
         InputStream input;
         OutputStream output;
         if (srcFiles.size() > 1) {
-            Vector<FileInputStream> finList = new Vector<FileInputStream>();
-            for (File f : srcFiles) {
-                finList.add(new FileInputStream(f));
-            }
-            input = new SequenceInputStream(finList.elements());
+
+            input = new SequenceInputStream(srcFiles.elements());
         } else {
-            input = new FileInputStream(srcFiles.get(0));
+            input = srcFiles.get(0);
         }
         // 构造OutputStream
         if (checkAccetptGzip(req) && contentInfo.needGzip) {
@@ -168,12 +167,6 @@ public class ConcatServlet extends HttpServlet {
 
         }
 
-        //TODO test
-        //   output = new FileOutputStream("D:/xxxxx.min.js");
-        String inputFilenameJS = "F:/Workspaces-idea/hope-cms/local-aggregator/src/main/webapp/static/assets/js/jquery-1.10.2.js";
-        String outputFilenameJS = "D:/XXXXXXXXXXX.js";
-        //  input = new FileInputStream(inputFilenameJS);
-        //  output = new FileOutputStream(outputFilenameJS);
         //TODO 压缩 css or js
         //TODO 写入到输出流
         //测试压缩javascript
@@ -205,9 +198,9 @@ public class ConcatServlet extends HttpServlet {
             IOUtils.closeQuietly(input);
         } catch (Exception e) {
             logger.error("压缩文件出错,{}", e);
-            //  resp.reset();
-            //  resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-            //  return;
+            resp.reset();
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
         }
 
         //  Number length = IOUtil.copy(sis, output);
@@ -241,7 +234,7 @@ public class ConcatServlet extends HttpServlet {
 
 
     protected long getLastModified() {
-        return (_development || _clean) ? -1 : _lastModified;
+        return   _lastModified;
     }
 
     protected String getEtag() {

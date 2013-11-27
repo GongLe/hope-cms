@@ -36,6 +36,10 @@
 		<property name="suffix" value=".jsp"/>
 	</bean>
 
+    <!--spring mvc 静态资源高效读取
+     @see org.springframework.web.servlet.resource.ResourceHttpRequestHandler-->
+    <mvc:resources mapping="/static/**" location="/static/" />
+
     <!-- 应用路径映射-->
     <bean id="resourcePathExposer" class="org.lework.core.common.ResourcePathExposer" init-method="init" />
 

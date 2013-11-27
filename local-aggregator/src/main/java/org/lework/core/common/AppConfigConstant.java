@@ -17,12 +17,18 @@ public class AppConfigConstant {
 
     /**
      * 属性会在Spring启动的时候根据appConfig.properties计算出来。
-     * #ResourcePathExposer
+     * @see ResourcePathExposer
      */
     public static String CTX;
+
+    /**
+     * as getServletContext().getRealPath("")
+     * @see ResourcePathExposer
+     */
+    public static String REAL_PATH;
     /**
      * 属性会在Spring启动的时候根据appConfig.properties计算出来。
-     * #ResourcePathExposer
+     * @see ResourcePathExposer
      */
     public static String SRC;
 

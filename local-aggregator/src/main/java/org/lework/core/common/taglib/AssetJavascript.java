@@ -19,7 +19,7 @@ import java.io.IOException;
  * User:Gongle
  * Date: 2013-10-01 18:51:48
  */
-public class AssetJavascript extends SimpleTagSupport {
+public class AssetJavascript extends SimpleTagSupport implements ITagResourceMeta {
     public static final String DEFAULT_PATH_SYMBOL = "/";
     public static final String DEFAULT_TYPE = "text/javascript";
     public static final String DEFAULT_OUT = "<script src=\"%s\" type=\"%s\" ></script> ";

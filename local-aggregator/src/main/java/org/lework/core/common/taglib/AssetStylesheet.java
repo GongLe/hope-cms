@@ -19,7 +19,7 @@ import java.io.IOException;
  * User:Gongle
  * Date: 2013-10-01 18:51:48
  */
-public class AssetStylesheet extends SimpleTagSupport {
+public class AssetStylesheet extends SimpleTagSupport implements ITagResourceMeta {
     public static final String DEFAULT_TYPE = "text/css";
     public static final String DEFAULT_PATH_SYMBOL = "/";
     public static final String DEFAULT_MEDIA = "all";

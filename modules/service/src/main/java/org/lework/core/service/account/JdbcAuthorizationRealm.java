@@ -43,6 +43,7 @@ public abstract class JdbcAuthorizationRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        //TODO 用户在线统计:登入
         //TODO 用户授权
         return info;
     }
