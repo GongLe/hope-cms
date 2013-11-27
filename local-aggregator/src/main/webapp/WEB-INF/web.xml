@@ -86,7 +86,25 @@
         <servlet-name>springServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+    <!--js,css file Concat Servlet-->
+    <servlet>
+        <servlet-name>concat</servlet-name>
+        <servlet-class>org.lework.core.common.servlet.ConcatServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>concat</servlet-name>
+        <url-pattern>/concat</url-pattern>
+    </servlet-mapping>
 
+    <!--本地静态内容展示与下载的Servlet-->
+    <servlet>
+        <servlet-name>staticContent</servlet-name>
+        <servlet-class>org.lework.core.common.servlet.StaticContentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>staticContent</servlet-name>
+        <url-pattern>/static-content</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>20</session-timeout>
     </session-config>

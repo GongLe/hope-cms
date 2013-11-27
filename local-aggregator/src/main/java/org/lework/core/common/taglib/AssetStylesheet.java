@@ -37,21 +37,24 @@ public class AssetStylesheet extends SimpleTagSupport {
         this.media = Strings.defaultString(getMedia(), DEFAULT_MEDIA);
         this.rel = Strings.defaultString(getRel(), DEFAULT_REL);
         if (getParent() != null && getParent() instanceof AssetBundle) {
+            //添加到父标签@see AssetBundle
             parent = (AssetBundle) getParent();
             parent.addStylesheet(this);
         } else {
+            //输出<link/>到页面
             getJspContext().getOut().write(buildOut());
         }
 
     }
 
     public String buildOut() {
-        return String.format(DEFAULT_OUT, getSrc(), getType(), getRel(), getMedia());
+        return String.format(DEFAULT_OUT, getRealPath(), getType(), getRel(), getMedia());
     }
 
     private String getRealPath() {
-        return AppConfigConstant.SRC + (getSrc().startsWith(DEFAULT_PATH_SYMBOL) ? getSrc() : DEFAULT_PATH_SYMBOL + getSrc());
+        return AppConfigConstant.CTX + (getSrc().startsWith(DEFAULT_PATH_SYMBOL) ? getSrc() : DEFAULT_PATH_SYMBOL + getSrc());
     }
+
 
     public String getSrc() {
         return src;

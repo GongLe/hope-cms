@@ -14,7 +14,7 @@ import org.springframework.web.context.ServletContextAware;
  */
 public class ResourcePathExposer implements ServletContextAware {
     private static Logger logger = LoggerFactory.getLogger(ResourcePathExposer.class);
-    public static final String DEFALUT_CONTEXT = ".";
+
 
     public ResourcePathExposer() {
     }
@@ -31,12 +31,10 @@ public class ResourcePathExposer implements ServletContextAware {
      */
     public void init() {
         //配置为本地上下文根
-        if (Strings.startsWith(AppConfigConstant.CTX, DEFALUT_CONTEXT)) {
-            AppConfigConstant.CTX = getServletContext().getContextPath();
-        }
-        if (Strings.startsWith(AppConfigConstant.SRC, DEFALUT_CONTEXT)) {
-            AppConfigConstant.SRC = getServletContext().getContextPath() + "/static";
-        }
+
+        AppConfigConstant.CTX = getServletContext().getContextPath();
+        AppConfigConstant.SRC = getServletContext().getContextPath() + "/static";
+
 
         getServletContext().setAttribute("src", AppConfigConstant.SRC);
         getServletContext().setAttribute("ctx", AppConfigConstant.CTX);

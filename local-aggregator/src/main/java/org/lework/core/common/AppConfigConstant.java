@@ -12,8 +12,6 @@ public class AppConfigConstant {
 
     static {
         LOADER = new PropertiesLoader("appConfigConstant.properties");
-        CTX = LOADER.getProperty(Keys.ctx);
-        SRC = LOADER.getProperty(Keys.src);
         runtimeEnv = RuntimeEnv.valueOf(LOADER.getProperty(Keys.runtimeEnv));
     }
 
@@ -38,9 +36,8 @@ public class AppConfigConstant {
      */
     private static RuntimeMode runtimeMode;
 
-    public static class Keys {
-        public static final String ctx = "ctx";
-        public static final String src = "src";
+    private static class Keys {
+
         public static final String runtimeEnv = "runtimeEnv";
 
     }

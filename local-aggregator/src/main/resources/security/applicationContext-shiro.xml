@@ -44,6 +44,8 @@
                 /login = authc
                 /logout = logout
                 /static/** = anon
+                /static-content/** = anon
+                /concat/** = anon
                 /api/** = anon
                 /register/** = anon
                 /admin/** = roles[admin]

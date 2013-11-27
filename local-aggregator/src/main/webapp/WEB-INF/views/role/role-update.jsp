@@ -13,7 +13,9 @@
           class="no-margin form-horizontal offset-40 error-inline" >
         <div class="modal-header" style="padding:5px 20px 5px 20px;">
             <h3>
+                <small class="grey">
                  正在<c:if test="${entity.isNew == true}" >新建角色</c:if><c:if test="${entity.isNew ==false}" >编辑角色“${entity.name}”</c:if>
+                </small>
             </h3>
         </div>
 

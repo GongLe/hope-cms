@@ -9,7 +9,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 
     <%@ include file="/WEB-INF/included/resource.jsp" %>
-    <le:stylesheet src="${src}/assets/ace/css/login.css" />
+    <le:stylesheet src="/static/assets/ace/css/login.css" />
 
 </head>
 <body class="login">

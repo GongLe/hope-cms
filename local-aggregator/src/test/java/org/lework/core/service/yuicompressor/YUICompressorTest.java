@@ -1,10 +1,8 @@
 package org.lework.core.service.yuicompressor;
 
-import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
-import org.apache.commons.io.IOUtils;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.mozilla.javascript.ErrorReporter;
-import org.mozilla.javascript.EvaluatorException;
+import org.lework.core.common.taglib.yui.YUICompressorUtils;
 
 import java.io.*;
 
@@ -14,59 +12,57 @@ import java.io.*;
  * Date: 13-11-26
  */
 public class YUICompressorTest {
+    String inputFilename = "F:/Workspaces-idea/hope-cms/local-aggregator/src/main/webapp/static/assets/css/lework.component.css";
+    String outputFilename = "D:/lework.component.min.css";
+    String inputFilenameJS = "F:/Workspaces-idea/hope-cms/local-aggregator/src/main/webapp/static/assets/js/jquery-1.10.2.js";
+    String outputFilenameJS = "D:/jquery-1.10.2.min.js";
+    @Ignore
     @Test
-    public void compressorCss() {
-        Reader in = null;
-        Writer out = null;
-        String inputFilename = "F:/Workspaces-idea/hope-cms/local-aggregator/src/main/webapp/static/assets/js/jquery-1.10.2.js";
-        String outputFilename = "D:/jquery-1.10.2.min.js";
-        Options o = new Options();
+    public void compressorJs() {
+
+
         try {
-            in = new InputStreamReader(new FileInputStream(inputFilename), o.charset);
+            InputStream input = new FileInputStream(inputFilenameJS);
+            OutputStream output = new FileOutputStream(outputFilenameJS);
+            YUICompressorUtils.compressJavascript(input, output);
 
-            JavaScriptCompressor compressor = new JavaScriptCompressor(in, new YuiCompressorErrorReporter());
-            in.close();
-            in = null;
-
-            out = new OutputStreamWriter(new FileOutputStream(outputFilename), o.charset);
-            compressor.compress(out, o.lineBreakPos, o.munge, o.verbose, o.preserveAllSemiColons, o.disableOptimizations);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            IOUtils.closeQuietly(in);
-            IOUtils.closeQuietly(out);
         }
     }
 
-    public static class Options {
-        public String charset = "UTF-8";
-        public int lineBreakPos = -1;
-        public boolean munge = true;
-        public boolean verbose = false;
-        public boolean preserveAllSemiColons = false;
-        public boolean disableOptimizations = false;
+    @Ignore
+    @Test()
+    public void compressorCss() {
+        try {
+            InputStream input = new FileInputStream(inputFilename);
+            OutputStream output = new FileOutputStream(outputFilename);
+            YUICompressorUtils.compressStylesheet(input, output);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
+    @Ignore
+    @Test()
+    public void compressorStreamCss() {
+        try {
+            InputStream input = new FileInputStream(inputFilename);
+            OutputStream output = new FileOutputStream(outputFilename);
+            YUICompressorUtils.compressStylesheet(input, output);
 
-    private static class YuiCompressorErrorReporter implements ErrorReporter {
-        public void warning(String message, String sourceName, int line, String lineSource, int lineOffset) {
-            if (line < 0) {
-                System.out.println("message = [" + message + "], sourceName = [" + sourceName + "], line = [" + line + "], lineSource = [" + lineSource + "], lineOffset = [" + lineOffset + "]");
-            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
+    }
+    @Test()
+    public void test() {
+        try {
+            InputStream in = new SequenceInputStream(new FileInputStream(inputFilenameJS),new FileInputStream(inputFilenameJS));
+            YUICompressorUtils.compressJavascript(in, new FileOutputStream(outputFilenameJS));
 
-        public void error(String message, String sourceName, int line, String lineSource, int lineOffset) {
-            if (line < 0) {
-                System.out.println("message = [" + message + "], sourceName = [" + sourceName + "], line = [" + line + "], lineSource = [" + lineSource + "], lineOffset = [" + lineOffset + "]");
-            }
-        }
-
-        public EvaluatorException runtimeError(String message, String sourceName, int line, String lineSource, int lineOffset) {
-            error(message, sourceName, line, lineSource, lineOffset);
-            return new EvaluatorException(message);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

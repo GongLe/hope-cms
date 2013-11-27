@@ -4,6 +4,8 @@
 		<pattern>/static/*</pattern>
 		<pattern>/api/*</pattern>
 		<pattern>/login*</pattern>
+		<pattern>/concat</pattern>
+		<pattern>/static-content</pattern>
 	</excludes>
 	
 	<decorator name="default" page="default.jsp">

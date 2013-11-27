@@ -30,19 +30,21 @@ public class AssetJavascript extends SimpleTagSupport {
     public void doTag() throws JspException, IOException {
         this.type = Strings.defaultString(getType(), DEFAULT_TYPE);
         if (getParent() != null && getParent() instanceof AssetBundle) {
+            //添加到父标签@see AssetBundle
             parent = (AssetBundle) getParent();
             parent.addScript(this);
         } else {
+            //输出<script>到页面
             getJspContext().getOut().write(buildOut());
         }
     }
 
     public String buildOut() {
-        return String.format(String.format(DEFAULT_OUT, getSrc() , getType()));
+        return String.format(String.format(DEFAULT_OUT, getRealPath() , getType()));
     }
 
     private String getRealPath() {
-        return AppConfigConstant.SRC + (getSrc().startsWith(DEFAULT_PATH_SYMBOL) ? getSrc() : DEFAULT_PATH_SYMBOL + getSrc());
+        return AppConfigConstant.CTX + (getSrc().startsWith(DEFAULT_PATH_SYMBOL) ? getSrc() : DEFAULT_PATH_SYMBOL + getSrc());
     }
 
     public String getSrc() {

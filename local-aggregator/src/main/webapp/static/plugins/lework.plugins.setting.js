@@ -67,10 +67,16 @@ $(function () {
                 //create new json structure for parameters for REST request
                 // var restParams = [] ;
                 var restParams = aoData;
+          /*    @see http://docs.spring.io/spring-data/jpa/docs/1.4.2.RELEASE/reference/html/repositories.html
                 restParams.push({'name': 'page.size', 'value': pageSize});
                 restParams.push({'name': 'page.page', 'value': pageNum });
                 restParams.push({'name': 'page.sort', 'value': sortName });
-                restParams.push({'name': 'page.sort.dir', 'value': sortDir ? sortDir : 'asc' });
+                restParams.push({'name': 'page.sort.dir', 'value': sortDir ? sortDir : 'asc' }); */
+
+                sortName = (sortName + ',' + (sortDir ? sortDir : 'asc' ) ) ;
+                restParams.push({'name': 'size', 'value': pageSize  });
+                restParams.push({'name': 'page', 'value': pageNum -1});
+                restParams.push({'name': 'sort', 'value': sortName });
                 //finally, make the request
                 oSettings.jqXHR = $.ajax({
                     'dataType': 'json',

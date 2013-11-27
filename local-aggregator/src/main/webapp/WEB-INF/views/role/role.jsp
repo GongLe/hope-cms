@@ -76,7 +76,7 @@
                             </div>
 
                         </div> <!--/.table-funtion-bar-->
-                        <input type="checkbox"> ::checkbox
+
                         <table id="table-list"
                                class="table table-hover  table-nomargin table-bordered dataTable dataTable-nosort clear-both">
                         </table>
@@ -148,7 +148,7 @@
                 //   { 'bVisible': false,  'aTargets': [ 1 ] },
                 { 'sClass': 'center', 'aTargets': [ 3 ] }
             ],
-            'sDom': 'rtip',
+            'sDom': 'rt<"table-footer clearfix"ip>',
             'bStateSave': false  , /**state saving **/
             'bProcessing': true ,
             'bServerSide': true,
