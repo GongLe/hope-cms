@@ -1,7 +1,6 @@
 package org.lework.core.common.taglib;
 
 import org.lework.core.common.AppConfigConstant;
-import org.lework.runner.utils.Strings;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
@@ -23,22 +22,18 @@ public class AssetStylesheet extends SimpleTagSupport implements ITagResourceMet
     public static final String DEFAULT_TYPE = "text/css";
     public static final String DEFAULT_PATH_SYMBOL = "/";
     public static final String DEFAULT_MEDIA = "all";
-    public static final String DEFAULT_REL = "stylesheet";
-    public static final String DEFAULT_OUT = "<link href=\"%s\" type=\"%s\" rel=\"%s\" media=\"%s\" />";
+    public static final String DEFAULT_OUT = "<link href=\"%s\" type=\"%s\" rel=\"stylesheet\" media=\"%s\" />";
     private String src;
-    private String type;
-    private String media;
-    private String rel;
-    private AssetBundle parent;
+    private String type=DEFAULT_TYPE;
+    private String media = DEFAULT_MEDIA ;
+    private BundleStylesheet parent;
 
     @Override
     public void doTag() throws JspException, IOException {
-        this.type = Strings.defaultString(getType(), DEFAULT_TYPE);
-        this.media = Strings.defaultString(getMedia(), DEFAULT_MEDIA);
-        this.rel = Strings.defaultString(getRel(), DEFAULT_REL);
-        if (getParent() != null && getParent() instanceof AssetBundle) {
+
+        if (getParent() != null && getParent() instanceof BundleStylesheet) {
             //添加到父标签@see AssetBundle
-            parent = (AssetBundle) getParent();
+            parent = (BundleStylesheet) getParent();
             parent.addStylesheet(this);
         } else {
             //输出<link/>到页面
@@ -48,7 +43,7 @@ public class AssetStylesheet extends SimpleTagSupport implements ITagResourceMet
     }
 
     public String buildOut() {
-        return String.format(DEFAULT_OUT, getRealPath(), getType(), getRel(), getMedia());
+        return String.format(DEFAULT_OUT, getRealPath(), getType(),   getMedia());
     }
 
     private String getRealPath() {
@@ -80,11 +75,5 @@ public class AssetStylesheet extends SimpleTagSupport implements ITagResourceMet
         this.media = media;
     }
 
-    public String getRel() {
-        return rel;
-    }
 
-    public void setRel(String rel) {
-        this.rel = rel;
-    }
 }

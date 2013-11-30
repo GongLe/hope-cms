@@ -10,11 +10,9 @@
 	<title>登录页</title>
     <!--
     =============
-    <le:javascript src="assets/js/jquery-1.10.2.js" ></le:javascript>
-     <le:bundle name="hello bundle" >
-             <le:stylesheet src="stylesheet"></le:stylesheet>
-     </le:bundle>
-
+   <le:bundleJs>
+     <le:javascript src="/static/assets/js/jquery-1.10.2.js"/>
+   </le:bundleJs>
     -->
 </head>
 

@@ -6,7 +6,10 @@ import com.google.common.cache.LoadingCache;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.lework.core.common.AppConfigConstant;
+import org.lework.runner.misc.range.EachRange;
+import org.lework.runner.misc.range.RangeCallback;
 import org.lework.runner.security.Digests;
+import org.lework.runner.utils.Collections3;
 import org.lework.runner.utils.Encodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +22,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -35,22 +39,15 @@ public class AssetBundle extends BodyTagSupport {
     private static Logger logger = LoggerFactory.getLogger(AssetBundle.class);
     public static final String DEFAULT_PATH_SYMBOL = "/";
     //使用GuavaCache,最大缓存个数:100,过期时间:3小时
-    public static final LoadingCache<String, String> cache;
+    public static final LoadingCache<String, String> CACHE;
 
     static {
-        cache = CacheBuilder.newBuilder().maximumSize(100)
+        CACHE = CacheBuilder.newBuilder().maximumSize(100)
                 .expireAfterAccess(3, TimeUnit.HOURS).build(new CacheLoader<String, String>() {
                     @Override
                     public String load(String key) throws Exception {
-                        //计算sha1 value
-                        byte[] salt = Digests.generateSalt(8);
-                        byte[] sha1Result = Digests.sha1(key.getBytes(), salt);
-                        String sha1 = Encodes.encodeHex(sha1Result);
-                       // logger.info("sha1 in hex result with salt  : " + sha1);
-                        logger.info("cache key:{},value:{}", key, sha1);
-                        return sha1;
+                        return key;
                     }
-
                 });
     }
 
@@ -66,17 +63,32 @@ public class AssetBundle extends BodyTagSupport {
     @Override
     public int doAfterBody() throws JspException {
         BodyContent bc = getBodyContent();
-        JspWriter out = bc.getEnclosingWriter();
+        final JspWriter out = bc.getEnclosingWriter();
         try {
             //存在缓存则直接返回
 
-            //合并File to InputStream
+            String jsfileNames = Collections3.extractToString(scripts, "src", ";");
+            String cssfileNames = Collections3.extractToString(stylesheets, "src", ";");
+            String cssMinUIR = AppConfigConstant.CTX + "/static";
+            String jsMinPath = AppConfigConstant.CTX + "/static";
+            if (CACHE.get(cssfileNames) == null) {
+                //处理stylesheets tag
+                InputStream in;
+                try {
+                    in =BundleUtils.mergeResourceAsOne(stylesheets);
+                    cssMinUIR += BundleUtils.compressorAndWrite(in, String.format("/%s.min.css", BundleUtils.buildSha1(cssfileNames)));
+                    out.print(String.format("<link href=\"%s\" type=\"text/css\" rel=\"stylesheet\" media=\"all\" />\"", cssMinUIR));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                CACHE.put(cssfileNames, cssfileNames);
+            }
 
-            out.print(name);
-            out.print(scripts.toString());
-            out.print(stylesheets.toString());
+
         } catch (IOException e) {
             throw new JspException("Error:" + e.getMessage());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
         return SKIP_BODY;
     }
@@ -86,44 +98,6 @@ public class AssetBundle extends BodyTagSupport {
         return super.doStartTag();
     }
 
-    /**
-     * 压缩资源文件 => 写入到应用static\min目录 =>
-     *
-     * @param in 资源文件输入流
-     * @return
-     */
-    private File compressorAndWrite(InputStream in) {
-        return null;
-    }
-
-    /**
-     * 根据标签资源描述信息,读取=>合并到一个输出流.
-     *
-     * @param resourceMetaList
-     * @return
-     */
-    private InputStream mergeResourceAsOne(List<ITagResourceMeta> resourceMetaList) throws FileNotFoundException {
-        Vector<FileInputStream> srcFiles = new Vector<FileInputStream>();
-        ITagResourceMeta rs;
-        InputStream input;
-        for (int i = 0; i < resourceMetaList.size(); i++) {
-            rs = resourceMetaList.get(i);
-            String path = FilenameUtils.concat(AppConfigConstant.REAL_PATH, rs.getSrc());
-            File file = new File(path);
-            if (!file.exists()) {
-                logger.warn("file:{} no exist ", path);
-                continue;
-            }
-            logger.debug("预合并文件:{}", path);
-            srcFiles.add(new FileInputStream(file));
-        }
-        if (srcFiles.size() > 1) {
-            input = new SequenceInputStream(srcFiles.elements());
-        } else {
-            input = srcFiles.get(0);
-        }
-        return input;
-    }
 
     //添加一个Script标签
     public void addScript(AssetJavascript script) {

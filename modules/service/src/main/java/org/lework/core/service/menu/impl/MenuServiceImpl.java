@@ -361,13 +361,13 @@ public class MenuServiceImpl implements MenuService {
     }
 
     /**
-     * 菜单关联角色select VO
+     * 菜单关联的角色VO
      * @param roleGroupId 角色组ID
      * @param menuId 菜单ID
      * @return
      */
     @Override
-    public List<Menu2RoleVO> convertVO(String roleGroupId, String menuId) {
+    public List<Menu2RoleVO> relatedRoleVO(String roleGroupId, String menuId) {
         List<Menu2RoleVO> ret = new ArrayList<Menu2RoleVO>() ;
         Menu2RoleVO temp ;
         //菜单关联的角色
@@ -384,5 +384,12 @@ public class MenuServiceImpl implements MenuService {
             }
         }
         return ret;
+    }
+
+    @Override
+    public void removeRelatedRole(Menu menu, String roleId) {
+        Role role = roleDao.findOne(roleId);
+        role.getMenus().remove(menu);
+        roleDao.save(role);
     }
 }

@@ -31,8 +31,9 @@ public class RoleNativeDao extends JpaDao<Role, String> {
         List<String> arrParam = Lists.newArrayList(menuId);
 
         if (Strings.isNotEmpty(search)) {
-            jpql.append(" and x.name like ? or x.code like ?");
-            arrParam.add(search);
+            jpql.append(" and x.name like ?2 or x.code like ?3 ");
+            arrParam.add("%" + search + "%");
+            arrParam.add("%" + search + "%");
         }
         return findPage(pageable, jpql.toString(), arrParam.toArray());
     }

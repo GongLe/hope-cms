@@ -15,6 +15,8 @@ import java.io.IOException;
  * 属性说明：
  * src 必填
  * type 非必填 默认值：text/javascript
+ * charset	charset	规定在外部脚本文件中使用的字符编码。
+ * src	  URL	规定外部脚本文件的 URL。
  * </p>
  * User:Gongle
  * Date: 2013-10-01 18:51:48
@@ -25,13 +27,15 @@ public class AssetJavascript extends SimpleTagSupport implements ITagResourceMet
     public static final String DEFAULT_OUT = "<script src=\"%s\" type=\"%s\" ></script> ";
     private String src;
     private String type;
-    private AssetBundle parent;
+    private String charset;
+
+    private BundleScript parent;
     @Override
     public void doTag() throws JspException, IOException {
         this.type = Strings.defaultString(getType(), DEFAULT_TYPE);
-        if (getParent() != null && getParent() instanceof AssetBundle) {
+        if (getParent() != null && getParent() instanceof BundleScript) {
             //添加到父标签@see AssetBundle
-            parent = (AssetBundle) getParent();
+            parent = (BundleScript) getParent();
             parent.addScript(this);
         } else {
             //输出<script>到页面
@@ -62,4 +66,13 @@ public class AssetJavascript extends SimpleTagSupport implements ITagResourceMet
     public void setType(String type) {
         this.type = type;
     }
+
+    public String getCharset() {
+        return charset;
+    }
+
+    public void setCharset(String charset) {
+        this.charset = charset;
+    }
+
 }

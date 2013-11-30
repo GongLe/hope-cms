@@ -116,5 +116,13 @@ public interface MenuService {
      * @param menuId 菜单ID
      * @return
      */
-    public List<Menu2RoleVO> convertVO(String roleGroupId, String menuId);
+    public List<Menu2RoleVO> relatedRoleVO(String roleGroupId, String menuId);
+
+    /**
+     * 解除关联的角色.
+     *
+     * @param menu
+     * @param roleId
+     */
+    public void removeRelatedRole(Menu menu, String roleId);
 }

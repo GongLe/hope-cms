@@ -28,7 +28,8 @@ public class JpaDao<T, ID extends Serializable> extends CrudJpaDao<T, ID> {
      */
     /**
      * 按JPQL分页查询.
-     *
+     *主表需要使用 x作为别名.
+     *eg: select x from Role x inner join x.menus m  where m.id=?1
      * @param pageable Spring data jpa 分页对象
      * @param jpql     hql语句.
      * @param values   数量可变的查询参数,按顺序绑定.
@@ -51,7 +52,8 @@ public class JpaDao<T, ID extends Serializable> extends CrudJpaDao<T, ID> {
 
     /**
      * 按JPQL分页查询.
-     *
+     *主表需要使用 x作为别名.
+     *eg: select x from Role x inner join x.menus m  where m.id=?1
      * @param pageable Spring data jpa 分页对象
      * @param jpql     hql语句.
      * @param values   数量可变的查询参数,按别名绑定.

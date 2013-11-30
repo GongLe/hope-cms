@@ -8,23 +8,37 @@
     <tlib-version>1.0</tlib-version>
     <short-name>le</short-name>
     <tag>
-        <name>bundle</name>
-        <!-- 定义标签处理类 -->
-        <tag-class>org.lework.core.common.taglib.AssetBundle</tag-class>
-        <!-- 定义标签体支持JSP脚本 -->
+        <name>bundleCss</name>
+        <tag-class>org.lework.core.common.taglib.BundleStylesheet</tag-class>
         <body-content>JSP</body-content>
-        <!-- 配置标签属性 -->
         <attribute>
-            <description>bundle unique name ,defalut name is hash value of(resource names) </description>
+            <description>name</description>
             <name>name</name>
             <required>false</required>
             <rtexprvalue>true</rtexprvalue> <!--rtexprvalue的全称是 Run-time Expression Value， 它用于表示是否可以使用JSP表达式. -->
         </attribute>
         <attribute>
-            <description>merge file size,default size is 10</description>
-            <name>size</name>
+            <description>html link#media,default value "all"</description>
+            <name>media</name>
             <required>false</required>
-            <type>java.lang.Integer</type>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <name>bundleJs</name>
+        <tag-class>org.lework.core.common.taglib.BundleScript</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>name</description>
+            <name>name</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>html script#charset,default value "utf-8"</description>
+            <name>charset</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
 
@@ -66,19 +80,16 @@
             <description>equals html link#type</description>
             <name>type</name>
             <required>false</required>
-            <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
             <description>equals html link#media</description>
             <name>media</name>
             <required>false</required>
-            <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
             <description>equals html link#rel</description>
             <name>rel</name>
             <required>false</required>
-            <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
 </taglib>

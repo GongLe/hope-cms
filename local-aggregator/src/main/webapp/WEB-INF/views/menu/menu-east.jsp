@@ -66,7 +66,7 @@
                     </li>
                 </ul>
 
-                <div class="tab-content">
+                <div class="tab-content no-padding-top">
                     <div id="profile3" class="tab-pane in active">
                       <%--  <div class="clearfix">
                             <div class="pull-right">
@@ -76,7 +76,7 @@
 
                           <div class="input-append no-margin-bottom pull-right">
                               <!--自定义搜索-->
-                              <form id="searchForm" name="searchForm" class="no-margin no-padding"  >
+                              <form id="searchForm" name="searchForm" class="no-margin"  style="padding:8px 0 5px 0;" >
                                     <span class="input-icon input-icon-right">
                                         <input class="input-medium" id="search" name="search" type="text" placeholder="名称/代码">
                                         <i class="icon-search blue" onclick="$('#searchForm').submit()"></i>
@@ -96,9 +96,10 @@
     </tbody>
 </table>
 <script>
-    $(function () {
-        var oTable = $('#menuRelatedRoleTable');
 
+    var oTable = $('#menuRelatedRoleTable');
+    $(function () {
+        var menuId ='${menu.id}'  ;
         oTable.dataTable({
             'aoColumns': [
                 { 'mData': 'name', 'sTitle': '角色名称' },
@@ -115,7 +116,13 @@
                 },
                 {
                     'mRender': function (data, type, full) {
-                        return '<a href="javascript:;" data-id="{1}">解除</a>'.format(data) ;
+                        var param = {
+                            roleName : full.name,
+                            roleId : full.id,
+                            menuId : menuId
+                        }
+                        return ('<a href="javascript:;" class="removeRelatedRole" data-menuId="{menuId}" data-roleId="{roleId}"' +
+                                ' data-roleName="{roleName" >解除</a>').format(param);
                     },
                     'aTargets': [3 ]
                 },
@@ -133,15 +140,42 @@
             'fnServerData': lework.springDataJpaPageableAdapter,
             'sAjaxSource': '${ctx}/menu/getMenuRelatedRoleJson',
             'fnServerParams' :function(aoData ){
-                 aoData.pushArray({name:'menuId',value:'${menu.id}'})
+                //附加请求参数
+                aoData.pushArray({name: 'menuId', value: '${menu.id}'})
+                aoData.pushArray($('#searchForm').serializeArray());
             },
             'fnInitComplete': function () {     /**datatables ready**/
             } ,
             fnDrawCallback :function(oSettings ){
+                //解除菜单角色关联关系
+                oTable.find('.removeRelatedRole').confirmDelete({
+                    text: '<span class="text-warning" >解除关联？</span>',
+                    onDelete: function () {
+                    var param = $(this).data();
+                    $.hiddenSubmit({
+                        formAction: 'menu/removeRelated',
+                        data: [
+                            {name: 'menuId', value: param.menuId } ,
+                            {name: 'roleName', value: param.roleName } ,
+                            {name: 'roleId', value: param.roleId }
+                        ],
+                        complete: null
+                    })
+                    return true;
+                }
+                });
             }
         });//dataTables
 
+        //搜索表单
+        $('#searchForm').submit(function(event){
+            event.preventDefault() ;
+            oTable.fnDraw();
+        });
+
     })  //dom ready
+
+
 </script>
 </body>
 </html>

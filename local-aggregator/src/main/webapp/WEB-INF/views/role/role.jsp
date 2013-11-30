@@ -90,7 +90,7 @@
 
 <!--/.page-content-->
 <script>
-
+    var oTable = $('#table-list');
     $(function () {
         //表单提交后,iframe回调函数
         window.actionCallback = function (resp) {
@@ -105,12 +105,11 @@
             oTable.fnDraw();
             lework.alert({content:json.message ,type: json.type ,width:'250px'})
         };
+      //搜索表单
       $('#searchForm').submit(function(event){
           event.preventDefault() ;
           oTable.fnDraw();
       });
-        var oTable = $('#table-list');
-
         oTable.dataTable({
             'aoColumns': [
                 { 'mData': 'name', 'sTitle': '角色名称' },

@@ -147,6 +147,23 @@ public class MenuController extends AbstractController {
     }
 
     /**
+     * 解除菜单与角色关联关系
+     *
+     * @param menuId
+     * @param roleId
+     * @param response
+     */
+    @RequestMapping(value = "/removeRelated", method = RequestMethod.POST)
+    public void removeRelated(@RequestParam(value = "menuId") String menuId,
+                              @RequestParam(value = "roleId") String roleId,
+                              @RequestParam(value = "roleName", required = false) String roleName,
+                              HttpServletResponse response) {
+        Menu entity = menuService.getMenu(menuId);
+        menuService.removeRelatedRole(entity, roleId);
+        callback(response, CallbackData.build("removeRelatedCallback", "解除关联角色&quot;" + roleName + " &quot;成功", NotificationType.DEFAULT));
+    }
+
+    /**
      * http://fontawesome.io/3.2.1/icons/
      */
     @RequestMapping(value = "/fontawesome", method = RequestMethod.GET)
@@ -172,7 +189,7 @@ public class MenuController extends AbstractController {
         //菜单关联的角色
         //当前角色组的角色
         //转换成VO
-        model.addAttribute("roles",menuService.convertVO(roleGroupId,menuId)) ;
+        model.addAttribute("roles",menuService.relatedRoleVO(roleGroupId, menuId)) ;
         return "menu/menu-relatedRole";
     }
 
