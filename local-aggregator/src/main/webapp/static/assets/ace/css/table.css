@@ -381,22 +381,24 @@ div.DTS div.dataTables_scrollHead {
 div.DTS div.dataTables_scrollBody {
     z-index: 2;
 }
-/**gongle datatables**/
+/**  datatables**/
 .dataTables_wrapper {
-
+    position: relative;
 
 }
+
 .dataTables_wrapper .dataTables_processing {
     display: block;
     width: 100px;
     height: 40px;
     position: absolute;
     top:55%;
-    left: 50% ;
+    left: 50%;
     margin-left: -50px;
-    margin-top:0;
+  /*  margin-top:-20px;*/
     text-align: center;
     color: #536aab;
+    background: url(../../images/loading_circular_35x35.GIF) no-repeat center center;
 }
 
 .table-funtion-bar{

@@ -44,13 +44,17 @@
                             <button class="btn no-border tooltips" id="refresh-function" data-original-title="刷新">
                                 <i class="icon-refresh"></i>
                             </button>
+                            <button class="btn no-border tooltips" id="update-function" data-original-title="编辑">
+                                <i class="icon-edit"></i>
+                            </button>
                             <button class="btn no-border tooltips" id="delete-function" style="display:none;" data-original-title="删除">
                                 <i class="icon-trash"></i>
                             </button>
-                            <button class="btn btn-danger no-border tooltips" id="addToRole-function" style="display:none;" data-original-title="添加菜单到角色">
-                                <i class="icon-group"></i>
-                            </button>
+
                         </div>
+                        <button class="btn btn-danger no-border tooltips" id="addToRole-function" style="display:none;" data-original-title="添加菜单到角色">
+                            <i class="icon-group"></i> 添加菜单到角色
+                        </button>
                     </div><!--/.table-funtion-bar-->
 
                     <div class="pull-left" id="menuTreeGridWrap">
@@ -194,6 +198,19 @@ $(function(){
         $('#menuTreeGrid').treegrid('reload');
         //重置function bar状态
         checkFunbarStatus(false);
+    });
+    //编辑
+    $('#update-function').click(function () {
+       var row =   $menuTreeGrid.treegrid('getSelected');
+        //双击编辑
+        $.colorbox({
+            href: 'menu/update?$SiteMesh=false&id=' + row.id,
+            adjustY: '40%',
+            width: '700px',
+            height: '415px', /**设置高度固定,弹出层load之后,有新的DOM加入,高度会增加,影响实际显示**/
+            overlayClose: false,
+            scrolling: false
+        }) ;
     });
 
     //删除

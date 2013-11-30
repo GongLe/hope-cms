@@ -99,7 +99,7 @@
 
     var oTable = $('#menuRelatedRoleTable');
     $(function () {
-        var menuId ='${menu.id}'  ;
+        var menuId = '${menu.id}';
         oTable.dataTable({
             'aoColumns': [
                 { 'mData': 'name', 'sTitle': '角色名称' },
@@ -110,19 +110,19 @@
             'aoColumnDefs': [
                 {
                     'mRender': function (data, type, full) {
-                        return  full['typeName'] ;
+                        return  full['typeName'];
                     },
                     'aTargets': [2 ]
                 },
                 {
                     'mRender': function (data, type, full) {
                         var param = {
-                            roleName : full.name,
-                            roleId : full.id,
-                            menuId : menuId
+                            roleName: full.name,
+                            roleId: full.id,
+                            menuId: menuId
                         }
-                        return ('<a href="javascript:;" class="removeRelatedRole" data-menuId="{menuId}" data-roleId="{roleId}"' +
-                                ' data-roleName="{roleName" >解除</a>').format(param);
+                        return ('<a href="javascript:;" class="removeRelatedRole" data-menu-id="{menuId}" data-role-id="{roleId}"' +
+                                ' data-role-name="{roleName}" >解除</a>').format(param);
                     },
                     'aTargets': [3 ]
                 },
@@ -132,46 +132,69 @@
                 { 'sClass': '', 'aTargets': [3 ] }
             ],
             'sDom': 'rtip',
-            sPaginationType:'two_button',
-            'iDisplayLength':5,
-            'bStateSave': false  , /**state saving **/
-            'bProcessing': true ,
+            sPaginationType: 'two_button',
+            'iDisplayLength': 5,
+            'bStateSave': false, /**state saving **/
+            'bProcessing': true,
             'bServerSide': true,
             'fnServerData': lework.springDataJpaPageableAdapter,
             'sAjaxSource': '${ctx}/menu/getMenuRelatedRoleJson',
-            'fnServerParams' :function(aoData ){
+            'fnServerParams': function (aoData) {
                 //附加请求参数
                 aoData.pushArray({name: 'menuId', value: '${menu.id}'})
                 aoData.pushArray($('#searchForm').serializeArray());
             },
             'fnInitComplete': function () {     /**datatables ready**/
-            } ,
-            fnDrawCallback :function(oSettings ){
+            },
+            fnDrawCallback: function (oSettings) {
                 //解除菜单角色关联关系
                 oTable.find('.removeRelatedRole').confirmDelete({
                     text: '<span class="text-warning" >解除关联？</span>',
-                    onDelete: function () {
-                    var param = $(this).data();
-                    $.hiddenSubmit({
-                        formAction: 'menu/removeRelated',
-                        data: [
-                            {name: 'menuId', value: param.menuId } ,
-                            {name: 'roleName', value: param.roleName } ,
-                            {name: 'roleId', value: param.roleId }
-                        ],
-                        complete: null
-                    })
-                    return true;
-                }
+                    onDelete: function (ele) {
+                        var param = $(this).data();
+                        $.hiddenSubmit({
+                            formAction: 'menu/removeRelatedRole',
+                            data: [
+                                {name: 'menuId', value: param.menuId } ,
+                                {name: 'roleName', value: param.roleName } ,
+                                {name: 'roleId', value: param.roleId }
+                            ],
+                            complete: function(response){
+                                oTable.fnDraw();
+                            }
+                        })
+                        return true;
+                    }
                 });
             }
         });//dataTables
 
         //搜索表单
-        $('#searchForm').submit(function(event){
-            event.preventDefault() ;
+        $('#searchForm').submit(function (event) {
+            event.preventDefault();
             oTable.fnDraw();
         });
+        /**
+         *解除菜单与角色关联关系,iframe回调函数
+         * @param resp
+         */
+        window.removeRelatedCallback = function (resp) {
+            var json = resp.attributes;
+            lework.alert({content: json.message, type: json.type, width: '200px',
+                timer:3000,
+                onClose: null })
+        };
+
+        /**
+         *创建菜单与角色关联关系
+         * @param resp
+         */
+        window.createRelateCallback = function (resp) {
+            var json = resp.attributes;
+            lework.alert({content: json.message, type: json.type, width: '200px',
+                timer: 3000,
+                onClose: null})
+        };
 
     })  //dom ready
 

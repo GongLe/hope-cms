@@ -29,7 +29,7 @@ $(function () {
             /**
              *初始化Datatable全局搜索 placeholder属性
              * @param placeholder属性
-             * @param tableFilterId table list filter 非必填f
+             * @param tableFilterId table list filter 非必填
              */
             lework.initDatatablesSearchHolder = function (placeholderValue, tableFilterId) {
                 $('input[type=text]', tableFilterId || '#table-list_filter').attr('placeholder', placeholderValue || '输入搜索')
@@ -90,16 +90,16 @@ $(function () {
                 });
             };
             var _opt = {
-                sPaginationType: "full_numbers",
+                sPaginationType: 'full_numbers',
                 oLanguage: {
-                    sSearch: "<span>搜索:</span> ",
-                    sInfo: "显示_START_到_END_条,共_TOTAL_条记录",
-                    sInfoEmpty: "显示0到0条,共0条记录",
-                    sLengthMenu: "每页_MENU_条",
-                    sProcessing: "加载中...",
-                    sEmptyTable: '<div class="alert no-margin" style="font-size:12px;">无可用数据</div>',
-                    sZeroRecords: '<div class="alert no-margin" style="font-size:12px;">无记录数据/div>',
-                    oPaginate: {  "sFirst": "首页", "sPrevious": " 上一页 ", "sNext": " 下一页 ", "sLast": " 尾页 " }
+                    sSearch: '<span>搜索:</span> ',
+                    sInfo: '显示_START_到_END_条,共_TOTAL_条记录',
+                    sInfoEmpty: '显示0到0条,共0条记录',
+                    sLengthMenu: '每页_MENU_条',
+                    sProcessing: '&nbsp;',
+                    sEmptyTable: '<div class="alert no-margin" style="font-size:12px;padding:5px;">无可用数据</div>',
+                    sZeroRecords: '<div class="alert no-margin" style="font-size:12px;padding:5px;">无记录数据/div>',
+                    oPaginate: {  'sFirst': '首页', 'sPrevious': ' 上一页 ', 'sNext': ' 下一页 ', 'sLast': ' 尾页 ' }
                 }
             };
             $.extend(true, $.fn.dataTable.defaults, _opt);

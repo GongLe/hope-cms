@@ -3,10 +3,6 @@
  * google alert style @see http://www.bootcss.com/p/google-bootstrap/components.html#alerts
  * User: Gongle
  * Date: 13-11-23
- * <p>
- *     api:
- *     method:
- * /p>
  */
 
 var lework = (function ($, lework) {
@@ -14,7 +10,7 @@ var lework = (function ($, lework) {
     var noop = function () {
     };
     var DEFAULTS = {
-        onHide: noop,
+        onClose: noop,
         content: '', /**html or text **/
         timer: 6000, /** 6秒后关闭 **/
         id: null,
@@ -23,25 +19,7 @@ var lework = (function ($, lework) {
         parentEl: 'body' /**父容器,默认为body**/
     };
 
-    // helper - does it support CSS3 transitions/animation
-    var doesTransitions = (function () {
-        var b = document.body || document.documentElement;
-        var s = b.style;
-        var p = 'transition';
-        if (typeof s[p] === 'string') {
-            return true;
-        }
 
-        // Tests for vendor specific prop
-        var v = ['Moz', 'Webkit', 'Khtml', 'O', 'ms'];
-        p = p.charAt(0).toUpperCase() + p.substr(1);
-        for (var i = 0; i < v.length; i++) {
-            if (typeof s[v[i] + p] === 'string') {
-                return true;
-            }
-        }
-        return false;
-    }());
 
     function Alert(opt) {
         this.settings = $.extend({}, DEFAULTS, opt);
@@ -64,16 +42,18 @@ var lework = (function ($, lework) {
             .css('width', this.settings.width)
             .addClass('lework-alert' + (this.settings.type ? ' lework-alert-' + this.settings.type : ''))
             .prop({'id': (this.settings.id ? this.settings.id : (new Date()).getTime()) })
-            .on('onHide.alert',function () {
+            .on('close.alert',function () {
                 that.hide();
-                that.settings.onHide.apply(this);
+                if ($.isFunction(that.settings.onClose)) {
+                    that.settings.onClose.apply(this);
+                }
                 that.destroy();
             }).html(that.settings.content || '&nbsp;&nbsp;')
         this.$alert.append(' <button type="button" class="close" title="关闭" >×</button> ')
         //关闭按钮
         this.$alert.on('click', '.close', function (e) {
             e.preventDefault();
-            $(this).parent().trigger('onHide.alert');
+            $(this).parent().trigger('close.alert');
         })
         that.$alert.appendTo($container);
     };
@@ -83,7 +63,7 @@ var lework = (function ($, lework) {
         var that = this;
         if (that.settings.timer) {
             setTimeout(function () {
-                that.$alert.trigger('onHide.alert');
+                that.$alert.trigger('close.alert');
             }, that.settings.timer)
         }
     }
@@ -91,7 +71,7 @@ var lework = (function ($, lework) {
         this.$alert.hide();
     };
     Alert.prototype.destroy = function () {
-        this.$alert.off('.alert').remove();
+        this.$alert.off('close.alert').remove();
         //   this.$alert = null;
     };
     Alert.prototype.update = function (content) {

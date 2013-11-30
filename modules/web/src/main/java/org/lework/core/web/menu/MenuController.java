@@ -153,23 +153,35 @@ public class MenuController extends AbstractController {
      * @param roleId
      * @param response
      */
-    @RequestMapping(value = "/removeRelated", method = RequestMethod.POST)
-    public void removeRelated(@RequestParam(value = "menuId") String menuId,
+    @RequestMapping(value = "/removeRelatedRole", method = RequestMethod.POST)
+    public void removeRelatedRole(@RequestParam(value = "menuId") String menuId,
                               @RequestParam(value = "roleId") String roleId,
                               @RequestParam(value = "roleName", required = false) String roleName,
                               HttpServletResponse response) {
         Menu entity = menuService.getMenu(menuId);
         menuService.removeRelatedRole(entity, roleId);
-        callback(response, CallbackData.build("removeRelatedCallback", "解除关联角色&quot;" + roleName + " &quot;成功", NotificationType.DEFAULT));
+        callback(response, CallbackData.build("removeRelatedCallback", "解除关联&quot;" + roleName + " &quot;关联成功",
+                NotificationType.DEFAULT));
+    }
+    /**
+     * 创建菜单与角色关联关系
+     *
+     * @param menuId
+     * @param roleId
+     * @param response
+     */
+    @RequestMapping(value = "/createRelateRole", method = RequestMethod.POST)
+    public void createRelateRole(@RequestParam(value = "menuId") String menuId,
+                              @RequestParam(value = "roleId") String roleId,
+                              @RequestParam(value = "roleName", required = false) String roleName,
+                              HttpServletResponse response) {
+        Menu entity = menuService.getMenu(menuId);
+        menuService.createRelateRole(entity, roleId);
+        callback(response, CallbackData.build("createRelateCallback", "创建关联&quot;" + roleName + " &quot;关联成功",
+                NotificationType.DEFAULT));
     }
 
-    /**
-     * http://fontawesome.io/3.2.1/icons/
-     */
-    @RequestMapping(value = "/fontawesome", method = RequestMethod.GET)
-    public String fontawesome() {
-        return "menu/fontawesome";
-    }
+
 
     /**
      * 添加菜单到角色
@@ -190,7 +202,8 @@ public class MenuController extends AbstractController {
         //当前角色组的角色
         //转换成VO
         model.addAttribute("roles",menuService.relatedRoleVO(roleGroupId, menuId)) ;
-        return "menu/menu-relatedRole";
+        model.addAttribute("menuId",menuId) ;
+        return "menu/menu-addToRole-relatedRole";
     }
 
     /**
@@ -289,6 +302,15 @@ public class MenuController extends AbstractController {
        /* TreeResult root = new TreeResult("root","上级菜单",Strings.EMPTY,"root") ;
         root.getChildren().addAll( menuService.getMenuTree(ignoreNodes))  ;*/
         return  menuService.getMenuTree(ignoreNodes) ;
+    }
+
+    /**
+     * fontawesome icon 3.2
+     * http://fontawesome.io/3.2.1/icons/
+     */
+    @RequestMapping(value = "/fontawesome", method = RequestMethod.GET)
+    public String fontawesome() {
+        return "menu/fontawesome";
     }
 
     /**

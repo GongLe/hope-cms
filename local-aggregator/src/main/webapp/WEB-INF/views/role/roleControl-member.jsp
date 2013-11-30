@@ -10,21 +10,6 @@
 <body>
 <div class="table-funtion-bar no-margin clear-both" id="memberBar"  >
     <div class="btn-group">
-        <button data-toggle="dropdown" class="btn no-border dropdown-toggle">
-            <i id="checkIcon" class="icon-check-empty bigger-120"></i>
-            <span class="caret"></span>
-        </button>
-
-        <ul class="dropdown-menu dropdown-default">
-            <li id="selectedAll">
-                <a href="javascript:;"  >全选</a>
-            </li>
-            <li id="cancelSelected" >
-                <a href="javascript:;" >取消</a>
-            </li>
-        </ul>
-    </div>
-    <div class="btn-group">
         <button class="btn  no-border tooltips" id="refresh-function" data-original-title="刷新">
             <i class="icon-refresh"></i>
         </button>

@@ -121,8 +121,15 @@ public interface MenuService {
     /**
      * 解除关联的角色.
      *
-     * @param menu
-     * @param roleId
+     * @param menu  菜单Entity
+     * @param roleId 角色ID
      */
     public void removeRelatedRole(Menu menu, String roleId);
+    /**
+     * 创建关联的角色.
+     *
+     * @param menu  菜单Entity
+     * @param roleId 角色ID
+     */
+    public void createRelateRole(Menu menu, String roleId);
 }

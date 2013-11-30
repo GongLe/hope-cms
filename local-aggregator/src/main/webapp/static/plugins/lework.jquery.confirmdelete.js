@@ -60,7 +60,7 @@
                         e.preventDefault();
                         var ret;
                         if ($.isFunction(that.options.onDelete)) {
-                            ret = that.options.onDelete.apply(that.$ele[0] );
+                            ret = that.options.onDelete.apply(that.$ele[0] ,that.$ele[0]);
                         }
                         if (ret == true) {
                             that.hide();

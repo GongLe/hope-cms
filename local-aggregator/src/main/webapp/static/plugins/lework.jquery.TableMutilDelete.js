@@ -19,7 +19,7 @@
         onSelect :null,
         beforeSelect: null,
         afterSelect :null ,
-        filterSelector :'.filterSelected' ,
+        filterSelector :'.filterSelected' , /**忽略此类元素事件**/
         trigger :  'click'
     };
     var old = $.fn.tableMutilDelete;

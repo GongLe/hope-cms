@@ -385,11 +385,29 @@ public class MenuServiceImpl implements MenuService {
         }
         return ret;
     }
-
+    /**
+     * 解除关联的角色.
+     *
+     * @param menu  菜单Entity
+     * @param roleId 角色ID
+     */
     @Override
     public void removeRelatedRole(Menu menu, String roleId) {
         Role role = roleDao.findOne(roleId);
         role.getMenus().remove(menu);
+        roleDao.save(role);
+    }
+
+    /**
+     * 创建关联的角色.
+     *
+     * @param menu   菜单Entity
+     * @param roleId 角色ID
+     */
+    @Override
+    public void createRelateRole(Menu menu, String roleId) {
+        Role role = roleDao.findOne(roleId);
+        role.getMenus().add(menu);
         roleDao.save(role);
     }
 }

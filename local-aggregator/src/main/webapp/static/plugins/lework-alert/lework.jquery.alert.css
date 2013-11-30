@@ -58,6 +58,7 @@
     /**内容超出后自动换行**/
     overflow: auto;
     word-break: break-all;
+    z-index:1999;
 
 }
 

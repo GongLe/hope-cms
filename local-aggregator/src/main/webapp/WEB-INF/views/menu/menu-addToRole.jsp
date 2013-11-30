@@ -32,7 +32,7 @@
 <body>
 
 <div class="modal-content" >
-    <form action="menu/update"  method="post" id="inputForm" name="inputForm" target="$iframe"
+    <form  method="post" id="inputForm" name="inputForm"
           class="no-margin form-horizontal offset-30 error-inline" >
         <div class="modal-header" style="padding:1px 15px">
             <small class="grey">
@@ -65,9 +65,6 @@
             </div>
         </div><!--/.modal-body-->
         <div class="modal-footer">
-            <button id="submitBtn" type="submit" class="btn btn-small btn-primary" >
-                保存
-            </button>
             <button type="button" class="btn btn-small" onclick="$.colorbox.close()">
                 关闭
             </button>
