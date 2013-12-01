@@ -99,6 +99,32 @@
 
     var oTable = $('#menuRelatedRoleTable');
     $(function () {
+        /**全局:刷新关联角色table**/
+        window.refreshRelatedRoleTable = function () {
+            oTable.fnDraw();
+        }
+        /**
+         *全局:解除菜单与角色关联关系,iframe回调函数
+         * @param resp
+         */
+        window.removeRelatedCallback = function (resp) {
+            var json = resp.attributes;
+            lework.alert({content: json.message, type: json.type, width: '200px',
+                timer:3000,
+                onClose: null })
+        };
+
+        /**
+         *全局:创建菜单与角色关联关系
+         * @param resp
+         */
+        window.createRelateCallback = function (resp) {
+            var json = resp.attributes;
+            lework.alert({content: json.message, type: json.type, width: '200px',
+                timer: 3000,
+                onClose: null})
+        };
+
         var menuId = '${menu.id}';
         oTable.dataTable({
             'aoColumns': [
@@ -174,28 +200,6 @@
             event.preventDefault();
             oTable.fnDraw();
         });
-        /**
-         *解除菜单与角色关联关系,iframe回调函数
-         * @param resp
-         */
-        window.removeRelatedCallback = function (resp) {
-            var json = resp.attributes;
-            lework.alert({content: json.message, type: json.type, width: '200px',
-                timer:3000,
-                onClose: null })
-        };
-
-        /**
-         *创建菜单与角色关联关系
-         * @param resp
-         */
-        window.createRelateCallback = function (resp) {
-            var json = resp.attributes;
-            lework.alert({content: json.message, type: json.type, width: '200px',
-                timer: 3000,
-                onClose: null})
-        };
-
     })  //dom ready
 
 

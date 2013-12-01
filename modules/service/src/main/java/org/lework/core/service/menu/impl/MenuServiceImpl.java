@@ -1,9 +1,9 @@
 package org.lework.core.service.menu.impl;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
 import org.lework.core.common.enumeration.Status;
 import org.lework.core.dao.menu.MenuDao;
+import org.lework.core.dao.menu.MenuNativeDao;
 import org.lework.core.dao.role.RoleDao;
 import org.lework.core.entity.menu.Menu;
 import org.lework.core.entity.role.Role;
@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,6 +39,7 @@ public class MenuServiceImpl implements MenuService {
     private static Logger logger = LoggerFactory.getLogger(MenuServiceImpl.class);
 
     private MenuDao menuDao;
+    private MenuNativeDao menuNativeDao;
     private RoleDao roleDao;
     @Autowired
     public void setRoleDao(RoleDao roleDao) {
@@ -48,6 +48,10 @@ public class MenuServiceImpl implements MenuService {
     @Autowired
     public void setMenuDao(MenuDao menuDao) {
         this.menuDao = menuDao;
+    }
+    @Autowired
+    public void setMenuNativeDao(MenuNativeDao menuNativeDao) {
+        this.menuNativeDao = menuNativeDao;
     }
 
     @Override
@@ -207,6 +211,19 @@ public class MenuServiceImpl implements MenuService {
     public Page<Menu> searchPageMenu(Pageable pageable, List<SearchFilter> filters) {
         Specification<Menu> spec = Specifications.build(filters, Menu.class);
         return menuDao.findAll(spec, pageable);
+    }
+
+    /**
+     * 获取角色关联的菜单.
+     *
+     * @param pageable
+     * @param roleId   角色ID
+     * @param search   过滤条件:name
+     * @return
+     */
+    @Override
+    public Page<Menu> searchMenuPageByRoleId(Pageable pageable, String roleId, String search) {
+        return menuNativeDao.findMenuPageByRoleId(pageable, roleId, search);
     }
 
     @Override

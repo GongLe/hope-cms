@@ -1,7 +1,6 @@
 package org.lework.core.dao.menu;
 
 import org.lework.core.entity.menu.Menu;
-import org.lework.core.entity.role.Role;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;

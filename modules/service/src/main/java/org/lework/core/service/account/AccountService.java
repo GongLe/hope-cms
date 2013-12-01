@@ -1,5 +1,6 @@
 package org.lework.core.service.account;
 
+import org.lework.core.entity.role.Role;
 import org.lework.core.entity.user.User;
 import org.lework.runner.orm.support.SearchFilter;
 import org.springframework.data.domain.Page;
@@ -59,6 +60,26 @@ public interface AccountService {
      * @see org.lework.runner.orm.support.SearchFilter
      */
     public Page<User> searchPageUser(Pageable pageable, List<SearchFilter> filters);
+
+    /**
+     * 获取角色关联的用户.
+     *
+     * @param pageable
+     * @param roleId   角色ID
+     * @param search   过滤条件:name or loginName
+     * @return
+     */
+    public Page<User> searchUserPageByRoleId(Pageable pageable, String roleId, String search);
+
+    /**
+     * 获取组织关联的用户.
+     *
+     * @param pageable
+     * @param orgId    组织ID
+     * @param search   过滤条件:name or loginName
+     * @return
+     */
+    public Page<User> searchUserPageByOrgId(Pageable pageable, String orgId, String search);
 
     public void saveUser(User entity);
 

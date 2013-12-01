@@ -98,7 +98,7 @@ $(function(){
     }
 
     using(['treegrid'], function () {
-          $menuTreeGrid = $('#menuTreeGrid');
+        $menuTreeGrid = $('#menuTreeGrid');
         $menuTreeGrid.treegrid({
             url: 'menu/getTreeGrid',
             method: 'post',
@@ -234,7 +234,12 @@ $(function(){
             adjustY:'40%',
             width: '760px',
             overlayClose: false,
-            scrolling: false
+            scrolling: false,
+            onClosed:function(){
+                //关闭弹出层后,刷新菜单关联的角色 @see menu-east.jsp @178 line
+                refreshRelatedRoleTable();
+                lework.log('关闭弹出层后,刷新菜单关联的用户');
+            }
         })
     });
 

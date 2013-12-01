@@ -9,7 +9,8 @@
         .box-title{border-bottom: 1px dashed #c5d0dc!important;}
         .west{ width:15%;min-height:550px;border-right:1px dashed  #c5d0dc;  }
         .west h5{  margin:5px 10px; }
-        .middle{width:20%;min-height:550px;border-right:1px dashed  #c5d0dc;
+        .middle{
+            width:20%;min-height:550px;border-right:1px dashed  #c5d0dc;
             overflow: auto;}
         .middle h5{margin:5px 10px;}
         .east{width:60%; padding:0 0 5px 10px;}

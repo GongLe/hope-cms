@@ -3,6 +3,7 @@ package org.lework.core.service.account.impl;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.lework.core.dao.user.UserDao;
+import org.lework.core.dao.user.UserNativeDao;
 import org.lework.core.entity.menu.Menu;
 import org.lework.core.entity.role.Role;
 import org.lework.core.entity.user.User;
@@ -34,6 +35,12 @@ public class AccountServiceImpl implements AccountService {
     private static Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
 
     private UserDao userDao;
+    private UserNativeDao userNativeDao;
+
+    @Autowired
+    public void setUserNativeDao(UserNativeDao userNativeDao) {
+        this.userNativeDao = userNativeDao;
+    }
 
     @Autowired
     public void setUserDao(UserDao userDao) {
@@ -136,6 +143,32 @@ public class AccountServiceImpl implements AccountService {
 
         Specification<User> spec = Specifications.build(filters, User.class);
         return userDao.findAll(spec, pageable);
+    }
+
+    /**
+     * 获取角色关联的用户.
+     *
+     * @param pageable
+     * @param roleId   角色ID
+     * @param search   过滤条件:name or loginName
+     * @return
+     */
+    @Override
+    public Page<User> searchUserPageByRoleId(Pageable pageable, String roleId, String search) {
+        return userNativeDao.findUserPageByRoleId(pageable, roleId, search);
+    }
+
+    /**
+     * 获取组织关联的用户.
+     *
+     * @param pageable
+     * @param orgId    组织ID
+     * @param search   过滤条件:name or loginName
+     * @return
+     */
+    @Override
+    public Page<User> searchUserPageByOrgId(Pageable pageable, String orgId, String search) {
+        return userNativeDao.findUserPageByOrgId(pageable, orgId, search);
     }
 
     public User getUser(String id) {

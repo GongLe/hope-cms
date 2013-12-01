@@ -8,12 +8,9 @@
 </head>
 
 <body>
-角色菜单 :: 模块权限
+  menuTreeGrid
 <script>
 
-    $(function () {
-
-    })  //dom ready
 </script>
 </body>
 </html>

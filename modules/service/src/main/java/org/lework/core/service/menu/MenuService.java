@@ -2,16 +2,11 @@ package org.lework.core.service.menu;
 
 import org.lework.core.common.enumeration.Status;
 import org.lework.core.entity.menu.Menu;
-import org.lework.core.entity.organization.Organization;
 import org.lework.core.entity.role.Role;
-import org.lework.core.entity.user.User;
 import org.lework.runner.orm.support.SearchFilter;
-import org.lework.runner.web.easyui.KVResult;
 import org.lework.runner.web.easyui.TreeResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -84,6 +79,16 @@ public interface MenuService {
      */
     public Page<Menu> searchPageMenu(Pageable pageable, List<SearchFilter> filters);
 
+
+    /**
+     * 获取角色关联的菜单.
+     *
+     * @param pageable
+     * @param roleId   角色ID
+     * @param search   过滤条件:name
+     * @return
+     */
+    public Page<Menu> searchMenuPageByRoleId(Pageable pageable, String roleId, String search);
 
     /**
      * get easyui tree grid json data

@@ -180,9 +180,6 @@ public class MenuController extends AbstractController {
         callback(response, CallbackData.build("createRelateCallback", "创建关联&quot;" + roleName + " &quot;关联成功",
                 NotificationType.DEFAULT));
     }
-
-
-
     /**
      * 添加菜单到角色
      */

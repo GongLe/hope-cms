@@ -1,6 +1,6 @@
 package org.lework.core.dao;
 
-import org.lework.core.dao.user.UserDao2;
+import org.lework.core.dao.user.UserNativeDao;
 import org.lework.runner.spring.Profiles;
 import org.lework.runner.spring.SpringTransactionalTestCase;
 import org.junit.Assert;
@@ -22,19 +22,19 @@ import javax.persistence.EntityNotFoundException;
 public class JpaDaoTest extends SpringTransactionalTestCase {
     private static Logger logger = LoggerFactory.getLogger(JpaDaoTest.class);
     @Autowired
-    private UserDao2 userDao2;
+    private UserNativeDao userNativeDao;
 
     @Test
     public void jpqlDaoTest() throws Exception {
         //test get by id
-        Assert.assertTrue(userDao2.findOne("") == null);
-        userDao2.findAll();
-        userDao2.findPageUser(new PageRequest(0, 10));
-        userDao2.findByLoginName("");
-        userDao2.findByLoginName("admin");
+        Assert.assertTrue(userNativeDao.findOne("") == null);
+        userNativeDao.findAll();
+        userNativeDao.findPageUser(new PageRequest(0, 10));
+        userNativeDao.findByLoginName("");
+        userNativeDao.findByLoginName("admin");
     }
     @Test(expected = EntityNotFoundException.class)
     public void testLoad(){
-          userDao2.load("") ;
+          userNativeDao.load("") ;
     }
 }
