@@ -38,27 +38,50 @@
     $(function () {
         /**全局:刷新关联角色table**/
         window.refreshRelatedUserTable = function () {
-           setTimeout(function(){
-              // userTable.fnDraw();
-           },1000)
+               userTable.fnDraw();
         }
+        /**
+         *全局:解除角色与用户关联关系
+         * @param resp
+         */
+        window.removeRelatedCallback = function (resp) {
+            var json = resp.attributes;
+            lework.alert({content: json.message, type: json.type, width: '200px',
+                timer:1500,
+                onClose: null })
+        };
+
+        /**
+         *全局:创建角色与用户关联关系
+         * @param resp
+         */
+        window.createRelateCallback = function (resp) {
+            var json = resp.attributes;
+            lework.alert({content: json.message, type: json.type, width: '200px',
+                timer: 1500,
+                onClose: null})
+        };
 
         $('#memberBar .tooltips').tooltip({
             placement: 'bottom'
         });
+
         var roleId = '${role.id}';
         userTable.dataTable({
             'aoColumns': [
                 { 'mData': 'name', 'sTitle': '用户名' },
                 { 'mData': 'loginName', 'sTitle': '登录名'}  ,
                 { 'mData': 'status', 'sTitle': '状态'}  ,
-                { 'mData': 'orgName', 'sTitle': '组织名称'}  ,
+                { 'mData': 'orgName', 'sTitle': '部门'}  ,
                 { 'mData': 'id', 'sTitle': '操作'}
             ],
             'aoColumnDefs': [
                 {
                     'mRender': function (data, type, full) {
-                        return  full['typeName'];
+                        if (data == 'enable') {
+                            return   '<i class="icon-flag bigger-130 green" title="启用的"></i>';
+                        }
+                        return    '<i class="icon-flag bigger-130 red" title="禁用的"></i>';
                     },
                     'aTargets': [2 ]
                 },
@@ -79,7 +102,7 @@
                 },
                 { 'sClass': '', 'aTargets': [3 ] }
             ],
-            'sDom': 'rtip',
+            'sDom': 'rt<"table-footer clearfix"ip>',
             sPaginationType: 'two_button',
             'iDisplayLength': 5,
             'bStateSave': false, /**state saving **/
@@ -118,6 +141,10 @@
                     refreshRelatedUserTable();
                 }
             })
+        })
+        //刷新
+        $('#refresh-function').click(function () {
+            userTable.fnDraw();
         })
 
     })  //dom ready

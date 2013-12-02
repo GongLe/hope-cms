@@ -1,8 +1,10 @@
 package org.lework.core.service.role;
 
 import org.lework.core.common.enumeration.Status;
+import org.lework.core.entity.menu.Menu;
 import org.lework.core.entity.role.Role;
 import org.lework.core.entity.user.User;
+import org.lework.core.service.menu.Menu2RoleVO;
 import org.lework.runner.orm.support.SearchFilter;
 import org.lework.runner.web.vo.ChosenDTO;
 import org.springframework.data.domain.Page;
@@ -90,5 +92,29 @@ public interface RoleService {
      * @return
      */
     public Map<String, List<ChosenDTO>> getRoleGroupOptions();
+
+
+    /**
+     * 获取角色成员
+     * @param orgId 组织ID
+     * @param roleId 角色ID
+     * @return
+     */
+    public List<User2RoleVO> getRoleRelatedUser(String orgId, String  roleId);
+
+    /**
+     * 解除角色成员
+     *
+     * @param role  角色Entity
+     * @param userId 用户ID
+     */
+    public void removeRelatedUser(Role  role, String userId);
+    /**
+     * 添加角色成员
+     *
+     * @param role  角色Entity
+     * @param userId 用户ID
+     */
+    public void createRelateUser(Role  role, String userId);
 
 }

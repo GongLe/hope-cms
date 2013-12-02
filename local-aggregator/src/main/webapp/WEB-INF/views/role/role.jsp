@@ -26,9 +26,9 @@
     <div class="row-fluid">
         <div class="span12">
 
-            <div class="box  box-bordered-no ">
-                <div class="box-title no-margin-top no-padding-top" style="border-bottom:1px dashed #c5d0dc;">
-                    <h3 class="blue">角色管理</h3>
+            <div class="box box-bordered">
+                <div class="box-title no-margin-top"  >
+                    <h4 class="inner"><i class="icon-group"></i> 角色管理</h4>
                 </div>
                 <div class="box-content no-padding ">
 

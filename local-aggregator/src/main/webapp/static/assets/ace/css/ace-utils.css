@@ -343,7 +343,12 @@
 .width-48 {
     width: 48% !important
 }
-
+.font-12{
+    font-size: 12px;
+}
+.font-14{
+    font-size: 14px;
+}
 .no-radius {
     -webkit-border-radius: 0 !important;
     -moz-border-radius: 0 !important;

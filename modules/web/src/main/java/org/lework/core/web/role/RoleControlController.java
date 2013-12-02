@@ -11,6 +11,7 @@ import org.lework.core.service.account.AccountService;
 import org.lework.core.service.menu.MenuService;
 import org.lework.core.service.organization.OrganizationService;
 import org.lework.core.service.role.RoleService;
+import org.lework.runner.mapper.JsonMapper;
 import org.lework.runner.utils.Collections3;
 import org.lework.runner.utils.Strings;
 import org.lework.runner.web.AbstractController;
@@ -105,11 +106,11 @@ public class RoleControlController extends AbstractController {
     /**
      * 角色授权主页面 for ajax load
      */
-    @RequestMapping(value = "/shouquan", method = {RequestMethod.GET, RequestMethod.POST})
-    public String shouquan(@RequestParam(value = "roleId") String roleId, Model model) {
+    @RequestMapping(value = "/tabs", method = {RequestMethod.GET, RequestMethod.POST})
+    public String tabs(@RequestParam(value = "roleId") String roleId, Model model) {
 
         model.addAttribute("role", roleService.getRole(roleId));
-        return "role/roleControl-shouquan";
+        return "role/roleControl-tabs";
     }
 
     /**
@@ -125,47 +126,65 @@ public class RoleControlController extends AbstractController {
     @RequestMapping(value = "/addMember", method = {RequestMethod.GET })
     public String addMember(@RequestParam(value = "roleId") String roleId, Model model) {
         model.addAttribute("role", roleService.getRole(roleId));
+
         return "role/roleControl-addMember";
+    }
+    /**check user**/
+    @RequestMapping(value = "/addMember-checkUser", method = {RequestMethod.GET})
+    public String checkUser(@RequestParam(value = "roleId") String roleId,
+                            @RequestParam(value = "orgId") String orgId,
+                            Model model) {
+        model.addAttribute("roleId", roleId);
+        model.addAttribute("users", roleService.getRoleRelatedUser(orgId, roleId));
+        return "role/roleControl-addMember-checkUser";
     }
 
     /**
-     * 添加角色与用户关联关系
+     * 添加角色成员
      *
-     * @param roleId 角色ID
-     * @param orgId  组织ID
+     * @param roleId   角色ID
+     * @param userId   用户ID
      * @param response
      */
     @RequestMapping(value = "/createRelateUser", method = RequestMethod.POST)
     public void createRelateUser(@RequestParam(value = "roleId") String roleId,
-                                 @RequestParam(value = "orgId") String orgId,
+                                 @RequestParam(value = "userId") String userId,
+                                 @RequestParam(value = "userName", required = false) String userName,
                                  HttpServletResponse response) {
         Role role = roleService.getRole(roleId);
-        callback(response, CallbackData.build("createRelateCallback", "创建关联&quot;" + role.getName() + " &quot;关联成功",
+        roleService.createRelateUser(role, userId);
+        callback(response, CallbackData.build("createRelateCallback", "添加成员&quot;" + userName + " &quot;成功",
                 NotificationType.DEFAULT));
     }
 
     /**
-     * 解除角色与用户关联关系
+     * 解除角色成员
      *
-     * @param roleId 角色ID
-     * @param orgId  组织ID
+     * @param roleId   角色ID
+     * @param userId   用户ID
      * @param response
      */
     @RequestMapping(value = "/removeRelatedUser", method = RequestMethod.POST)
     public void removeRelatedUser(@RequestParam(value = "roleId") String roleId,
-                                  @RequestParam(value = "orgId") String orgId,
+                                  @RequestParam(value = "userId") String userId,
+                                  @RequestParam(value = "userName", required = false) String userName,
                                   HttpServletResponse response) {
+        Role role = roleService.getRole(roleId);
+        roleService.removeRelatedUser(role, userId);
+        callback(response, CallbackData.build("removeRelatedCallback", "解除成员&quot;" + userName + " &quot;成功",
+                NotificationType.DEFAULT));
     }
 
     /**
      * 角色模块权限 ajax load页面
      */
-    @RequestMapping(value = "/modules", method = {RequestMethod.GET, RequestMethod.POST})
-    public String modules(@RequestParam(value = "roleId") String roleId, Model model) {
-
-        return "role/roleControl-module";
+    @RequestMapping(value = "/menu", method = {RequestMethod.GET, RequestMethod.POST})
+    public String menu(@RequestParam(value = "roleId") String roleId, Model model) {
+        List<String > checkedIds = Collections3.extractToList( menuService.getRoleMenus(roleId),"id");
+        model.addAttribute("checkedIds", new JsonMapper().toJson(checkedIds));
+        return "role/roleControl-menu";
     }
-
+     //TODO save relate menu action
     /**
      * 根据角色组ID加载所属角色
      * return easyui tree json result
@@ -211,25 +230,6 @@ public class RoleControlController extends AbstractController {
                                                 @RequestParam(value = "search", required = false) String search) {
 
         Page<User> page = accountService.searchUserPageByRoleId(pageable, roleId, search);
-        return DataTableResult.build(page);
-    }
-
-    /**
-     * 获取角色关联的菜单(模块)
-     *
-     * @param pageable
-     * @param roleId   菜单ID
-     * @param search   用户名||登录名
-     * @return Datatables Json Data
-     */
-    @RequestMapping(value = "/geRoleRelatedMenuJson", method = {RequestMethod.GET, RequestMethod.POST})
-    public
-    @ResponseBody
-    DataTableResult<Menu> geRoleRelatedMenuJson(@PageableDefault(page = 0, size = 15) Pageable pageable,
-                                                @RequestParam(value = "roleId") String roleId,
-                                                @RequestParam(value = "search", required = false) String search) {
-
-        Page<Menu> page = menuService.searchMenuPageByRoleId(pageable, roleId, search);
         return DataTableResult.build(page);
     }
 

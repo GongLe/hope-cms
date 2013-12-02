@@ -68,11 +68,13 @@ th .lbl:only-child,td .lbl:only-child {
     margin-top:6px
 }
 .table-footer{
- /*   background-color: #f2f2f2;*/
-    padding:5px 15px;
+    padding:5px 0;
+    margin-top:5px;
+
 /*    border: 1px solid #e6e6e6;
     border-width: 1px 0;
     border-top: 1px solid #e4e9ee*/
+
 }
 .dataTables_length {
     margin-left:8px
@@ -313,34 +315,66 @@ span.ColVis_radio {
     margin-top:10px;
 }
 .dataTables_wrapper .dataTables_paginate > a {
-    background: none repeat scroll 0 0 #EEEEEE;
-    color: #333333;
-    cursor: pointer;
-    margin-right:3px;
-    padding: 5px 8px;
+    height: 18px;
+    padding: 3px 10px;
+    border: 1px solid #ccc;
+    margin-left: 2px;
+    line-height: 20px;
+    font-size: 14px;
+    overflow: hidden;
+/*    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;*/
+    color: #005aa0;
+    background:#fff;
+
+}
+.dataTables_wrapper .dataTables_paginate > a.paginate_button_disabled ,
+.dataTables_wrapper .dataTables_paginate > a.paginate_disabled_previous,
+.dataTables_wrapper .dataTables_paginate > a.paginate_disabled_next
+{
+   color: #ccc;
+    background:#fff;
+    cursor: default;
+}
+.dataTables_wrapper .dataTables_paginate > a.paginate_button_disabled:hover,
+.dataTables_wrapper .dataTables_paginate > a.paginate_disabled_previous:hover,
+.dataTables_wrapper .dataTables_paginate > a.paginate_disabled_next:hover{
     text-decoration: none;
-}
-.dataTables_wrapper .dataTables_paginate > a.paginate_button_disabled {
-    color: #999999;
-}
-.dataTables_wrapper .dataTables_paginate > a.paginate_button_disabled:hover {
-    background: none repeat scroll 0 0 #EEEEEE;
+    color: #ccc;
+    background:#fff;
     cursor: default;
 }
 .dataTables_wrapper .dataTables_paginate > a:hover {
-    background: none repeat scroll 0 0 #DDDDDD;
+    background: #005aa0;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
 }
 .dataTables_wrapper .dataTables_paginate > span > a {
-    background: none repeat scroll 0 0 #EEEEEE;
-    color: #333333;
+    height: 18px;
+    padding: 3px 10px;
+    border: 1px solid #ccc;
+    margin-left: 2px;
+    line-height: 20px;
+    font-size: 14px;
+    overflow: hidden;
+/*    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;*/
+    color: #005aa0;
+    background:#fff;
     cursor: pointer;
-    margin-right:3px;
-    padding: 5px 8px;
-    text-decoration: none;
+}
+.dataTables_wrapper .dataTables_paginate > span > a:hover {
+    background: #005aa0;
+    color: #fff;
 }
 .dataTables_wrapper .dataTables_paginate > span > a.paginate_active {
-    background: none repeat scroll 0 0 #368EE0;
-    color: #FFFFFF;
+    color: #fff;
+    font-weight: 700;
+    background: #146aa0;
+    cursor: default;
 }
 .dataTables_scroll {
     clear: both;

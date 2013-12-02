@@ -9,17 +9,14 @@
         .box-title {
             border-bottom: 1px dashed #c5d0dc !important;
         }
-
         #memberContainer .west {
             width: 28%;
             min-height: 300px;
             border-right: 1px dashed #c5d0dc;
         }
-
         #memberContainer  .west h6 {
             margin: 5px 10px;
         }
-
         #memberContainer  .middle {
             width: 70%;
             min-height: 300px;
@@ -27,18 +24,16 @@
             border-right: none;
             overflow: auto;
         }
-
         #memberContainer  .middle h6 {
             margin: 5px 10px;
         }
     </style>
 </head>
-
 <body>
  <div class="modal-content" >
      <form  method="post" id="inputForm" name="inputForm"
             class="no-margin form-horizontal offset-30 error-inline" >
-         <div class="modal-header" style="padding:1px 15px">
+         <div class="modal-header" style="padding:5px 15px 0 5px">
              <small class="grey">
                  添加用户到角色
              </small>
@@ -54,23 +49,13 @@
                          <div class="box-content no-padding " id="memberContainer">
 
                              <div class="pull-left west" >
-                                 <h6  class="smaller lighter blue">组织机构</h6>
+                                 <h6  class="smaller lighter blue">部门</h6>
                                  <ul id="orgTree" style="padding:5px 10px 0 5px;" ></ul>
                              </div>
                              <div class="pull-left middle"  >
                                  <h6  class="smaller lighter blue text-left">成员</h6>
-                                 <div id="relatedUserContent">
-
-                                     <div class="checkbuttonNo  panelcheck"  >
-                                         <div class="checktext"> <i class="icon-user blue"></i>&nbsp;&nbsp;userName
-                                         </div>
-                                         <div class="triangleNo"></div>
-                                     </div>
-                                     <div class="checkbuttonNo  panelcheck"  >
-                                         <div class="checktext"> <i class="icon-user red"></i>&nbsp;&nbsp;userName
-                                         </div>
-                                         <div class="triangleNo"></div>
-                                     </div>
+                                 <div id="userItems">
+                                    加载中...
                                  </div>
                              </div>
                          </div>
@@ -88,8 +73,9 @@
      </form>
  </div>
 <script>
-    var $orgTree =  $('#orgTree','#inputForm') ;
-    $(function(){
+    //组织结构树
+    var $orgTree = $('#orgTree', '#inputForm');
+    $(function () {
         var loadOrgTree = function () {
             $orgTree.tree({
                 url: 'organization/getTree',
@@ -100,14 +86,25 @@
                     var root = $orgTree.tree('getRoot');
                     $orgTree.tree('select', root.target);
                 },
-                onSelect : function (node) {
-
+                onSelect: function (node) {
+                    loadCheckUserItems(node.id, '${role.id}');
                 }
             });
         }
+
         using(['tree'], function () {
             loadOrgTree();
         }) //using
+
+        //对应的User选项列表
+        function loadCheckUserItems(orgId, roleId) {
+            $('#userItems').load('roleControl/addMember-checkUser?' + $.param({
+                '$SiteMesh': false,
+                _d: lework.time(),
+                roleId: roleId,
+                orgId: orgId
+            }));
+        }
     });
 </script>
 </body>

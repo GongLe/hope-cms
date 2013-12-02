@@ -55,7 +55,7 @@
                           </div>
                           <div class="pull-left middle"  >
                               <h6  class="smaller lighter blue text-left">角色</h6>
-                              <div id="guanLianRoleContent"></div>
+                              <div id="guanLianRoleContent">加载中...</div>
                           </div>
                       </div>
                   </div>
@@ -85,7 +85,7 @@
                     $orgTree.tree('select', root.target);
                 },
                 onSelect : function (node) {
-                    loadRelatedRole(node.id,'${menu.id}')
+                    loadCheckRoleItems(node.id,'${menu.id}')
                 }
             });
         }
@@ -95,7 +95,7 @@
          * @param roleGroupId
          * @param menuId
          */
-        function loadRelatedRole(roleGroupId, menuId) {
+        function loadCheckRoleItems(roleGroupId, menuId) {
             $('#guanLianRoleContent').load('menu/relatedRole?$SiteMesh=false&' + $.param({
                 _d: lework.time(),
                 roleGroupId: roleGroupId,

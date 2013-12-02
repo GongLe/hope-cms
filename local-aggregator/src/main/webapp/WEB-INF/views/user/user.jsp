@@ -161,7 +161,7 @@
                 //   { 'bVisible': false,  'aTargets': [ 1 ] },
                 { 'sClass': 'center', 'aTargets': [3] }
             ],
-            'sDom' : 'rtlip',
+            'sDom': 'rt<"table-footer clearfix"ip>',
             'bStateSave': false  , /**state saving **/
             'bProcessing': true ,
             'bServerSide': true,

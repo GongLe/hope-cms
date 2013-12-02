@@ -170,6 +170,11 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    public List<Menu> getRoleMenus(String roleId) {
+        return menuDao.findRoleMenus(roleId);
+    }
+
+    @Override
     public void saveMenu(Menu entity) {
         Integer curSortNum;
         if (entity.isNew()) { //新增操作,默认序号为{同级节点最大值}+1
@@ -384,7 +389,7 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public List<Menu2RoleVO> relatedRoleVO(String roleGroupId, String menuId) {
+    public List<Menu2RoleVO> getMenuRelatedRole(String roleGroupId, String menuId) {
         List<Menu2RoleVO> ret = new ArrayList<Menu2RoleVO>() ;
         Menu2RoleVO temp ;
         //菜单关联的角色

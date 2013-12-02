@@ -8,11 +8,14 @@ import org.lework.core.common.enumeration.Status;
 import org.lework.core.dao.organization.OrganizationDao;
 import org.lework.core.dao.role.RoleDao;
 import org.lework.core.dao.role.RoleNativeDao;
+import org.lework.core.dao.user.UserDao;
 import org.lework.core.entity.menu.Menu;
 import org.lework.core.entity.organization.Organization;
 import org.lework.core.entity.role.Role;
 import org.lework.core.entity.user.User;
+import org.lework.core.service.menu.Menu2RoleVO;
 import org.lework.core.service.role.RoleService;
+import org.lework.core.service.role.User2RoleVO;
 import org.lework.runner.orm.support.SearchFilter;
 import org.lework.runner.orm.support.Specifications;
 import org.lework.runner.utils.Collections3;
@@ -46,6 +49,7 @@ public class RoleServiceImpl implements RoleService {
 
     private RoleDao roleDao;
     private RoleNativeDao roleNativeDao;
+    private UserDao userDao ;
     private OrganizationDao organizationDao;
     @Autowired
     public void setRoleNativeDao(RoleNativeDao roleNativeDao) {
@@ -55,6 +59,10 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     public void setOrganizationDao(OrganizationDao organizationDao) {
         this.organizationDao = organizationDao;
+    }
+    @Autowired
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Autowired
@@ -171,6 +179,12 @@ public class RoleServiceImpl implements RoleService {
 
     }
 
+    /**
+     * query chosen group option DTO
+     * @param selectedList 已选择的节点集合
+     * @param ignoreEmpty  是否隐藏空角色组
+     * @return
+     */
     @Override
     public Map<String, List<ChosenDTO>> getRoleGroupOptions(List<Role> selectedList, boolean ignoreEmpty) {
         Map<String, List<ChosenDTO>> ret = Maps.newHashMap();
@@ -195,10 +209,48 @@ public class RoleServiceImpl implements RoleService {
         }
         return ret;
     }
-
     @Override
     public Map<String, List<ChosenDTO>> getRoleGroupOptions() {
         return getRoleGroupOptions(null, false);
     }
+    @Override
+    public void createRelateUser(Role role, String userId) {
+        User user = userDao.findOne(userId);
+        user.getRoles().add(role);
+        userDao.save(user);
+    }
 
+    @Override
+    public void removeRelatedUser(Role role, String userId) {
+        User user = userDao.findOne(userId);
+        user.getRoles().remove(role);
+        userDao.save(user);
+    }
+
+    /**
+     * 获取角色成员
+     *
+     * @param orgId  组织ID
+     * @param roleId 角色ID
+     * @return
+     */
+    @Override
+    public List<User2RoleVO> getRoleRelatedUser(String orgId, String roleId) {
+        List<User2RoleVO> ret = new ArrayList<User2RoleVO>();
+        User2RoleVO temp;
+        //当前组织下的人员
+        List<User> orgUsers = userDao.findOrgRelatedUsers(orgId);
+        //当前角色关联的用户
+        List<User> roleUsers = userDao.findRoleRelatedUsers(roleId);
+        //转换成VO
+        if (Collections3.isNotEmpty(orgUsers)) {
+            for (User u : orgUsers) {
+                temp = User2RoleVO.convert(u);
+                //是否已关联
+                temp.setSelected(Collections3.contain(roleUsers, u));
+                ret.add(temp);
+            }
+        }
+        return ret;
+    }
 }

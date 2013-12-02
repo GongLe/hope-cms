@@ -730,7 +730,7 @@
     background: #2C90CA;
 }
 
-.box.box-color .box-title h3 {
+.box.box-color .box-title .inner {
     color: #fff
 }
 
@@ -805,11 +805,11 @@
 }
 
 .box.box-bordered .box-title {
-    border: 2px solid #ddd
+    border: 1px solid #ddd
 }
 
 .box.box-bordered .box-content {
-    border: 2px solid #ddd;
+    border: 1px solid #ddd;
     border-top: 0
 }
 
@@ -826,7 +826,7 @@
     clear: both
 }
 
-.box .box-title h3 {
+.box .box-title .inner {
     float: left;
     margin: 3px 0 3px 0;
     line-height: 24px;
@@ -835,7 +835,7 @@
     font-size: 20px
 }
 
-.box .box-title h3 i {
+.box .box-title .inner i {
     margin: 0 10px 0 5px
 }
 

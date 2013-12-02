@@ -52,7 +52,8 @@
                             </button>
 
                         </div>
-                        <button class="btn btn-danger no-border tooltips" id="addToRole-function" style="display:none;" data-original-title="添加菜单到角色">
+                        <button class="btn btn-danger no-border tooltips " id="addToRole-function" style="display:none;font-size:12px"
+                                data-original-title="添加菜单到角色">
                             <i class="icon-group"></i> 添加菜单到角色
                         </button>
                     </div><!--/.table-funtion-bar-->

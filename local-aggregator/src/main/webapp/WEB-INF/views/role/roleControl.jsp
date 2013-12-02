@@ -13,7 +13,7 @@
             width:20%;min-height:550px;border-right:1px dashed  #c5d0dc;
             overflow: auto;}
         .middle h5{margin:5px 10px;}
-        .east{width:60%; padding:0 0 5px 10px;}
+        .east{width:63%; padding:0 0 5px 10px;}
         .east h5{margin:5px 10px;}
     </style>
 </head>
@@ -37,9 +37,9 @@
     <div class="row-fluid">
         <div class="span12">
 
-            <div class="box  box-bordered-no ">
-                <div class="box-title no-margin-top no-padding-top" >
-                    <h3 class="blue">角色权限控制</h3>
+            <div class="box  box-bordered">
+                <div class="box-title no-margin-top" >
+                    <h4  ><i class="icon-group"></i> 角色权限控制</h4>
                 </div>
                 <div class="box-content no-padding ">
 
@@ -104,21 +104,21 @@
          */
         var loadRoleTree = function (groupId) {
             $roleTree.tree({
-                url: 'roleControl/getRoleTreeByGroupId?1=1&' + $.param({'groupId': groupId }),
+                url: 'roleControl/getRoleTreeByGroupId?' + $.param({'groupId': groupId }),
                 method: 'get',
                 checkbox: false,
                 onLoadSuccess: function (node, data) {
                     //默认选择根节点.
-                    var root =  $('#roleTree').tree('getRoot');
-                    if(root){
+                    var root = $('#roleTree').tree('getRoot');
+                    if (root) {
                         $('#alertNullRoleData').hide();
                         $('#roleTree').tree('select', root.target);
-                    }else{
+                    } else {
                         $('#alertNullRoleData').show();
                     }
                 },
                 onSelect: function (node) {
-                    loadShouQuan(node.id) ;
+                    loadShouQuan(node.id);
                 }
             });
         }
@@ -127,7 +127,7 @@
          * @param roleId
          */
         var loadShouQuan = function (roleId) {
-            $('#shouQuan').load('roleControl/shouquan?1=1&' + $.param({'roleId': roleId, '$SiteMesh': 'false' }));
+            $('#shouQuan').load('roleControl/tabs?' + $.param({'roleId': roleId, '$SiteMesh': 'false' }));
         }
 
         using(['tree'], function () {

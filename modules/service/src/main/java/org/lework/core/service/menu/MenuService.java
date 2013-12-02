@@ -52,6 +52,8 @@ public interface MenuService {
      */
     public List<Menu> getRoleMenus(Role role) ;
 
+    public List<Menu> getRoleMenus(String roleId) ;
+
     /**
      * 新增操作时,默认序号为{同级节点最大值}+1
      * @param entity
@@ -116,12 +118,12 @@ public interface MenuService {
     public void downSortNum(Menu entity);
 
     /**
-     * 菜单关联角色select VO
+     * 菜单关联角色VO
      * @param roleGroupId 角色组ID
      * @param menuId 菜单ID
      * @return
      */
-    public List<Menu2RoleVO> relatedRoleVO(String roleGroupId, String menuId);
+    public List<Menu2RoleVO> getMenuRelatedRole(String roleGroupId, String menuId);
 
     /**
      * 解除关联的角色.

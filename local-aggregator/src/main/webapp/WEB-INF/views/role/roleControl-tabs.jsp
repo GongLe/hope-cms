@@ -8,8 +8,13 @@
 </head>
 
 <body>
-<h5 style="margin:5px 10px;" class="header smaller lighter blue "> 角色授权-${role.name}(${role.code})</h5>
- <div class="tabbable" style="margin:15px 10px 5px 10px;">
+
+<div class="alert alert-info" style="margin:5px 0 0 0;">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>角色授权</strong> -${role.name}(${role.code})
+</div>
+
+ <div class="tabbable" style="margin:15px 10px 5px 10px;border:none;">
      <ul class="nav nav-tabs" id="shouquanTab">
          <li >
              <a data-toggle="tab" data-url="roleControl/member" href="#member">
@@ -18,18 +23,18 @@
          </li>
 
          <li>
-             <a data-toggle="tab" data-url="roleControl/modules" href="#module">
-                模块权限
+             <a data-toggle="tab" data-url="roleControl/menu" href="#menu">
+               菜单权限
              </a>
          </li>
 
      </ul>
 
-     <div class="tab-content">
+     <div class="tab-content" style="padding: 5px;">
          <!--角色成员-->
          <div id="member" class="tab-pane" style="min-height:430px;"> </div>
          <!--模块权限::菜单权限-->
-         <div id="module" class="tab-pane" style="min-height:430px;"></div>
+         <div id="menu" class="tab-pane" style="min-height:430px;"></div>
      </div>
  </div>
 <script>

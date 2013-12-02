@@ -193,12 +193,12 @@ public class MenuController extends AbstractController {
      * 菜单关联角色 ajax load 页面
      */
     @RequestMapping(value = "/relatedRole", method = RequestMethod.GET)
-    public String getMenuRelatedRole(@RequestParam(value = "menuId") String menuId,
+    public String checkRole(@RequestParam(value = "menuId") String menuId,
                                @RequestParam(value = "roleGroupId") String roleGroupId,Model model) {
         //菜单关联的角色
         //当前角色组的角色
         //转换成VO
-        model.addAttribute("roles",menuService.relatedRoleVO(roleGroupId, menuId)) ;
+        model.addAttribute("roles",menuService.getMenuRelatedRole(roleGroupId, menuId)) ;
         model.addAttribute("menuId",menuId) ;
         return "menu/menu-addToRole-relatedRole";
     }

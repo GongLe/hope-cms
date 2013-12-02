@@ -1,6 +1,7 @@
 package org.lework.core.service.menu;
 
 import org.lework.core.entity.role.Role;
+import org.lework.runner.mapper.BeanMapper;
 
 /**
  * 添加菜单到用户 VO
@@ -8,8 +9,11 @@ import org.lework.core.entity.role.Role;
  * Date: 13-11-24
  */
 public class Menu2RoleVO {
+    public Menu2RoleVO() {
+    }
+
     public Menu2RoleVO(Role role) {
-        this.id= role.getId();
+        this.id = role.getId();
         this.name = role.getName();
         this.code = role.getCode();
         this.status = role.getStatus();
@@ -17,6 +21,11 @@ public class Menu2RoleVO {
         this.groupName = role.getGroupName();
         this.description = role.getDescription();
         this.sortNum = role.getSortNum();
+
+    }
+
+    public static Menu2RoleVO convert(Role role) {
+        return BeanMapper.map(role, Menu2RoleVO.class);
     }
 
     private String id;
