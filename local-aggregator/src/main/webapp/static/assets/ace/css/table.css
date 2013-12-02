@@ -108,7 +108,7 @@ th .lbl:only-child,td .lbl:only-child {
 }
 .dataTables_wrapper input[type=text],.dataTables_wrapper select {
     margin-bottom:0!important;
-    margin:0 4px
+    margin:0 4px;
 }
 .dataTables_wrapper .row-fluid:first-child {
     padding:12px 0 4px;
