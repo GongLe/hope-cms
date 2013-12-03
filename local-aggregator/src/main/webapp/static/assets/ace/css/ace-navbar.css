@@ -21,7 +21,8 @@
     min-height:40px;
     position:relative;
     /*background:#438eb9  ;*/
-    background:#2C90CA  ;
+  /*  background:#2C90CA  ;*/
+    background: #0072C6;
     filter:none;
 }
 .navbar .navbar-text,.navbar .navbar-link {
@@ -84,6 +85,9 @@
 }
 .ace-nav>li.light-blue {
     background:#62a8d1
+}
+.ace-nav>li.ms-blue {
+    background:#0072C6;
 }
 .ace-nav>li.light-blue2 {
     background:#42a8e1

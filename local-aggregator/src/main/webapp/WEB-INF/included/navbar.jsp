@@ -4,10 +4,11 @@
     <div class="navbar-inner">
         <div class="container-fluid">
             <a href="#" class="brand">
-                <small><i class="icon-leaf"></i> lework</small>
+               <%-- <small>lework<span style="font-size: 12px;font-weight: normal;padding:0 0 0 5px;">0.5 beta</span> </small>--%>
+                <h3 style="margin: 0;padding: 0;line-height:20px;">lework<span style="font-size: 12px;font-weight: normal;padding:0 0 0 5px;">0.5 beta</span></h3>
             </a><!--/.brand-->
             <ul class="nav ace-nav pull-right ">
-                <li class="grey">
+       <%--         <li class="grey">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <i class="icon-tasks"></i>
                         <span class="badge badge-grey">4</span>
@@ -85,8 +86,8 @@
                         <i class="icon-envelope icon-animated-vertical"></i>
                         <span class="badge badge-success">0</span>
                     </a>
-                </li>
-                <li class="light-blue">
+                </li>--%>
+                <li class="ms-blue">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                         <img class="nav-user-photo" src="${ctx}/static/assets/images/user-img.jpg" alt="Jason's Photo">
                                                 <span class="user-info">

@@ -112,7 +112,8 @@
 		// override these in your code to change the default behavior and style
 		$.blockUI.defaults = {
 			// message displayed when blocking (use null for no message)
-			message:  '<div style="padding:5px;font-size:12px;">正在处理,请稍后..</div>',
+			//message:  '<div style="padding:5px 2px;font-size:12px;">正在处理...</div>',
+			message:  '<div class="loading-bar-150_14" style="padding:5px;"></div>',
 
 			title: null,		// title string; only used when theme == true
 			draggable: true,	// only used when theme == true (requires jquery-ui.js to be loaded)
@@ -130,8 +131,8 @@
 				left:		'45%',
 				textAlign:	'center',
 				color:		'#000',
-				border:		'1px solid #aaa',
-				backgroundColor:'#fff',
+				//border:		'1px solid #aaa',
+			//	backgroundColor:'#fff',
 				cursor:		'wait'
 			},
 
@@ -145,8 +146,8 @@
 			// styles for the overlay
 			overlayCSS:  {
 				backgroundColor:	'#fff',
-				opacity:			0.6,
-				cursor:				'wait'
+				opacity:			0.9,
+				cursor:				'progress'
 			},
 
 			// style to replace wait cursor before unblocking to correct issue

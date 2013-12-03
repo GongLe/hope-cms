@@ -8,16 +8,13 @@
 </head>
 
 <body>
-<div class="table-funtion-bar clear-both" style="margin:0 0 10px 0;" id="memberBar"  >
-    <div class="btn-group">
-        <button class="btn  no-border tooltips" id="refresh-function" data-original-title="刷新">
+<div class="table-funtion-bar clear-both" style="margin:0 0 10px 0;padding: 2px 10px 2px;" id="memberBar"  >
+    <div class="btn-group" style="padding-top:4px;">
+        <button class="btn btn-small  no-border tooltips" id="refresh-function" data-original-title="刷新">
             <i class="icon-refresh"></i>
         </button>
-        <button class="btn btn-error no-border tooltips" id="delete-function" style="display:none;" data-original-title="删除成员">
-            <i class="icon-trash"></i>
-        </button>
     </div>
-    <button class="btn btn-danger no-border tooltips" id="addMember-function" data-original-title="添加成员" >
+    <button class="btn btn-small btn-danger no-border tooltips" style="margin-top:4px;" id="addMember-function" data-original-title="添加成员" >
         <i class="icon-user"></i>添加成员
     </button>
     <div class="input-append no-margin-bottom pull-right">
@@ -31,7 +28,7 @@
     </div>
 </div> <!--/.table-funtion-bar-->
 <table id="roleRelatedUserTable"
-       class="table table-hover  table-nomargin table-bordered dataTable dataTable-nosort clear-both">
+       class="table table-hover  table-nomargin table-bordered dataTable dataTable-nosort clear-both"  >
 </table>
 <script>
     var userTable = $('#roleRelatedUserTable');
@@ -46,7 +43,7 @@
          */
         window.removeRelatedCallback = function (resp) {
             var json = resp.attributes;
-            lework.alert({content: json.message, type: json.type, width: '200px',
+            lework.alert({content: json.message, type: json.type ,
                 timer:1500,
                 onClose: null })
         };
@@ -57,7 +54,7 @@
          */
         window.createRelateCallback = function (resp) {
             var json = resp.attributes;
-            lework.alert({content: json.message, type: json.type, width: '200px',
+            lework.alert({content: json.message, type: json.type ,
                 timer: 1500,
                 onClose: null})
         };

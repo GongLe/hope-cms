@@ -48,6 +48,15 @@
     text-align: center;
 }
 
+.loading-bar-150_14 {
+    min-width: 150px;
+    background: url('../images/loading-bar-150x14.gif') no-repeat center 0;
+}
+
+.loading-bar-220x20 {
+    min-width: 220px;
+    background: url('../images/loadding-bar-220x20.gif') no-repeat center 0;
+}
 /**重写checkbox样式
 input[type="checkbox"] {
     height: 18px;

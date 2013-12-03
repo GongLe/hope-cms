@@ -109,7 +109,7 @@
          */
         window.removeRelatedCallback = function (resp) {
             var json = resp.attributes;
-            lework.alert({content: json.message, type: json.type, width: '200px',
+            lework.alert({content: json.message, type: json.type,
                 timer:3000,
                 onClose: null })
         };
@@ -120,7 +120,7 @@
          */
         window.createRelateCallback = function (resp) {
             var json = resp.attributes;
-            lework.alert({content: json.message, type: json.type, width: '200px',
+            lework.alert({content: json.message, type: json.type,
                 timer: 3000,
                 onClose: null})
         };

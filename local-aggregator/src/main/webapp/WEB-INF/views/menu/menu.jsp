@@ -94,7 +94,7 @@ $(function(){
     window.doSortNumCallback = function(resp){
         var json =  resp.attributes ;
         $.unblockUI();
-        lework.alert({content: json.message, type: json.type ,width:'200px'})
+        lework.alert({content: json.message, type: json.type  })
         $('#menuTreeGrid').treegrid('reload');
     }
 

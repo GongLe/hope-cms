@@ -43,7 +43,7 @@
                       <span class="add-on"><i class="icon-key"></i></span>
                       <input style="width: 245px;" type="password"  name="plainPassword" id="plainPassword"
                         <c:if test="${entity.isNew == true }">  value="123456" title="默认密码为123456" placeholder="输入密码" </c:if>
-                      <c:if test="${entity.isNew == false }"> placeholder="更新密码"</c:if>    >
+                      <c:if test="${entity.isNew == false }"> placeholder="新密码"</c:if>    >
                   </div>
               </div>
           </div>

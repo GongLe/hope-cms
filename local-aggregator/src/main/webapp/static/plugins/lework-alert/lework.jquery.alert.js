@@ -35,20 +35,29 @@ var lework = (function ($, lework) {
             $container = $('#lework-PopupPanel')
         }
     };
+
+    /**渲染html,附件事件
+     * <pre>
+     *     <div class="lework-alert" id="1386050958197">
+     *         <div class="lework-alert-inner">hello</div>
+     *         <button type="button" class="close" title="关闭">×</button>
+     *         </div>
+     *     </pre>
+     */
     Alert.prototype.create = function () {
         var that = this;
         //create alert body
         this.$alert = $('<div />')
-            .css('width', this.settings.width)
+            /*.css('width', this.settings.width)*/
             .addClass('lework-alert' + (this.settings.type ? ' lework-alert-' + this.settings.type : ''))
             .prop({'id': (this.settings.id ? this.settings.id : (new Date()).getTime()) })
-            .on('close.alert',function () {
+            .on('close.alert', function () {
                 that.hide();
                 if ($.isFunction(that.settings.onClose)) {
                     that.settings.onClose.apply(this);
                 }
                 that.destroy();
-            }).html(that.settings.content || '&nbsp;&nbsp;')
+            }) .html(that.settings.content || '&nbsp;&nbsp;')
         this.$alert.append(' <button type="button" class="close" title="关闭" >×</button> ')
         //关闭按钮
         this.$alert.on('click', '.close', function (e) {
@@ -56,6 +65,7 @@ var lework = (function ($, lework) {
             $(this).parent().trigger('close.alert');
         })
         that.$alert.appendTo($container);
+        $('<div class="clearfix" />').appendTo($container);
     };
     Alert.prototype.autoColse = function () {
         // debugger;

@@ -103,7 +103,7 @@
             var json =  resp.attributes ;
             $.colorbox.close();
             oTable.fnDraw();
-            lework.alert({content:json.message ,type: json.type ,width:'250px'})
+            lework.alert({content:json.message ,type: json.type })
         };
       //搜索表单
       $('#searchForm').submit(function(event){

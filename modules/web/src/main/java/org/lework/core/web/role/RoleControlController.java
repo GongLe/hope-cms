@@ -182,9 +182,36 @@ public class RoleControlController extends AbstractController {
     public String menu(@RequestParam(value = "roleId") String roleId, Model model) {
         List<String > checkedIds = Collections3.extractToList( menuService.getRoleMenus(roleId),"id");
         model.addAttribute("checkedIds", new JsonMapper().toJson(checkedIds));
+        model.addAttribute("roleId",roleId );
         return "role/roleControl-menu";
     }
      //TODO save relate menu action
+
+    /**
+     * 授权角色菜单给角色.
+     *
+     * @param roleId         角色ID
+     * @param checkedMenuIds 选中的菜单IDs
+     * @param response
+     */
+    @RequestMapping(value = "/saveRelatedMenu", method = RequestMethod.POST)
+    public void saveRelatedMenu(@RequestParam(value = "roleId") String roleId,
+                                @RequestParam(value = "checkedMenuId", required = false) List<String> checkedMenuIds,
+                                HttpServletResponse response) {
+        Role role = roleService.getRole(roleId);
+        //关联菜单
+        if (Collections3.isNotEmpty(checkedMenuIds)) {
+            List<Menu> menus = menuService.getMenusByIds(checkedMenuIds);
+            role.getMenus().clear();
+            role.getMenus().addAll(menus);
+        } else {
+            role.setMenus(null);
+        }
+        roleService.saveRole(role);
+        callback(response, CallbackData.build("saveRelatedMenuCallback", "授权&quot;\"" + role.getName() + "\" &quot;菜单成功",
+                NotificationType.DEFAULT));
+    }
+
     /**
      * 根据角色组ID加载所属角色
      * return easyui tree json result

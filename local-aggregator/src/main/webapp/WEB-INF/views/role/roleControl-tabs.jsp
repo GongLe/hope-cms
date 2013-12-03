@@ -30,7 +30,7 @@
 
      </ul>
 
-     <div class="tab-content" style="padding: 5px;">
+     <div class="tab-content" style="padding: 5px;border: none;">
          <!--角色成员-->
          <div id="member" class="tab-pane" style="min-height:430px;"> </div>
          <!--模块权限::菜单权限-->
@@ -40,16 +40,16 @@
 <script>
 
     $(function () {
-        var roleId= '${role.id}' ;
-        $('a[data-toggle="tab"]','#shouquanTab').on('shown', function (e) {
-             //ajax load tab content
-            $('#shouQuan').block({message:'加载中..'});
-            $($(this).attr('href') ).load($(this).data('url'),{'roleId':roleId,'$SiteMesh':'false'},function(){
+        var roleId = '${role.id}';
+        $('a[data-toggle="tab"]', '#shouquanTab').on('shown', function (e) {
+            //ajax load tab content
+            $('#shouQuan').block( );
+            $($(this).attr('href')).load($(this).data('url'), {'roleId': roleId, '$SiteMesh': 'false'}, function () {
                 $('#shouQuan').unblock();
-            }) ;//load
+            });//load
         })
         //load first tab
-        $('a[data-toggle="tab"]:first','#shouquanTab').tab('show')  ;
+        $('a[data-toggle="tab"]:first', '#shouquanTab').tab('show');
 
     })  //dom ready
 </script>

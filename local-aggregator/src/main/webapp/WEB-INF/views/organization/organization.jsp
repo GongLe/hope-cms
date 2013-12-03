@@ -66,20 +66,20 @@
       window.actionCallback = function (resp) {
           var json = resp.attributes;
           $.colorbox.close();
-          lework.alert({content: json.message, type: json.type, width: '200px'})
+          lework.alert({content: json.message, type: json.type })
           $('#orgTreeGrid').treegrid('reload');
       };
 
       window.deleteCallback = function (resp) {
           var json = resp.attributes;
-          lework.alert({content: json.message, type: json.type, width: '200px'})
+          lework.alert({content: json.message, type: json.type })
           $('#orgTreeGrid').treegrid('reload');
       };
       //调整序号iframe回调函数
       window.doSortNumCallback = function (resp) {
           var json = resp.attributes;
           $.unblockUI();
-          lework.alert({content: json.message, type: json.type, width: '200px' })
+          lework.alert({content: json.message, type: json.type })
           $('#orgTreeGrid').treegrid('reload');
       }
 

@@ -106,7 +106,7 @@
         window.deleteCallback = function (resp) {
             $.colorbox.close();
             oTable.fnDraw();
-            lework.alert({content:resp.attributes.message ,type: resp.attributes.type ,width:'250px'})
+            lework.alert({content:resp.attributes.message ,type: resp.attributes.type  })
         };
         //自定义搜索表单
         $('#searchForm').submit(function(event){
