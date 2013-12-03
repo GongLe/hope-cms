@@ -10,14 +10,14 @@
     <c:forEach items="${users}" var="user">
         <c:if test="${user.selected == true}">
             <div class="checkbuttonOk  panelcheck" data-role-id="${roleId}" data-user-id="${user.id}"  data-user-name="${user.name}" >
-                <div data-id="${user.id}" class="checktext"> <i class="icon-user blue"></i>&nbsp;&nbsp;${user.name}
+                <div data-id="${user.id}" class="checktext" title="${user.name}"> <i class="icon-user blue"></i>&nbsp;&nbsp;${user.name}
                 </div>
                 <div class="triangleOk"></div>
             </div>
         </c:if>
         <c:if test="${user.selected == false}">
             <div class="checkbuttonNo  panelcheck" data-role-id="${roleId}" data-user-id="${user.id}"  data-user-name="${user.name}">
-                <div data-id="${user.id}" class="checktext"> <i class="icon-user blue"></i>&nbsp;&nbsp;${user.name}
+                <div data-id="${user.id}" class="checktext" title="${user.name}"> <i class="icon-user blue"></i>&nbsp;&nbsp;${user.name}
                 </div>
                 <div class="triangleNo"></div>
             </div>

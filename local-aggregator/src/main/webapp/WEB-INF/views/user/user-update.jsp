@@ -21,6 +21,7 @@
     <div class="row-fluid ">
       <div class="span12" >
         <!--隐藏域-->
+         <input type="hidden" name="$SiteMesh" value="false">
         <form:hidden path="entity.id" />
           <div class="control-group">
               <label class="control-label " for="name">姓名</label>
@@ -73,13 +74,19 @@
                 </select>
               </div>
           </div>
-
+          <div class="control-group">
+              <label class="control-label " for="email">手机号码</label>
+              <div class="controls">
+                  <input  class="input-xlarge" type="text" id="mobile" name="mobile"   value="${entity.mobile}" placeholder="输入手机号码l">
+              </div>
+          </div>
           <div class="control-group">
               <label class="control-label " for="email">Email</label>
               <div class="controls">
                   <input  class="input-xlarge" type="text" id="email" name="email"   value="${entity.email}" placeholder="输入email">
               </div>
           </div>
+
           <div class="control-group">
               <label class="control-label" for="status">状态</label>
               <div class="controls">
@@ -158,8 +165,11 @@
                     }
                 }
             },
+            mobile:{
+                isMobile:true
+            } ,
             plainPassword :{
-                maxlength: 16
+                maxlength: 32
             },
             status :{
                 required:true

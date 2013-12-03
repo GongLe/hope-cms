@@ -239,7 +239,6 @@ $(function(){
             onClosed:function(){
                 //关闭弹出层后,刷新菜单关联的角色 @see menu-east.jsp @178 line
                 refreshRelatedRoleTable();
-                lework.log('关闭弹出层后,刷新菜单关联的用户');
             }
         })
     });

@@ -26,9 +26,10 @@
     <div class="row-fluid">
         <div class="span12">
 
-            <div class="box box-bordered-no ">
-                <div class="box-title no-margin-top no-padding-top" style="border-bottom:1px dashed #c5d0dc;">
-                    <h3 class="blue">用户管理</h3>
+            <div class="box box-bordered">
+                <div class="box-title no-margin-top" style="border-bottom:1px dashed #c5d0dc;">
+                   <%-- <h3 class="blue">用户管理</h3>--%>
+                    <h4 class="inner"><i class="icon-user"></i>用户管理</h4>
                 </div>
                 <div class="box-content no-padding ">
                     <div class="pull-left" style="width:18%;min-height:520px;border-right:1px dashed  #c5d0dc;">
@@ -62,10 +63,10 @@
                                 <button class="btn no-border tooltips" id="delete-function" style="display:none;" data-original-title="删除">
                                     <i class="icon-trash"></i>
                                 </button>
-                                <button class="btn btn-danger no-border tooltips" id="role-function"  data-original-title="分配角色">
+                             <%--   <button class="btn btn-danger no-border tooltips" id="role-function"  data-original-title="分配角色">
                                     <i class="icon-group"></i>
-                                </button>
-                                <button class="btn btn-danger no-border tooltips" id="resetPwd-function" style="display:none;"   data-original-title="重置密码">
+                                </button>--%>
+                                <button class="btn btn-danger no-border tooltips" id="resetPassword-function" style="display:none;"   data-original-title="重置密码">
                                     <i class="icon-key"></i>
                                 </button>
                             </div>
@@ -103,10 +104,15 @@
             oTable.fnDraw();
             lework.alert({content: resp.attributes.message, type: resp.attributes.type })
         };
+        //重置密码回调
+        window.resetPasswordCallback = function (resp) {
+            $.colorbox.close();
+            lework.alert({content: resp.attributes.message, type: resp.attributes.type })
+        };
         window.deleteCallback = function (resp) {
             $.colorbox.close();
             oTable.fnDraw();
-            lework.alert({content:resp.attributes.message ,type: resp.attributes.type  })
+            lework.alert({content:resp.attributes.message ,type: resp.attributes.type ,width:'250px'})
         };
         //自定义搜索表单
         $('#searchForm').submit(function(event){
@@ -203,7 +209,21 @@
             }
         });
 
-        //新建
+        //重置密码
+        $('#resetPassword-function').click(function () {
+            var ids = [];
+            oTable.find('tr.selected .confirmDelete').each(function () {
+                ids.push($(this).data('id'))
+            });
+            $(this).colorbox({
+                href: 'user/resetPassword?' + $.param({'$SiteMesh': false, 'userIds': ids.join(',')}),
+                adjustY: '40%',
+                width: '700px',
+                overlayClose: false,
+                scrolling: false
+            })
+        });
+         //新建
         $('#create-function').click(function () {
             $(this).colorbox({
                 href :'user/update?$SiteMesh=false' ,
@@ -257,10 +277,10 @@
         function checkFunbarStatus(hasSelected) {
             if (hasSelected == true) {
                 $('#checkIcon').removeClass('icon-check-empty').addClass('icon-check')
-                $('#delete-function,#resetPwd-function').show();
+                $('#delete-function,#resetPassword-function').show();
             } else {
                 $('#checkIcon').removeClass('icon-check').addClass('icon-check-empty');
-                $('#delete-function,#resetPwd-function').hide();
+                $('#delete-function,#resetPassword-function').hide();
             }
         }
 
@@ -276,14 +296,11 @@
 <!--table action template-->
 <script id="tableActionTpl" type="text/x-jsrender">
     <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-        <a class="light-blue tooltips filterSelected" href="javascript:;" data-original-title="配置角色|菜单|权限"  >
-            <i class="icon-cog bigger-140 filterSelected"></i>
-        </a>
         <a class="green tooltips view"  href="user/view?id={{:id}}&$SiteMesh=false"   data-original-title="查看"
            onclick="$(this).colorbox({adjustY:'40%',width:'900px',overlayClose:false,scrolling:true,scrolling:false });" >
             <i class="icon-zoom-in bigger-140 filterSelected"></i>
         </a>
-        <a class="blue tooltips update" href="user/update?id={{:id}}&$SiteMesh=false" data-original-title="编辑基本信息"
+        <a class="blue tooltips update" href="user/update?id={{:id}}&$SiteMesh=false" data-original-title="编辑"
            onclick="$(this).colorbox({ adjustY:'40%',width:'700px',overlayClose:false,scrolling:false });" >
             <i class="icon-edit bigger-140 filterSelected"></i>
         </a>

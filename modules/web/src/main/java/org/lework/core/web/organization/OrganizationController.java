@@ -161,7 +161,7 @@ public class OrganizationController extends AbstractController {
     @RequestMapping(value = "/upSortNum", method = RequestMethod.POST)
     public void upSortNum(@Valid @ModelAttribute("entity") Organization entity, HttpServletResponse response) {
         organizationService.upSortNum(entity);
-        callback(response, CallbackData.build("doSortNumCallback", "操作提示", "组织机构&quot;" + entity.getName() + "&quot;序号上移成功", NotificationType.SUCCESS));
+        callback(response, CallbackData.build("doSortNumCallback", "组织机构&quot;" + entity.getName() + "&quot;序号上移成功", NotificationType.DEFAULT));
     }
 
     /**
@@ -170,7 +170,7 @@ public class OrganizationController extends AbstractController {
     @RequestMapping(value = "/downSortNum", method = RequestMethod.POST)
     public void downSortNum(@Valid @ModelAttribute("entity") Organization entity, HttpServletResponse response) {
         organizationService.downSortNum(entity);
-        callback(response, CallbackData.build("doSortNumCallback", "操作提示", "组织机构&quot;" + entity.getName() + "&quot;序号下移成功", NotificationType.SUCCESS));
+        callback(response, CallbackData.build("doSortNumCallback", "组织机构&quot;" + entity.getName() + "&quot;序号下移成功", NotificationType.DEFAULT));
     }
 
 

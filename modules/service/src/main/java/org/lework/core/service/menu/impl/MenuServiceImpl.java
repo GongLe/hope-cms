@@ -393,9 +393,15 @@ public class MenuServiceImpl implements MenuService {
         List<Menu2RoleVO> ret = new ArrayList<Menu2RoleVO>() ;
         Menu2RoleVO temp ;
         //菜单关联的角色
-        List<Role> selecedRoles =  roleDao.findMenuRelatedRoles(menuId) ;
+        List<Role> selecedRoles = roleDao.findMenuRelatedRoles(menuId);
         //当前角色组的角色
-        List<Role> groupRoles =   roleDao.findRolesByGroupId(roleGroupId);
+        List<Role> groupRoles;
+        if (Strings.isEmpty(roleGroupId)) {
+            groupRoles = (List) roleDao.findAllRoles();
+        } else {
+            groupRoles = roleDao.findRolesByGroupId(roleGroupId);
+        }
+
         //转换成VO
         if(Collections3.isNotEmpty(groupRoles)){
             for(Role r : groupRoles){

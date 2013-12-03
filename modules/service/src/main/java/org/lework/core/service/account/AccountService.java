@@ -37,6 +37,7 @@ public interface AccountService {
      */
     public User getUserByEmail(String email);
 
+    public  void resetUserPassword(List<User> users,String plainPassword);
     /**
      * 新建用户
      */

@@ -194,7 +194,7 @@ public class MenuController extends AbstractController {
      */
     @RequestMapping(value = "/relatedRole", method = RequestMethod.GET)
     public String checkRole(@RequestParam(value = "menuId") String menuId,
-                               @RequestParam(value = "roleGroupId") String roleGroupId,Model model) {
+                               @RequestParam(value = "roleGroupId",required = false) String roleGroupId,Model model) {
         //菜单关联的角色
         //当前角色组的角色
         //转换成VO

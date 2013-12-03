@@ -14,6 +14,9 @@ public class AppConfigConstant {
         LOADER = new PropertiesLoader("appConfigConstant.properties");
         runtimeEnv = RuntimeEnv.valueOf(LOADER.getProperty(Keys.runtimeEnv));
     }
+    public static String  get(String key){
+       return  LOADER.getProperty(key);
+    }
 
     /**
      * 属性会在Spring启动的时候根据appConfig.properties计算出来。
@@ -45,6 +48,5 @@ public class AppConfigConstant {
     private static class Keys {
 
         public static final String runtimeEnv = "runtimeEnv";
-
     }
 }

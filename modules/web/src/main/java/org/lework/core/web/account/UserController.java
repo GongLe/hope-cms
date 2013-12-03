@@ -46,6 +46,35 @@ public class UserController  extends AbstractController {
     @Autowired
     private OrganizationService organizationService;
 
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
+    public String resetPassword(Model model,
+                                @RequestParam(value = "userIds")  String  userIds) {
+        List<String> userIdList = Lists.newArrayList(Strings.split(userIds, ","));
+        List<User> users = accountService.getUserByIds(userIdList);
+        String userNames = Collections3.extractToString(users, "name", ",");
+        model.addAttribute("users",users);
+        model.addAttribute("userNames",userNames);
+        return "user/user-resetPassword";
+    }
+
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+    public void doResetPassword(Model model,
+                                @RequestParam(value = "userIds") List<String> userIds,
+                                @RequestParam(value = "plainPassword") String plainPassword,
+                                @RequestParam(value = "plainPassword2") String plainPassword2,
+                                HttpServletResponse response) {
+
+        if (!Strings.equals(plainPassword, plainPassword2)) {
+            callback(response, CallbackData.build("resetPasswordCallback", "两次密码输入不一致", NotificationType.ERROR));
+            return;
+        }
+
+        List<User> users = accountService.getUserByIds(userIds);
+        String userNames = Collections3.extractToString(users, "name", ",");
+        //重置密码
+        accountService.resetUserPassword(users, plainPassword);
+        callback(response, CallbackData.build("resetPasswordCallback", "用户&quot;" + userNames + "&quot;密码重置成功", NotificationType.DEFAULT));
+    }
     /**
      * list页面*
      */

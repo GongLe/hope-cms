@@ -16,6 +16,7 @@ public class OrgTreeGridDTO {
 
     public OrgTreeGridDTO(Organization entity) {
         this.id = entity.getId();
+        this.id2 = entity.getId();
         this.name = entity.getName();
         this.code = entity.getCode();
         this.type = entity.getType();
@@ -27,6 +28,7 @@ public class OrgTreeGridDTO {
     }
 
     private String id;
+    private String id2;
     private String parentId;
     private String parentCode;
     private String name;            //菜单名
@@ -144,5 +146,13 @@ public class OrgTreeGridDTO {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public String getId2() {
+        return id2;
+    }
+
+    public void setId2(String id2) {
+        this.id2 = id2;
     }
 }

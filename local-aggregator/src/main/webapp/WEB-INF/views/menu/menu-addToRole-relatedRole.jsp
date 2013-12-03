@@ -6,18 +6,18 @@
 </head>
 
 <body>
-<div id="roleCheckItems">
+<div id="roleItemsContainer">
   <c:forEach items="${roles}" var="role">
       <c:if test="${role.selected == true}">
           <div class="checkbuttonOk  panelcheck" data-menu-id="${menuId}" data-role-id="${role.id}"  data-role-name="${role.name}" >
-              <div data-id="${role.id}" class="checktext"> <i class="icon-user blue"></i>&nbsp;&nbsp;${role.name}
+              <div data-id="${role.id}" class="checktext" title="${role.name}"> <i class="icon-user blue"></i>&nbsp;&nbsp;${role.name}
               </div>
               <div class="triangleOk"></div>
           </div>
       </c:if>
       <c:if test="${role.selected == false}">
           <div class="checkbuttonNo  panelcheck" data-menu-id="${menuId}" data-role-id="${role.id}"  data-role-name="${role.name}">
-              <div data-id="${role.id}" class="checktext"> <i class="icon-user blue"></i>&nbsp;&nbsp;${role.name}
+              <div data-id="${role.id}" class="checktext" title="${role.name}"> <i class="icon-user blue"></i>&nbsp;&nbsp;${role.name}
               </div>
               <div class="triangleNo"></div>
           </div>
@@ -27,7 +27,9 @@
 <script>
 
     $(function () {
-        $('#roleCheckItems').on('click', '.panelcheck', function () {
+        $('#roleItemsContainer').slimscroll({height: '450px'});
+
+        $('#roleItemsContainer').on('click', '.panelcheck', function () {
             if ($(this).hasClass('checkbuttonNo')) {   //选中
                 $(this).removeClass('checkbuttonNo')
                         .addClass('checkbuttonOk')

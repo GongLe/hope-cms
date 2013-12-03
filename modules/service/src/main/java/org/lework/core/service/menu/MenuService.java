@@ -119,7 +119,8 @@ public interface MenuService {
 
     /**
      * 菜单关联角色VO
-     * @param roleGroupId 角色组ID
+     *
+     * @param roleGroupId 角色组ID,可不传值,为空时查出所有角色.
      * @param menuId 菜单ID
      * @return
      */

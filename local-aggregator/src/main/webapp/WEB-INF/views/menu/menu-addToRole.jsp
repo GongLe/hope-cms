@@ -81,8 +81,9 @@
                 checkbox: false,
                 onLoadSuccess: function (node, data) {
                     //默认选择根节点.
-                    var root = $orgTree.tree('getRoot');
-                    $orgTree.tree('select', root.target);
+                  //  var root = $orgTree.tree('getRoot');
+                   // $orgTree.tree('select', root.target);
+                    loadCheckRoleItems('','${menu.id}')
                 },
                 onSelect : function (node) {
                     loadCheckRoleItems(node.id,'${menu.id}')

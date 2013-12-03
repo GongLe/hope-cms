@@ -175,6 +175,17 @@ public class AccountServiceImpl implements AccountService {
         return userDao.findOne(id);
     }
 
+    @Override
+    public void resetUserPassword(List<User> users, String plainPassword) {
+        if (Collections3.isNotEmpty(users)) {
+            for (User u : users) {
+                u.setPlainPassword(plainPassword);
+                entryptPassword(u);
+            }
+            userDao.save(users);
+        }
+    }
+
     public void registerUser(User user) {
         entryptPassword(user);
         user.setUserRegistered(new Date());

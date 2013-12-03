@@ -66,23 +66,24 @@
                     </li>
                 </ul>
 
-                <div class="tab-content no-padding-top">
+                <div class="tab-content " style="padding:5px;">
                     <div id="profile3" class="tab-pane in active">
-                      <%--  <div class="clearfix">
-                            <div class="pull-right">
-                                <button class="btn btn-white btn-minier ">添加菜单到角色</button>
+                        <div class="table-funtion-bar clear-both" style="margin:0 0 10px 0;padding: 2px 10px 2px;" >
+                            <div class="btn-group" style="padding-top:4px;">
+                                <button class="btn btn-small  no-border tooltips" id="refreshRole-function" data-original-title="刷新">
+                                    <i class="icon-refresh"></i>
+                                </button>
                             </div>
-                        </div>--%>
-
-                          <div class="input-append no-margin-bottom pull-right">
-                              <!--自定义搜索-->
-                              <form id="searchForm" name="searchForm" class="no-margin"  style="padding:8px 0 5px 0;" >
+                            <div class="input-append no-margin-bottom pull-right">
+                                <!--自定义搜索-->
+                                <form id="roleSearchForm" name="roleSearchForm" class="no-margin no-padding">
                                     <span class="input-icon input-icon-right">
-                                        <input class="input-medium" id="search" name="search" type="text" placeholder="名称/代码">
-                                        <i class="icon-search blue" onclick="$('#searchForm').submit()"></i>
+                                        <input class="input-medium" id="search" name="search" type="text" placeholder="姓名">
+                                        <i class="icon-search blue" onclick="$('#roleSearchForm').submit()"></i>
                                     </span>
-                              </form> <!--/#searchForm-->
-                          </div>
+                                </form> <!--/#roleSearchForm-->
+                            </div>
+                        </div>
                         <table id="menuRelatedRoleTable"
                                class="table table-hover  table-nomargin table-bordered dataTable dataTable-nosort clear-both">
                         </table>
@@ -124,7 +125,7 @@
                 timer: 3000,
                 onClose: null})
         };
-
+        $('#refreshRole-function').click(refreshRelatedRoleTable) ;
         var menuId = '${menu.id}';
         oTable.dataTable({
             'aoColumns': [
@@ -168,7 +169,7 @@
             'fnServerParams': function (aoData) {
                 //附加请求参数
                 aoData.pushArray({name: 'menuId', value: '${menu.id}'})
-                aoData.pushArray($('#searchForm').serializeArray());
+                aoData.pushArray($('#roleSearchForm').serializeArray());
             },
             'fnInitComplete': function () {     /**datatables ready**/
             },
@@ -196,7 +197,7 @@
         });//dataTables
 
         //搜索表单
-        $('#searchForm').submit(function (event) {
+        $('#roleSearchForm').submit(function (event) {
             event.preventDefault();
             oTable.fnDraw();
         });

@@ -48,13 +48,9 @@
                         </div>
                     </div><!--/.table-funtion-bar-->
 
-                    <div class="pull-left" id="orgTreeGridWrap">
-                        <table id="orgTreeGrid" style="width:500px;height:500px;" ></table>
+                    <div  id="orgTreeGridWrap">
+                        <table id="orgTreeGrid" style="height:500px;" ></table>
                     </div>
-
-                    <div id="eastOrgRelated"  style="margin-left:485px;padding:0 20px 0 20px;">
-
-                    </div><!--/.eastMenuRelated-->
                 </div>
             </div>  <!--/.box-->
         </div>
@@ -82,9 +78,11 @@
           lework.alert({content: json.message, type: json.type })
           $('#orgTreeGrid').treegrid('reload');
       }
+      var $orgTreeGrid = $('#orgTreeGrid');
+
+      $orgTreeGrid.width($('#orgTreeGridWrap').width()*1) ;
 
       using(['treegrid'], function () {
-        var $orgTreeGrid = $('#orgTreeGrid');
         $orgTreeGrid.treegrid({
             url: 'organization/getTreeGrid',
             method: 'post',
@@ -93,10 +91,11 @@
             treeField: 'name',
             columns: [
                 [
-                    {field: 'name', title: '组织名称', width: 170},
-                    {field: 'code', title: '组织代码', width: $.browser.msie ? 137 : 156},
-                    {field: 'typeName', title: '类别', width:80},
-                    {field: 'id', title: '序号', align: 'left', width:80, formatter: function (value, row) {
+                    {field: 'name', title: '组织名称', width: 300},
+                    {field: 'code', title: '组织代码', width: $.browser.msie ? 200 : 210},
+                    {field: 'typeName', title: '类别', width: 150},
+                    {field: 'manager', title: '负责人', width: 150},
+                    {field: 'id', title: '序号', align: 'left', width: 100, formatter: function (value, row) {
                         var html = '&nbsp;&nbsp;&nbsp;&nbsp;';
                         if (row.levelIndex > 0) {
                             html += '<a href="javascript:;" class="sortNumAction up" data-id="{id}" title="上移序号">' +
@@ -129,7 +128,7 @@
             },
             onSelect: function (node) {
                 //加载选中节点east界面
-                loadEast(node.id);
+           //     loadEast(node.id);
             },
             onLoadSuccess: function () {
                 $('.tooltips').tooltip();
@@ -143,6 +142,23 @@
                 $orgTreeGrid.treegrid('select', root.id);
                 //监听序号调整
                 listenerSortAction();
+                // bootstrap-tooltip
+                $('.tooltips').tooltip();
+                $('.confirmDelete').confirmDelete({onDelete: function () {
+                    var id = $(this).data('id');
+                    $.hiddenSubmit({
+                        formAction: 'organization/delete',
+                        data: [
+                            {name: 'deleteId', value: id }
+                        ],
+                        complete: function () {
+                            checkFunbarStatus(false);
+                        }
+                    })
+                    return true;
+                }
+                });
+
             }
         });
     })

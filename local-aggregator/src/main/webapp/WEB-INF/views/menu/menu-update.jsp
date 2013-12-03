@@ -24,8 +24,9 @@
                 <div class="span12"  >
 
                     <!--隐藏域-->
+                    <input type="hidden" name="$SiteMesh" value="false">
                     <form:hidden path="entity.id"  />
-
+                    <input type="hidden" name="$SiteMesh" value="false">
                     <div class="control-group">
                         <label class="control-label " for="name">菜单名称</label>
                         <div class="controls">
