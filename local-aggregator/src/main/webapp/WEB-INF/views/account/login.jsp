@@ -14,10 +14,14 @@
 </head>
 <body class="login">
 <div class="wrapper">
-    <h1  style="color:#ffffff"><i class="icon-leaf"></i>&nbsp;lework</h1>
+    <h1  style="color:#ffffff">lework</h1>
     <div class="login-body">
         <h2>账号登陆</h2>
         <form action="${ctx}/login" method="post" class="form-validate" >
+            <c:if test="${not empty shiroLoginFailure }" >
+                <div class="red">${shiroLoginFailure}</div>
+            </c:if>
+
             <div class="control-group">
                 <div class="email controls">
                     <input type="text" name="username" placeholder="用户名" class="input-block-level"  >
@@ -29,6 +33,14 @@
                     <!--autocomplete="off"-->
                 </div>
             </div>
+            <c:if test="${not empty sessionScope.showCaptcha == true }" >
+                <div class="control-group">
+                    <div class="controls">
+                        <input name="captcha"  autocomplete="off" placeholder="验证码"  style="width: 40%;" >
+                        <img id="captchaImg" title="点击刷新验证码" src="login/getCaptcha" width="70" height="28" onclick="reloadValidateCode();"  />
+                    </div>
+                </div>
+            </c:if>
             <div class="submit">
                 <shiro:user>
                 <p class="padding-10">
@@ -39,6 +51,22 @@
                 </p>
                 </shiro:user>
                 <shiro:guest>
+                    <%--
+                        	<select class="selection" name="rememberMe" id="filter_EQI_state" size="25">
+			           		<option value="">
+								无
+			                </option>
+			                <option value="25200">
+								在一周内
+			                </option>
+			                <option value="2592000">
+								在一个月内
+			                </option>
+			                <option value="31536000">
+								在一个年内
+			                </option>
+			           </select>
+			           --%>
                     <div class="remember">
                         <label for="rememberMe">记住密码&nbsp;&nbsp;</label><input type="checkbox" name="rememberMe" id="rememberMe"/>
                     </div>
@@ -46,6 +74,7 @@
                         <button type="submit" class="btn btn-primary" >登陆</button>
                     </div>
                 </shiro:guest>
+
             </div>
         </form>
         <div class="forget">
@@ -53,5 +82,10 @@
         </div>
     </div>
 </div>
+<script>
+    function reloadValidateCode() {
+        $("#captchaImg").attr("src","login/getCaptcha?_=" + (new Date()).getTime()  );
+    }
+</script>
 </body>
 </html>

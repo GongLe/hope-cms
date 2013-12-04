@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@include file="/WEB-INF/included/resource.jsp" %>
+<%response.setStatus(200);%>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
@@ -12,7 +14,7 @@
 <div class="wrapper">
     <div class="desc"><i class="icon-warning-sign"></i><span>401 - 权限不足 </span></div>
     <div class="buttons">
-        <a href="<c:url value="/dashboard" />" class="btn btn-info btn-large btn-block"><i class="icon-home"></i>首页</a>
+        <a href="dashboard" class="btn btn-info btn-large btn-block"><i class="icon-home"></i>首页</a>
         <a href="javascript:;" onclick="window.history.go(-1);" class="btn btn-large btn-block"><i class="icon-arrow-left"></i>返回</a>
     </div>
 </div>

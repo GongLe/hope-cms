@@ -107,6 +107,7 @@
                 },
                 code: {
                     required: true,
+                    account:true,
                     maxlength: 50,
                     remote: {
                         url: 'role/validateRoleCode', //后台处理程序

@@ -313,8 +313,8 @@ span.ColVis_radio {
     margin-top:10px;
 }
 .dataTables_wrapper .dataTables_paginate > a {
-    height: 18px;
-    padding: 3px 10px;
+    height: 20px;
+    padding: 4px 10px;
     border: 1px solid #ccc;
     margin-left: 2px;
     line-height: 20px;
@@ -350,8 +350,8 @@ span.ColVis_radio {
     cursor: pointer;
 }
 .dataTables_wrapper .dataTables_paginate > span > a {
-    height: 18px;
-    padding: 3px 10px;
+    height: 20px;
+    padding: 4px 10px;
     border: 1px solid #ccc;
     margin-left: 2px;
     line-height: 20px;

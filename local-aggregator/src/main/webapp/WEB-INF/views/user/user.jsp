@@ -32,7 +32,7 @@
                     <h4 class="inner"><i class="icon-user"></i>用户管理</h4>
                 </div>
                 <div class="box-content no-padding ">
-                    <div class="pull-left" style="width:18%;min-height:520px;border-right:1px dashed  #c5d0dc;">
+                    <div class="pull-left" style="width:18%;min-height:600px;border-right:1px dashed  #c5d0dc;">
                         <%--<h5 class="header smaller lighter blue" style="margin:5px 10px;" >角色组</h5>--%>
                           <ul id="orgTree" style="padding:10px 10px 0 5px;" ></ul>
                     </div>
@@ -54,7 +54,7 @@
                                 </ul>
                             </div>
                             <div class="btn-group">
-                                <button class="btn no-border tooltips" id="create-function" data-original-title="新建" >
+                                <button class="btn no-border tooltips" id="create-function" data-original-title="新增" >
                                     <i class="icon-plus"></i>
                                 </button>
                                 <button class="btn no-border tooltips" id="refresh-function" data-original-title="刷新">

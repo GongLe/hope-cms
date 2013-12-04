@@ -16,7 +16,7 @@
 <div class="wrapper">
     <div class="desc"><i class="icon-warning-sign"></i><span>404 - 页面不存在</span></div>
     <div class="buttons">
-            <a href="<c:url value="/dashboard" />" class="btn btn-info btn-large btn-block"><i class="icon-home"></i>首页</a>
+            <a href="dashboard" class="btn btn-info btn-large btn-block"><i class="icon-home"></i>首页</a>
             <a href="javascript:;" onclick="window.history.go(-1);" class="btn btn-large btn-block"><i class="icon-arrow-left"></i>返回</a>
     </div>
 </div>

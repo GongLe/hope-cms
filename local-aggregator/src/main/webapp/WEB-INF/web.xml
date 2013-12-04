@@ -109,6 +109,7 @@
         <servlet-name>staticContent</servlet-name>
         <url-pattern>/static-content</url-pattern>
     </servlet-mapping>
+
     <session-config>
         <session-timeout>20</session-timeout>
     </session-config>
