@@ -42,6 +42,7 @@ public class Menu extends AuditorEntity {
     public boolean hasChild() {
         return Collections3.isNotEmpty(getChildrenMenus());
     }
+
     @Transient
     public boolean getHasChild() {
         return hasChild();
