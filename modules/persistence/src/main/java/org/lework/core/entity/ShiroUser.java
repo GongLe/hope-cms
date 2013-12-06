@@ -41,6 +41,7 @@ public class ShiroUser implements Serializable {
     public List<Menu> getMenus() {
         return Collections3.isNotEmpty(this.menus) ? this.menus : new ArrayList<Menu>();
     }
+
     /**
      * 本函数输出将作为默认的<shiro:principal/>输出.
      */
