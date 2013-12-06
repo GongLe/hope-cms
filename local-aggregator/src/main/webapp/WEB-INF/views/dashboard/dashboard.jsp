@@ -11,24 +11,13 @@
 <div class="breadcrumbs" id="breadcrumbs">
     <ul class="breadcrumb">
         <li>
-            <i class="icon-home home-icon"></i>
-            <a href="#">Home</a>
-
-							<span class="divider">
-								<i class="icon-angle-right arrow-icon"></i>
-							</span>
+            <a href="${ctx}/dashboard" class="grey"> <i class="icon-home home-icon"></i></a>
         </li>
-
-        <li>
-            <a href="#">Other Pages</a>
-
-							<span class="divider">
-								<i class="icon-angle-right arrow-icon"></i>
-							</span>
+        <li class="active">
+           Dashboard
         </li>
-        <li class="active">Grid</li>
-    </ul> <!--.breadcrumb-->
-
+    </ul>
+    <!--.breadcrumb-->
 </div>
 
 <div class="page-content">

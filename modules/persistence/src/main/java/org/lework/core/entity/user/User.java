@@ -129,6 +129,7 @@ public class User extends AuditorEntity {
     public void setType(String type) {
         this.type = type;
     }
+
     @Email
     @NotBlank
     public String getEmail() {
@@ -140,7 +141,7 @@ public class User extends AuditorEntity {
     }
 
     @JsonIgnore
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany
     @JoinTable(name = "SS_USER_ROLE",
             joinColumns =
             @JoinColumn(name = "FK_USER_ID", referencedColumnName = "ID"),

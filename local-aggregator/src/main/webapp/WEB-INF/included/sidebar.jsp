@@ -5,9 +5,12 @@
 <%@ include file="/WEB-INF/included/taglibs.jsp"%>
 <%
     ShiroUser user = SubjectUtils.getUser();
-    if (user != null) {
-        request.setAttribute("menuList", user.getMenus());
+    if (session.getAttribute("menuList") == null) {
+        if (user != null) {
+            session.setAttribute("menuList", user.getMenus());
+        }
     }
+
 %>
 
 <div class="sidebar" id="sidebar">
@@ -20,15 +23,14 @@
 
 <ul class="nav nav-list">
     <%-- 三级级菜单循环输出--%>
-    <c:forEach items="${menuList}" var="menu">
+    <c:forEach items="${sessionScope.menuList}" var="menu">
         <li>
-            <a href="${ctx}/${menu.url}" data-menu-id="${menu.id}"
-               <c:if test="${ menu.hasChild == true }">class="dropdown-toggle" </c:if> >
+            <a href="${ctx}/${menu.url}" data-menu-id="${menu.id}"  <c:if test="${  menu.hasChild eq 'true' }">class="dropdown-toggle" </c:if> >
                 <c:if test="${not empty menu.icon}">
                     <i class="${menu.icon}"></i>
                 </c:if>
                 <span class="menu-text-in"> ${menu.name} </span>
-                <c:if test="${menu.childrenMenus!=null}">
+                <c:if test="${menu.hasChild eq  true }">
                     <b class="arrow icon-angle-down"></b>
                 </c:if>
             </a>
@@ -39,27 +41,27 @@
 
                         <li>
                             <a href="${ctx}/${subMenu.url}" data-menu-id="${subMenu.id}"
-                               <c:if test="${subMenu.hasChild == true }">class="dropdown-toggle" </c:if> >
+                               <c:if test="${not empty subMenu.childrenMenus }">class="dropdown-toggle" </c:if> >
                                 <c:if test="${not empty subMenu.icon}">
                                     <i class="${subMenu.icon}"></i>
                                 </c:if>
                                 <span class="menu-text-in"> ${subMenu.name} </span>
 
-                                <c:if test="${subMenu.hasChild == true}">
+                                <c:if test="${subMenu.hasChild eq  true}">
                                     <b class="arrow icon-angle-down"></b>
                                 </c:if>
                             </a>
                             <c:if test="${ subMenu.childrenMenus !=null}">
                                 <ul class="submenu">
-                                    <c:forEach items="${subMenu.childrenMenus}" var="menu3">
+                                    <c:forEach items="${subMenu.childrenMenus}" var="subMenu3">
                                         <li>
-                                            <a href="${ctx}/${menu3.url}" data-menu-id="${menu3.id}"
-                                               <c:if test="${menu3.hasChild == true}">class="dropdown-toggle" </c:if> >
-                                                <c:if test="${not empty menu3.icon}">
-                                                    <i class="${menu3.icon}"></i>
+                                            <a href="${ctx}/${subMenu3.url}" data-menu-id="${subMenu3.id}"
+                                               <c:if test="${subMenu3.hasChild == true}">class="dropdown-toggle" </c:if> >
+                                                <c:if test="${not empty subMenu3.icon}">
+                                                    <i class="${subMenu3.icon}"></i>
                                                 </c:if>
-                                                <span class="menu-text-in"> ${menu3.name} </span>
-                                                <c:if test="${menu3.hasChild == true}">
+                                                <span class="menu-text-in"> ${subMenu3.name} </span>
+                                                <c:if test="${subMenu3.hasChild eq  true }">
                                                     <b class="arrow icon-angle-down"></b>
                                                 </c:if>
                                             </a>

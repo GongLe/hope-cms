@@ -41,6 +41,8 @@ public interface RoleService {
      */
     public List<Role> getUserRolesByStatus(User user, Status status);
 
+    public List<Role> getUserRolesByStatus(String userId, Status status);
+
     public List<Role> getRoleByIds(List<String> ids );
 
     public Role getRoleByCode(String code);

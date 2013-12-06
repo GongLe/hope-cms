@@ -9,7 +9,7 @@
 <body>
 
 <div class="modal-content">
-    <form action="role/update" class="no-margin" method="post" id="form-input" name="form-input" target="$iframe">
+    <form action="role/update" class="no-margin" method="post" id="form-input" name="form-input"  >
         <div class="modal-header">
             <h4 class="blue bigger">Please fill the following form fields</h4>
         </div>

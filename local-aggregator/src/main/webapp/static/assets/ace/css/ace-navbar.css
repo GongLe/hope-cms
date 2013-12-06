@@ -31,7 +31,9 @@
 .navbar .brand {
     color:#fff;
     font-size:24px;
-    text-shadow:none
+    text-shadow:none ;
+    padding-top:10px;
+    padding-bottom:5px;
 }
 .navbar .nav>li>a,.navbar .nav>li>a:hover,.navbar .nav>li>a:focus {
     font-size:13px;

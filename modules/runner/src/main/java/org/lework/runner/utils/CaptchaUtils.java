@@ -17,7 +17,7 @@ public class CaptchaUtils {
 
     public static String FONT_FAMILY = "Arial";
 
-    public static Integer FONT_SIZE = 16;
+    public static Integer FONT_SIZE = 18;
 
     /**
      * 生成GIF动画验证码
@@ -47,7 +47,7 @@ public class CaptchaUtils {
         e.start(out);
         e.setRepeat(0);
 
-        Font font = new Font(FONT_FAMILY, Font.PLAIN, FONT_SIZE);
+        Font font = new Font(FONT_FAMILY, Font.BOLD, FONT_SIZE);
 
         for (int i = 0; i < sRand.length(); i++) {
             // 生成一张新图片
@@ -126,7 +126,7 @@ public class CaptchaUtils {
         Graphics g = image.getGraphics();
         g.setColor(getRandColor(200, 250));
         g.fillRect(1, 1, width - 1, height - 1);
-        g.setColor(new Color(102, 102, 103));
+        g.setColor(new Color(29, 28, 152));
         g.drawRect(0, 0, width - 1, height - 1);
         g.setFont(font);
         // 随机生成线条，让图片看起来更加杂乱

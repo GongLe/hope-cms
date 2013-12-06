@@ -29,8 +29,5 @@
         <sitemesh:body></sitemesh:body>
     </div> <!--/.main-content-->
 </div> <!--/.main-container-->
-<%--hidden iframe  --%>
-<%@ include file="/WEB-INF/included/hiddenIframe.jsp" %>
-
 </body>
 </html>

@@ -134,6 +134,14 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    public List<Menu> getUserMenus(String userId, Status status) {
+        List<Menu> ret = menuDao.findUserMenus(userId, status.getCode());
+        if (Collections3.isEmpty(ret))
+            ret = new ArrayList<Menu>();
+        return ret;
+    }
+
+    @Override
     public List<Menu> getAllMenus() {
         return (List<Menu>) menuDao.findAll();
     }

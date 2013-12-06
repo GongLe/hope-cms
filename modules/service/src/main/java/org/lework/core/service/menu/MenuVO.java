@@ -1,31 +1,37 @@
-package org.lework.core.entity.menu;
+package org.lework.core.service.menu;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.lework.core.entity.AuditorEntity;
-import org.lework.core.entity.role.Role;
+import org.lework.core.entity.menu.Menu;
 import org.lework.runner.utils.Collections3;
 import org.lework.runner.utils.Strings;
 
-import javax.persistence.*;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 菜单Entity
+ * Menu Entity View Object
  * User: Gongle
- * Date: 13-10-22
+ * Date: 13-12-5
  */
-@Entity
-@Table(name = "SS_MENU")
-//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Menu extends AuditorEntity {
+public class MenuVO {
+    public MenuVO() {
+    }
 
+    public MenuVO(Menu entity) {
+        this.id = entity.getId();
+        this.name = entity.getName();
+        this.code = entity.getCode();
+        this.sortNum = entity.getSortNum();
+        this.type = entity.getType();
+        this.url = entity.getUrl();
+        this.icon = entity.getIcon();
+        this.parentName = entity.getParentName();
+    }
+
+    private String id;
     private String name;            //菜单名
     private String code;            //代码
     private Integer sortNum;            //排序
@@ -34,22 +40,19 @@ public class Menu extends AuditorEntity {
     private String url;                //URL
     private String icon;                //图标
     private String parentName;
-    private Menu parentMenu;        //上级菜单
-    private List<Menu> childrenMenus;    //下级菜单
-    private List<Role> roles = new ArrayList<Role>();    //菜单对应的角色
+    List<MenuVO> childrenMenus = new ArrayList<MenuVO>();
+    MenuVO parentMenu;
 
-    @Transient
     public boolean hasChild() {
         return Collections3.isNotEmpty(getChildrenMenus());
     }
-    @Transient
+
     public boolean getHasChild() {
-        return hasChild();
+        return Collections3.isNotEmpty(getChildrenMenus());
     }
 
-    @Transient
     public String getParentId() {
-        Menu parent = getParentMenu();
+        MenuVO parent = getParentMenu();
         return parent != null ? parent.getId() : Strings.EMPTY;
     }
 
@@ -58,8 +61,6 @@ public class Menu extends AuditorEntity {
         return getParentMenu() != null;
     }
 
-    @NotEmpty
-    @Length(max = 50)
     public String getName() {
         return name;
     }
@@ -68,8 +69,6 @@ public class Menu extends AuditorEntity {
         this.name = name;
     }
 
-    @NotBlank
-    @Length(max = 50)
     public String getCode() {
         return code;
     }
@@ -86,7 +85,6 @@ public class Menu extends AuditorEntity {
         this.sortNum = sortNum;
     }
 
-
     public String getType() {
         return type;
     }
@@ -95,7 +93,6 @@ public class Menu extends AuditorEntity {
         this.type = type;
     }
 
-    @NotBlank
     public String getStatus() {
         return status;
     }
@@ -104,8 +101,6 @@ public class Menu extends AuditorEntity {
         this.status = status;
     }
 
-    @NotBlank
-    @Length(max = 200)
     public String getUrl() {
         return url;
     }
@@ -122,17 +117,6 @@ public class Menu extends AuditorEntity {
         this.icon = icon;
     }
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "fk_parent_menu_id")
-    public Menu getParentMenu() {
-        return parentMenu;
-    }
-
-    public void setParentMenu(Menu parentMenu) {
-        this.parentMenu = parentMenu;
-    }
-
     public String getParentName() {
         return parentName;
     }
@@ -141,27 +125,29 @@ public class Menu extends AuditorEntity {
         this.parentName = parentName;
     }
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "parentMenu", fetch = FetchType.LAZY)
-    @OrderBy(value = "sortNum asc")
-    public List<Menu> getChildrenMenus() {
+    public List<MenuVO> getChildrenMenus() {
         return childrenMenus;
     }
 
-    public void setChildrenMenus(List<Menu> childrenMenus) {
+    public void setChildrenMenus(List<MenuVO> childrenMenus) {
         this.childrenMenus = childrenMenus;
     }
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "menus")
-    public List<Role> getRoles() {
-        return roles;
+    public MenuVO getParentMenu() {
+        return parentMenu;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setParentMenu(MenuVO parentMenu) {
+        this.parentMenu = parentMenu;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -174,7 +160,7 @@ public class Menu extends AuditorEntity {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        Menu rhs = (Menu) obj;
+        MenuVO rhs = (MenuVO) obj;
         return new EqualsBuilder()
                 .appendSuper(super.equals(obj))
                 .append(code, rhs.code)

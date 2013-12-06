@@ -123,7 +123,7 @@ public class RoleController extends AbstractController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            callback(response, CallbackData.build("deleteCallback", "操作提示", "角色删除失败!" + e.toString(), NotificationType.ERROR));
+            callback(response, CallbackData.build("deleteCallback", "角色删除失败!" + e.toString(), NotificationType.ERROR));
         }
 
     }

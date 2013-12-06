@@ -7,10 +7,11 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.lework.core.common.enumeration.Status;
 import org.lework.core.entity.ShiroUser;
 import org.lework.core.entity.user.User;
 import org.lework.runner.utils.Encodes;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.lework.runner.utils.Strings;
 
 import javax.annotation.PostConstruct;
 
@@ -20,10 +21,7 @@ import javax.annotation.PostConstruct;
  *
  * @author Gongle
  */
-public class JdbcAuthenticationRealm extends JdbcAuthorizationRealm {
-
-    private AccountService accountService;
-
+public class JdbcAuthenticationRealm extends AuthorizationRealm {
     /**
      * shiro身份验证回调方法
      */
@@ -39,9 +37,9 @@ public class JdbcAuthenticationRealm extends JdbcAuthorizationRealm {
 
         if (user == null) {
             throw new UnknownAccountException("账号不存在");
-        } /*else if (user.getState() == Status.Disable.getCode()) {
+        } else if (Strings.equals(user.getStatus(), Status.disable.getCode())) {
             throw new DisabledAccountException("账号是禁用的");
-        } */
+        }
 
         byte[] salt = Encodes.decodeHex(user.getSalt());
         ShiroUser shiroUser = new ShiroUser(user.getId(), user.getLoginName(), user.getName());
@@ -50,6 +48,7 @@ public class JdbcAuthenticationRealm extends JdbcAuthorizationRealm {
         return new SimpleAuthenticationInfo(shiroUser, user.getPassword(), ByteSource.Util.bytes(salt), getName());
 
     }
+
 
     /**
      * 设定Password 校验的Hash算法与迭代次数.
@@ -84,11 +83,6 @@ public class JdbcAuthenticationRealm extends JdbcAuthorizationRealm {
 
     public AccountService getAccountService() {
         return accountService;
-    }
-
-    @Autowired
-    public void setAccountService(AccountService accountService) {
-        this.accountService = accountService;
     }
 
 

@@ -75,9 +75,12 @@ public class RoleServiceImpl implements RoleService {
         if (user == null) {
             return new ArrayList<Role>();
         }
-
-        Validate.notNull(status);
         return roleDao.findUserRolesByStatus(user.getId(), status.getCode());
+    }
+
+    @Override
+    public List<Role> getUserRolesByStatus(String userId, Status status) {
+        return roleDao.findUserRolesByStatus(userId,status.getCode()) ;
     }
 
     @Override

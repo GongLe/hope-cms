@@ -23,6 +23,15 @@ public interface MenuService {
     public List<Menu> getAllMenus();
 
     public List<Menu> getMenusByIds(List<String> ids );
+
+    /**
+     * 获取用户关联的菜单
+     * @param userId
+     * @param status
+     * @return
+     */
+    public List<Menu> getUserMenus(String userId,Status status);
+
     /**
      * 获取当前节点所有子节点,包含自身
      * @param id 菜单ID

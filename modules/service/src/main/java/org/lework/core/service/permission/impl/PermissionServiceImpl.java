@@ -1,10 +1,13 @@
 package org.lework.core.service.permission.impl;
 
+import org.lework.core.common.enumeration.Status;
 import org.lework.core.dao.permission.PermissionDao;
 import org.lework.core.entity.permission.Permission;
+import org.lework.core.entity.role.Role;
 import org.lework.core.service.permission.PermissionService;
 import org.lework.runner.orm.support.SearchFilter;
 import org.lework.runner.orm.support.Specifications;
+import org.lework.runner.utils.Collections3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +36,19 @@ public class PermissionServiceImpl  implements PermissionService{
     @Autowired
     public void setPermissionDao(PermissionDao permissionDao) {
         this.permissionDao = permissionDao;
+    }
+
+    @Override
+    public List<Permission> getPermsiiomsByIds(List<String> ids) {
+        if (Collections3.isEmpty(ids)) {
+            return new ArrayList<Permission>();
+        }
+        return (List<Permission>) permissionDao.findAll(ids);
+    }
+
+    @Override
+    public List<Permission> getUserPermissions(String userId, Status status) {
+        return  permissionDao.findUserPermissions(userId,status.getCode()) ;
     }
 
     @Override
@@ -54,6 +71,11 @@ public class PermissionServiceImpl  implements PermissionService{
     @Override
     public void deletePermission(String id) {
         permissionDao.delete(id);
+    }
+
+    @Override
+    public void deletePermission(List<Permission> entities) {
+        permissionDao.delete(entities);
     }
 
     @Override

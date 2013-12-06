@@ -5,7 +5,8 @@
         <div class="container-fluid">
             <a href="#" class="brand">
                <%-- <small>lework<span style="font-size: 12px;font-weight: normal;padding:0 0 0 5px;">0.5 beta</span> </small>--%>
-                <h3 style="margin: 0;padding: 0;line-height:20px;">lework<span style="font-size: 12px;font-weight: normal;padding:0 0 0 5px;">0.5 beta</span></h3>
+               <%-- <h3 style="margin: 0;padding: 0;line-height:20px;">lework<span style="font-size: 12px;font-weight: normal;padding:0 0 0 5px;">0.5 beta</span></h3>--%>
+                   lework<span style="font-size: 12px;font-weight: normal;padding:0 0 0 5px;">0.5 beta</span>
             </a><!--/.brand-->
             <ul class="nav ace-nav pull-right ">
        <%--         <li class="grey">

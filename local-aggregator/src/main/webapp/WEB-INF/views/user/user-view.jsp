@@ -9,7 +9,7 @@
 <body>
 
 <div class="modal-content" >
-    <form action="user/update"  method="post" id="inputForm" name="inputForm" target="$iframe"
+    <form action="user/update"  method="post" id="inputForm" name="inputForm"
           class="no-margin  error-inline" >
         <div class="modal-header" style="padding:5px 20px 5px 20px;">
             <small class="grey">

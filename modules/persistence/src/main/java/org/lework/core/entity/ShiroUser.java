@@ -1,8 +1,14 @@
 package org.lework.core.entity;
 
 import com.google.common.base.Objects;
+import org.lework.core.entity.menu.Menu;
+import org.lework.core.entity.permission.Permission;
+import org.lework.core.entity.role.Role;
+import org.lework.runner.utils.Collections3;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Authentication对象，使得Subject除了携带用户的登录名外还可以携带更多信息.
@@ -14,6 +20,9 @@ public class ShiroUser implements Serializable {
     public String id;
     public String loginName;
     public String name;
+    /*    public List<Role> roles ;
+        public List<Permission> permsissions  */
+    public List<Menu> menus;
 
     public ShiroUser(String id, String loginName, String name) {
         this.id = id;
@@ -24,10 +33,14 @@ public class ShiroUser implements Serializable {
     public String getName() {
         return name;
     }
+
     public String getLoginName() {
         return loginName;
     }
 
+    public List<Menu> getMenus() {
+        return Collections3.isNotEmpty(this.menus) ? this.menus : new ArrayList<Menu>();
+    }
     /**
      * 本函数输出将作为默认的<shiro:principal/>输出.
      */

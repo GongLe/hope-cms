@@ -59,8 +59,14 @@
                 /logout = logout
                 /static/** = anon
                 /register/** = anon
+                /error/** = anon
                 /admin/** = roles[admin]
                 /dashboard/**=roles[guest]
+                /user/**=roles[guest]
+                /role/**=roles[guest]
+                /roleControl/**=roles[guest]
+                /menu/**=roles[guest]
+                /permission/**=roles[guest]
             </value>
         </property>
     </bean>

@@ -113,8 +113,7 @@ public class Role extends AuditorEntity {
     }
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "roles",
-            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE}  )
+    @ManyToMany(mappedBy = "roles"  )
     public List<User> getUsers() {
         return users;
     }
@@ -124,7 +123,7 @@ public class Role extends AuditorEntity {
     }
 
     @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE})
+    @ManyToMany
     @JoinTable(name = "SS_ROLE_PERMISSION",
             joinColumns =
             @JoinColumn(name = "FK_ROLE_ID", referencedColumnName = "ID"),
@@ -140,7 +139,7 @@ public class Role extends AuditorEntity {
     }
 
     @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE})
+    @ManyToMany
     @JoinTable(name = "SS_ROLE_MENU",
             joinColumns =
             @JoinColumn(name = "FK_ROLE_ID", referencedColumnName = "ID"),

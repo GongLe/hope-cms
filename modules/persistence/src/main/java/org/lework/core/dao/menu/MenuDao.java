@@ -48,4 +48,7 @@ public interface MenuDao extends PagingAndSortingRepository<Menu, String>, JpaSp
     @Query("select m from Role r inner join r.menus m where r.id=?1 order by m.sortNum")
     public List<Menu> findRoleMenus(String roleId  );
 
+     @Query("select distinct m from User u inner join u.roles r inner join r.menus m where u.id=?1 and m.status=?2 order by m.sortNum")
+    public List<Menu> findUserMenus(String userId,String status  );
+
 }

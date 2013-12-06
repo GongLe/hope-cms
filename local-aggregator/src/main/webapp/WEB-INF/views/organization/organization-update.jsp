@@ -6,7 +6,7 @@
 <body>
 
 <div class="modal-content" >
-    <form action="organization/update"  method="post" id="inputForm" name="inputForm" target="$iframe"
+    <form action="organization/update"  method="post" id="inputForm" name="inputForm"
           class="no-margin form-horizontal offset-30 error-inline" >
         <div class="modal-header"  >
             <h3>
@@ -140,7 +140,7 @@
         }); //slimscroll
 
         //from validater
-        $('#inputForm').validate({
+        $('#inputForm').targetIframe().validate({
             submitHandler: function (form) {
                 $('#submitBtn').prop('disable',true).text('保存中....')
                 form.submit() ;

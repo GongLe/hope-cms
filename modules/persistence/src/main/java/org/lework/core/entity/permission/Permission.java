@@ -1,6 +1,8 @@
 package org.lework.core.entity.permission;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.lework.core.entity.AuditorEntity;
 import org.lework.core.entity.role.Role;
@@ -24,6 +26,8 @@ import java.util.List;
 public class Permission extends AuditorEntity {
     private String name;
     private String code;
+    /**Shiro权限表达式 eg: perms[xxx,www]**/
+    private String perms;
     private String status;
     private String type;
     private String description;
@@ -69,13 +73,46 @@ public class Permission extends AuditorEntity {
         this.description = description;
     }
     @JsonIgnore
-    @ManyToMany(mappedBy = "permissions", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "permissions" )
     public List<Role> getRoles() {
         return roles;
     }
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getPerms() {
+        return perms;
+    }
+
+    public void setPerms(String perms) {
+        this.perms = perms;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Permission rhs = (Permission) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(id, rhs.id)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).
+                append(id).
+                toHashCode();
     }
 
     @Override

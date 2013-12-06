@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<div class="table-funtion-bar clear-both" style="margin:0 0 10px 0;padding: 2px 10px 2px;" id="memberBar"  >
+<div class="table-funtion-bar clear-both" style="margin:4px 0 10px 0;padding: 4px 10px 4px;" id="memberBar"  >
     <div class="btn-group" style="padding-top:4px;">
         <button class="btn btn-small  no-border tooltips" id="refresh-function" data-original-title="刷新">
             <i class="icon-refresh"></i>

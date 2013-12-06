@@ -93,7 +93,35 @@ public class Collections3 {
 
 		return list;
 	}
+    /**
+     * 提取集合中的对象的属性(通过Getter函数), 组合成List.
+     *
+     * @param collection 来源集合.
+     * @param propertyName 要提取的属性名.
+     * @param ignoreEmptyValue 是否过滤null值和""值
+     *
+     * @return List
+     */
+    public static <T> List<T> extractToList(Collection collection, String propertyName,boolean ignoreEmptyValue) {
+        if (collection == null) {
+            return null;
+        }
+        List list = new ArrayList();
 
+        try {
+            for (Object obj : collection) {
+                T value = (T) PropertyUtils.getProperty(obj, propertyName);
+                if (ignoreEmptyValue && value == null || value.toString().equals("")) {
+                    continue;
+                }
+                list.add(PropertyUtils.getProperty(obj, propertyName));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 	/**
 	 * 提取集合中的对象的一个属性(通过Getter函数), 组合成由分割符分隔的字符串.
 	 * 

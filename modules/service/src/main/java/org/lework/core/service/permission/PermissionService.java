@@ -1,6 +1,8 @@
 package org.lework.core.service.permission;
 
+import org.lework.core.common.enumeration.Status;
 import org.lework.core.entity.permission.Permission;
+import org.lework.core.entity.role.Role;
 import org.lework.runner.orm.support.SearchFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +20,16 @@ public interface PermissionService {
 
     public List<Permission> getAllPermission();
 
+    public List<Permission> getPermsiiomsByIds(List<String> ids);
+
+    /**
+     * 获取用户关联的权限集合
+     *
+     * @param userId
+     * @param status
+     * @return
+     */
+    public List<Permission> getUserPermissions(String userId, Status status);
 
     public Permission getPermissionByCode(String code);
 
@@ -26,6 +38,8 @@ public interface PermissionService {
     public void deletePermission(String id);
 
     public void deletePermission(Permission entity);
+
+    public void deletePermission(List<Permission> entities);
 
     public Page<Permission> getPagePermission(Pageable pageable);
 
